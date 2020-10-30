@@ -1,0 +1,6 @@
+autoload
+bundle
+session/
+spell
+undodir
+*.swp

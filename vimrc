@@ -748,8 +748,16 @@
         \ ]
     " }
 
-    " hardcoded files or directories that will always be shown
-    let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.tmux.conf' ]
+    " hardcoded files or directories that will always be shown {
+    let g:startify_bookmarks = [
+        \ '~/.vimrc',
+        \ '~/.zshrc',
+        \ '~/.tmux.conf',
+        \ '~/.config/ranger/rc.conf',
+        \ '~/README.md',
+        \ '~/.vim/README.md',
+        \ '~/.config/ranger/README.md' ]
+    " }
 
     " The directory to save/load sessions to/from.
     let g:startify_session_dir = '~/.vim/session'

@@ -313,6 +313,14 @@
             :term docker build -t '%:p:h:t':local -f % .
             :AutoScrollDown
             :bd!
+        elseif &filetype == 'json'
+            " to run package.json scripts, move cursor to script name and
+            " press <leader>R to start npm run <script>
+            set splitbelow
+            :sp
+            :execute 'term npm run ' . shellescape(expand('<cword>'))
+            :AutoScrollDown
+            :bd!
         endif
     endfunc
 

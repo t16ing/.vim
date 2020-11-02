@@ -260,7 +260,7 @@
         " Share clipboard with system
         set clipboard=unnamedplus
 
-        " set persistent undo
+        " set persistent undo {
         if !isdirectory("~/.vim/undodir")
             silent !mkdir -p ~/.vim/undodir
         endif
@@ -271,6 +271,7 @@
             set undoreload=10000
         catch
         endtry
+        " }
 
     " }
 
@@ -297,13 +298,38 @@
 
 " }
 
+" Compile and Run {
+
+    command! AutoScrollDown while 1 | let c=getchar(1) | if c != 0 | break | else | exec "norm! gj" | sleep 10 m | redraw | endif | endwhile
+
+    noremap <leader>R :call CompileRun()<CR>
+    func! CompileRun()
+        exec "w"
+        if &filetype == 'vim'
+            noremap :source %<CR>
+        elseif &filetype == 'dockerfile'
+            set splitbelow
+            :sp
+            :term docker build -t '%:p:h:t':local -f % .
+            :AutoScrollDown
+            :bd!
+        elseif &filetype == 'json'
+            " to run package.json scripts, move cursor to script name and
+            " press <leader>R to start npm run <script>
+            set splitbelow
+            :sp
+            :execute 'term npm run ' . shellescape(expand('<cword>'))
+            :AutoScrollDown
+            :bd!
+        endif
+    endfunc
+
+" }
+
 " Misc {
 
     " Open the vimrc file anytime
     noremap <LEADER>rc :e ~/.vim/init.vim<CR>
-
-    " Reload vimrc
-    noremap <LEADER>rr :source ~/.vim/init.vim<CR>
 
     " next placeholder <++> <++> <++>
     noremap <LEADER><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
@@ -580,9 +606,7 @@
     let g:ctrlp_clear_cache_on_exit=1
     let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
-    map <leader>o :CtrlPBuffer<CR>
-
-    VkhAdd 'ctrlp.vim: <c-p> open ctrlp window. <leader>o open buffer window.'
+    VkhAdd 'ctrlp.vim: <c-p> open ctrlp window.'
     " }
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

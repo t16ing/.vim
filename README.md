@@ -16,11 +16,13 @@
     * [Selection](#selection)
     * [Marks and Register](#marks-and-register)
     * [File Finder](#file-finder)
-    * [Develop](#develop)
+    * [Coding Navigation](#coding-navigation)
+    * [Integrated Development Environment](#integrated-development-environment)
     * [Markdown](#markdown)
     * [Spell](#spell)
     * [CoC](#coc)
     * [Misc](#misc)
+* [Commands](#commands)
 * [Plugins](#plugins)
 * [Supporting Languages](#supporting-languages)
 * [License](#license)
@@ -107,31 +109,36 @@ Use ',' as leader key.
 | `<leader>nf` | Open nerdtree in file location. |
 | `<c-p>`      | Fuzzy find files.               |
 
-### Develop
+### Coding Navigation
 
-| Key                | Action                                                      |
-|--------------------|-------------------------------------------------------------|
-| `K`                | Open document.                                              |
-| `tt`               | Toggle tagbar.                                              |
-| `<leader>f`        | Search for code.                                            |
-| `<c-j>` or `<c-k>` | Navigate errors.                                            |
-| `gt`               | Toggle git sign.                                            |
-| `gb`               | Git blame.                                                  |
-| `gl`               | Git log.                                                    |
-| `]c` or `[c`       | Navigate hunks.                                             |
-| `gd`               | Go to definition.                                           |
-| `gy`               | Go to type definition.                                      |
-| `gi`               | Go to implementation.                                       |
-| `gr`               | Go to references.                                           |
-| `gf`               | Open file.                                                  |
-| (insert)`<c-o>`    | Auto completion.                                            |
-| `]g` or `[g`       | Navigate diagnostics.                                       |
-| `<leader>a`        | Apply code action, ex: `<leader>aap` for current paragraph. |
-| `<leader>ac`       | Apply code action to current buffer.                        |
-| `<leader>qf`       | Apply quick fix to the problem of the current line.         |
-| `<leader>rn`       | Symbol rename.                                              |
-| `<leader>R`        | Complie and Run.                                            |
-| `<leader>T`        | Open terminal.                                              |
+| Key          | Action                 |
+|--------------|------------------------|
+| `tt`         | Toggle tagbar.         |
+| `<leader>f`  | Search for code.       |
+| `]e` or `[e` | Navigate errors.       |
+| `gt`         | Toggle git sign.       |
+| `gb`         | Git blame.             |
+| `gl`         | Git log.               |
+| `]c` or `[c` | Navigate hunks.        |
+| `gd`         | Go to definition.      |
+| `gy`         | Go to type definition. |
+| `gi`         | Go to implementation.  |
+| `gr`         | Go to references.      |
+| `gf`         | Open file.             |
+| `]g` or `[g` | Navigate diagnostics.  |
+
+### Integrated Development Environment
+
+| Key             | Action                                                      |
+|-----------------|-------------------------------------------------------------|
+| (insert)`<c-o>` | Auto completion.                                            |
+| `K`             | Open document.                                              |
+| `<leader>a`     | Apply code action, ex: `<leader>aap` for current paragraph. |
+| `<leader>ac`    | Apply code action to current buffer.                        |
+| `<leader>qf`    | Apply quick fix to the problem of the current line.         |
+| `<leader>rn`    | Symbol rename.                                              |
+| `<leader>R`     | Complie and Run.                                            |
+| `<leader>T`     | Open terminal.                                              |
 
 ### Markdown
 
@@ -175,6 +182,12 @@ Use ',' as leader key.
 | `<leader><space>` | Edit next placeholder.     |
 | `tx`              | Place an AsciiArt.         |
 
+## Commands
+
+| Command    | Action                                                   |
+|------------|----------------------------------------------------------|
+| :SudoWrite | Write with sudo, requires ssh-askpass to input password. |
+
 ## Plugins
 
 Highlight:
@@ -186,9 +199,10 @@ Highlight:
     - `vim-nerdtree-syntax-highlight`
     - `vim-devicons`
 - `lightline` family
-    - `lightline#buffer`
-    - `lightline#hunks`
-    - `lightline#ale`
+    - `lightline-buffer`
+    - `lightline-hunks`
+    - `lightline-ale`
+    - `vim-lightline-coc`
 - `ctrlp.vim`
 - `ack.vim`
 - `ale`
@@ -201,8 +215,8 @@ For other plugins, please check out the `vimrc` [Plugins manager: vim-plug]() se
 ## Supporting Languages
 
 - Dockerfile
+- `python` (by `jedi.vim`)
 - `php`
-- `python`
 - `javascript`
 - `typescript`
 - `markdown`

@@ -38,7 +38,7 @@
     set nobackup
 
     " set swap folder to .vim/swap
-    set directory^=$HOME/.vim//
+    set directory^=$HOME/.vim/swap/
 
     " opening a new file when the current buffer has unsaved changes causes files to be hidden instead of closed
     set hid
@@ -240,6 +240,10 @@
     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
     autocmd BufWinLeave * call clearmatches()
 
+    " make tab indent and unwanted space more visiable
+    set list
+    set listchars=tab:\|\ ,trail:▫
+
     " make indent faster
     nnoremap < <<
     nnoremap > >>
@@ -298,9 +302,21 @@
 
 " }
 
+" Snippet {
+
+    " Markdown
+    source ~/.vim/snippets/markdown.vim
+
+" }
+
 " Compile and Run {
 
-    command! AutoScrollDown while 1 | let c=getchar(1) | if c != 0 | break | else | exec "norm! gj" | sleep 10 m | redraw | endif | endwhile
+	" Enable auto scroll. `startinsert` let Enter to leave Compile and Run.
+    try
+        let g:neoterm_autoscroll = 1
+        autocmd TermOpen term://* startinsert
+    catch
+    endtry
 
     noremap <leader>R :call CompileRun()<CR>
     function! CompileRun()
@@ -309,22 +325,16 @@
             set splitbelow
             :sp
             :term docker build -t '%:p:h:t':local -f % .
-            :AutoScrollDown
-            :bd!
-        elseif expand('%:t') == 'package.json'
-            " to run package.json scripts, move cursor to script name and
-            " press <leader>R to start npm run <script>
+        elseif &filetype == 'json'
+            " How to run package.json scripts:
+            " - move cursor to script name and press <leader>R to start npm run <script>
             set splitbelow
             :sp
-            :execute 'term npm run ' . shellescape(expand('<cword>'))
-            :AutoScrollDown
-            :bd!
+            :exec 'term npm run ' . shellescape(expand('<cword>'))
         elseif &filetype == 'go'
             set splitbelow
             :sp
             :term go run .
-            :AutoScrollDown
-            :bd!
         endif
     endfunc
 
@@ -429,6 +439,8 @@
 
         Plug 'luochen1990/rainbow'
           " rainbow parentheses {[()]}
+        Plug 'jiangmiao/auto-pairs'
+          " Insert or delete brackets, parens, quotes in pair.
         Plug 'nathanaelkane/vim-indent-guides'
           " visually displaying indent levels
         Plug 'ap/vim-css-color'
@@ -445,38 +457,51 @@
 
     " Plugins - filetypes {
 
+        " python {
         Plug 'davidhalter/jedi-vim', {'for': 'python'}
           " Auto-complete for python, gd for definition, <leader>rn for rename, <leader>f for usage
+        " }
 
+        " javascript {
         Plug 'nikvdp/ejs-syntax', {'for': 'ejs'}
           " syntax for ejs
         Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
           " syntax for ts
-
         Plug 'hushicai/tagbar-javascript.vim'
           " tagbar for js; have to load early, otherwise not working
         Plug 'moll/vim-node'
           " gf in node.js require(...)
+        " }
 
+        " markdown {
+        Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
+          " <leader>tm to start automatic table creator & formatter
+        Plug 'mzlogin/vim-markdown-toc', { 'on': 'GenTocGFM', 'for': ['text', 'markdown', 'vim-plug'] }
+          " :GenTocGFM to generate markdown TOC for Github markdown
+        " }
+
+        " gpg {
         Plug 'jamessan/vim-gnupg'
           " transparent editing of gpg encrypted files: ".gpg", ".pgp" or ".asc" suffix
+        " }
+
+    " }
+
+    " Plugins - Formatting {
+
+        Plug 'junegunn/vim-easy-align'
+          " select, ENTER, =, =
 
     " }
 
     " Plugins - Editing {
 
-        Plug 'junegunn/vim-easy-align'
-          " select, ENTER, =, =
         Plug 'tpope/vim-commentary'
           " gcc to comment out a line, gcap to comment out a paragraph
         Plug 'junegunn/vim-peekaboo'
           " extends " and @ in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
         Plug 'mbbill/undotree'
           " visualizes undo history, <leader>u to open undo tree
-        Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
-          " <leader>tm to start automatic table creator & formatter
-        Plug 'mzlogin/vim-markdown-toc'
-          " :GenTocGFM to generate markdown TOC for Github markdown
         Plug 'Ron89/thesaurus_query.vim'
           " <leader>cs to lookup synonyms of any word under cursor or phrase covered in visual mode, and replace it with an user chosen synonym
         Plug 'mg979/vim-visual-multi'

@@ -171,7 +171,6 @@ Use ',' as leader key.
 | `<space>s`      | List CoC symbols.                       |
 | `<space>j or k` | Do default next or previous CoC action. |
 | `<space>p`      | Resume previous CoC list.               |
-| `<leader>ne`    | Open CoC file explorer.                 |
 
 ### Misc
 
@@ -179,6 +178,7 @@ Use ',' as leader key.
 |-------------------|----------------------------|
 | `<leader>S`       | Open a fancy start screen. |
 | `<leader>rc`      | Open vimrc.                |
+| `<leader>rr`      | Reload vimrc.              |
 | `<leader><space>` | Edit next placeholder.     |
 | `tx`              | Place an AsciiArt.         |
 

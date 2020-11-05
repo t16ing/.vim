@@ -305,20 +305,24 @@
     noremap <leader>R :call CompileRun()<CR>
     function! CompileRun()
         exec "w"
-        if &filetype == 'vim'
-            :source %
-        elseif &filetype == 'dockerfile'
+        if &filetype == 'dockerfile'
             set splitbelow
             :sp
             :term docker build -t '%:p:h:t':local -f % .
             :AutoScrollDown
             :bd!
-        elseif &filetype == 'json'
+        elseif expand('%:t') == 'package.json'
             " to run package.json scripts, move cursor to script name and
             " press <leader>R to start npm run <script>
             set splitbelow
             :sp
             :execute 'term npm run ' . shellescape(expand('<cword>'))
+            :AutoScrollDown
+            :bd!
+        elseif &filetype == 'go'
+            set splitbelow
+            :sp
+            :term go run .
             :AutoScrollDown
             :bd!
         endif
@@ -330,6 +334,9 @@
 
     " Open the vimrc file anytime
     noremap <LEADER>rc :e ~/.vim/init.vim<CR>
+
+    " Reload vimrc
+    noremap <LEADER>rr :source ~/.vim/init.vim<CR>
 
     " next placeholder <++> <++> <++>
     noremap <LEADER><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
@@ -490,6 +497,7 @@
     " }
 
     call plug#end()
+
 "}
 
 " Plugins Configs {
@@ -1067,6 +1075,7 @@
                 \ 'coc-phpls',
                 \ 'coc-html',
                 \ 'coc-css',
+                \ 'coc-go',
                 \ ]
     " }
 

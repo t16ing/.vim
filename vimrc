@@ -114,26 +114,20 @@
         set mat=2
 
         " Visual mode pressing * or # searches for the current selection
-        vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-        vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+        vnoremap <silent> * :<C-u>call VisualSelection()<CR>/<C-R>=@/<CR><CR>
+        vnoremap <silent> # :<C-u>call VisualSelection()<CR>?<C-R>=@/<CR><CR>
 
         " helper function for current selection {
         function! CmdLine(str)
             call feedkeys(":" . a:str)
         endfunction
 
-        function! VisualSelection(direction, extra_filter) range
+        function! VisualSelection() range
             let l:saved_reg = @"
             execute "normal! vgvy"
 
             let l:pattern = escape(@", "\\/.*'$^~[]")
             let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-            if a:direction == 'gv'
-                call CmdLine("Ack '" . l:pattern . "' " )
-            elseif a:direction == 'replace'
-                call CmdLine("%s" . '/'. l:pattern . '/')
-            endif
 
             let @/ = l:pattern
             let @" = l:saved_reg
@@ -272,7 +266,8 @@
         map <leader>pp :setlocal paste!<cr>
 
         " Share clipboard with system
-        set clipboard=unnamedplus
+        set clipboard+=unnamed
+        set clipboard+=unnamedplus
 
         " set persistent undo {
         if !isdirectory("~/.vim/undodir")
@@ -418,7 +413,7 @@
         Plug 'Xuyuanp/nerdtree-git-plugin'
           " git notation for nerdtree
 
-        Plug 'junegunn/fzf'
+        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         Plug 'junegunn/fzf.vim'
           " <c-p> open ctrlp window. <leader>ff for keyword search, and <leader>f? other fzf functions.
 
@@ -628,7 +623,8 @@
     " ~/.vim/bundle/fzf.vim/README.md
 
     noremap <silent> <C-p> :Files<CR>
-    noremap <silent> <expr> <leader>ff ':Rg '.expand('<cword>').'<CR>'
+    noremap <leader>ff ':Rg '.expand('<cword>').'<CR>'
+    vnoremap <leader>ff y:Rg <C-R><C-R>"<CR>
     noremap <silent> <leader>fh :History<CR>
     noremap <silent> <leader>ft :Tags<CR>
     noremap <silent> <leader>fl :Lines<CR>
@@ -641,7 +637,7 @@
     let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
-    VkhAdd 'fzf.vim: <c-p> open ctrlp window. <leader>ff for keyword search, and <leader>f? other fzf functions.'
+    VkhAdd 'fzf.vim: <c-p> open ctrlp window. <leader>f for other fzf functions.'
     " }
 
     " plugin vim-rooter {
@@ -800,6 +796,8 @@
     let g:jedi#usages_command = "<leader>f"
     let g:jedi#completions_command = ""
     let g:jedi#rename_command = "<leader>rn"
+    let g:jedi#popup_on_dot = 0
+    let g:jedi#completions_command = "<C-O>"
     VkhAdd 'jedi-vim: gd for definition, <leader>rn for rename, <leader>f for usage'
     " }
 
@@ -886,7 +884,7 @@
 
     " plugin thesaurus_query.vim {
     " ~/.vim/bundle/thesaurus_query.vim/README.md
-    VkhAdd 'thesaurus_query.vim: <leader>cs to lookup synonyms of any word under cursor or phrase covered in visual mode, and replace it with an user chosen synonym'
+    VkhAdd 'thesaurus_query.vim: <leader>cs to lookup synonyms'
     " }
 
     " plugin vim-visual-multi {
@@ -931,33 +929,6 @@
           \       'nerdtree': 0
           \    }
           \}
-    " }
-
-    " alternate plugin for clean mode for copy/paste {
-
-    function! MY_PROC_CLEAN_MODE_TOGGLE()
-      if ! exists('g:my_clean_mode_toggle')
-        let g:my_clean_mode_toggle=0
-      endif
-
-      if g:my_clean_mode_toggle == 0
-        set paste
-        set nonu
-        set norelativenumber
-        set signcolumn=no
-        let g:my_clean_mode_toggle=1
-      else
-        set nopaste
-        set nu
-        set relativenumber
-        set signcolumn=yes
-        let g:my_clean_mode_toggle=0
-      endif
-    endfunction
-
-    map <leader>cc <ESC>:call MY_PROC_CLEAN_MODE_TOGGLE()<CR>
-
-    VkhAdd '<leader>cc enter/leave clean mode.'
     " }
 
     " plugin lightline.vim {
@@ -1100,7 +1071,7 @@
     " }
 
     " plugin coc.nvim {
-    " ~/.vim/bundle/coc.nvim/README.md
+    " ~/.vim/bundle/coc.nvim/Readme.md
     " https://github.com/neoclide/coc.nvim#example-vim-configuration
 
     let g:coc_global_extensions = [
@@ -1138,10 +1109,12 @@
         " Use <c-o> to trigger completion in insert mode.
         inoremap <silent><expr> <c-o> coc#refresh()
 
-        " Make <CR> auto-select the first completion item and notify coc.nvim to {
-        " format on enter, <cr> could be remapped by other vim plugin
-        inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                                      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+        " Make <tab> and <s-tab> to choose completion item
+        inoremap <silent><expr> <TAB>
+                    \ pumvisible() ? "\<C-n>" :
+                    \ <SID>check_back_space() ? "\<TAB>" :
+                    \ coc#refresh()
+        inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
         " }
 
         " Use `[g` and `]g` to navigate diagnostics {

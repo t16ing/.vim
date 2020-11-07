@@ -75,7 +75,6 @@ Use ',' as leader key.
 | `gcap`              | Toggle comment for a paragraph.      |
 | `<leader>u`         | Open undo tree.                      |
 | `<leader>pp`        | Toggle paste mode.                   |
-| `<leader>cc`        | Toggle clean mode.                   |
 
 ### Selection
 
@@ -137,17 +136,17 @@ Use ',' as leader key.
 
 ### Integrated Development Environment
 
-| Key              | Action                                                      |
-|------------------|-------------------------------------------------------------|
-| (INTSERT)`<c-o>` | Auto completion.                                            |
-| `K`              | Open document.                                              |
-| `<leader>a`      | Apply code action, ex: `<leader>aap` for current paragraph. |
-| `<leader>ac`     | Apply code action to current buffer.                        |
-| `<leader>qf`     | Apply quick fix to the problem of the current line.         |
-| `<leader>rn`     | Symbol rename.                                              |
-| `<leader>f`      | Show name usages.                                           |
-| `<leader>R`      | Complie and Run.                                            |
-| `<leader>T`      | Open terminal.                                              |
+| Key             | Action                                                      |
+|-----------------|-------------------------------------------------------------|
+| (INSERT)`<c-o>` | Auto completion.                                            |
+| `K`             | Open document.                                              |
+| `<leader>a`     | Apply code action, ex: `<leader>aap` for current paragraph. |
+| `<leader>ac`    | Apply code action to current buffer.                        |
+| `<leader>qf`    | Apply quick fix to the problem of the current line.         |
+| `<leader>rn`    | Symbol rename.                                              |
+| `<leader>f`     | Show name usages.                                           |
+| `<leader>R`     | Complie and Run.                                            |
+| `<leader>T`     | Open terminal.                                              |
 
 ### Markdown
 

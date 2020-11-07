@@ -48,5 +48,14 @@
         "python",
         "javascript",
         "typescript"
-    ]
+    ],
+    "typescript.suggestionActions.enabled": true,
+    "typescript.format.enabled": true,
+    "html.format.enable": true,
+    "html.autoClosingTags": true,
+    "javascript.referencesCodeLens.enable": true,
+    "javascript.showUnused": true,
+    "javascript.suggest.names": true,
+    "javascript.suggestionActions.enabled": true,
+    "json.format.enable": true
 }

@@ -52,6 +52,13 @@
     " With a map leader it's possible to do extra key combinations
     let mapleader = ","
 
+    " Quicker command mode
+    noremap ; :
+
+    " Save and Quit
+    noremap Q <c-w>q
+    noremap S :w<CR>
+
 " }
 
 " User Interface {
@@ -64,8 +71,8 @@
         " precede each line with its line number
         set nu
 
-        " Show the line number relative to the line with the cursor (syntax highlight performance impacted)
-        set rnu
+        " Don't show the line number relative to the line with the cursor (syntax highlight performance impacted)
+        set nornu
 
         " show the cursor position all the time
         set ruler
@@ -135,6 +142,9 @@
         " Disable highlight by <leader>/
         map <silent> <leader>/ :noh<cr>
 
+        " Do not keep last highlight when opening VIM
+        exec "nohlsearch"
+
     " }
 
     " Move around of lines {
@@ -168,6 +178,7 @@
         " Buffer switching
         nmap gn :bn<cr>
         nmap gp :bp<cr>
+        nmap g<tab> :b#<cr>
 
         " ,bt to open buffer in tab; ,bc to close tab; ,bd to close buffer
         nmap <leader>bt :tab split<cr>
@@ -181,7 +192,6 @@
         map <c-w>- :set splitbelow<cr>:split<cr>
         map <c-w>\| :set splitright<cr>:vsplit<cr>
         map <c-w>\ :set splitright<cr>:vsplit<cr>
-        map Q <c-w>q
 
         " Windows resizing
         map <s-up> :res+1<cr>
@@ -240,7 +250,7 @@
     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
     autocmd BufWinLeave * call clearmatches()
 
-    " make tab indent and unwanted space more visiable
+    " make tab indent and unwanted space more visible
     set list
     set listchars=tab:\|\ ,trail:▫
 
@@ -407,10 +417,13 @@
           " <leader>nn open nerdtree window. <leader>nf find current file in nerdtree.'
         Plug 'Xuyuanp/nerdtree-git-plugin'
           " git notation for nerdtree
-        Plug 'ctrlpvim/ctrlp.vim'
-          " <c-p> for ctrlp, <leader>o for buffer window
-        Plug 'mileszs/ack.vim', {'on': 'Ack'}
-          " <leader>f code search tool
+
+        Plug 'junegunn/fzf'
+        Plug 'junegunn/fzf.vim'
+          " <c-p> open ctrlp window. <leader>ff for keyword search, and <leader>f? other fzf functions.
+
+        Plug 'airblade/vim-rooter'
+          " changes the working directory to the project root when you open a file or directory
 
     " }
 
@@ -437,21 +450,15 @@
         Plug 'majutsushi/tagbar'
           " tt to open tag bar; ctags required
 
-        Plug 'luochen1990/rainbow'
-          " rainbow parentheses {[()]}
-        Plug 'jiangmiao/auto-pairs'
-          " Insert or delete brackets, parens, quotes in pair.
-        Plug 'nathanaelkane/vim-indent-guides'
-          " visually displaying indent levels
-        Plug 'ap/vim-css-color'
-          " A very fast, multi-syntax context-sensitive color name highlighter
-
         Plug 'dense-analysis/ale'
-          " Visible ERROR and warning, ]e and [e for error navigation.
+          " Visible linter ERROR and warning, ]e and [e for error navigation.
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
           " Conquer of Completion, ]g and [g for error navigation.
         Plug 'wellle/tmux-complete.vim'
           " complete words visible in Tmux panes
+
+        Plug 'ap/vim-css-color'
+          " A very fast, multi-syntax context-sensitive color name highlighter
 
     " }
 
@@ -491,6 +498,12 @@
 
         Plug 'junegunn/vim-easy-align'
           " select, ENTER, =, =
+        Plug 'nathanaelkane/vim-indent-guides'
+          " visually displaying indent levels
+        Plug 'luochen1990/rainbow'
+          " rainbow parentheses {[()]}
+        Plug 'jiangmiao/auto-pairs'
+          " Insert or delete brackets, parens, quotes in pair.
 
     " }
 
@@ -527,275 +540,22 @@
 
 " Plugins Configs {
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vandomkeyhint {
+    " plugin vim-vandomkeyhint {
     " ~/.vim/bundle/vim-vandomkeyhint/autoload/vandomkeyhint.vim
     " This has to be prior than any VkhAdd command
     " Has to be done here to avoid following "VkhAdd" from leading to error
     let vkh_readme=expand('~/.vim/bundle/vim-vandomkeyhint/README.md')
     if !filereadable(vkh_readme)
-      echo "Installing vandomkeyhint.."
-      echo ""
-      silent !mkdir -p ~/.vim/bundle/vim-vandomkeyhint
-      silent !git clone https://github.com/t16ing/vim-vandomkeyhint ~/.vim/bundle/vim-vandomkeyhint
+        echo "Installing vandomkeyhint.."
+        echo ""
+        silent !mkdir -p ~/.vim/bundle/vim-vandomkeyhint
+        silent !git clone https://github.com/t16ing/vim-vandomkeyhint ~/.vim/bundle/vim-vandomkeyhint
     endif
     set rtp+=~/.vim/bundle/vim-vandomkeyhint/
     call vandomkeyhint#rc()
-
-    VkhAdd 'plugin vandomkeyhint: Vim plugin to install and show user-defined hints.'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-signature {
-    " ~/.vim/bundle/vim-signature/doc/signature.txt
-
-    " marks key mappings
-    let g:SignatureMap = {
-        \ 'Leader'             :  "m",
-        \ 'ToggleMarkAtLine'   :  "mm",
-        \ 'PurgeMarks'         :  "m<Space>",
-        \ 'PurgeMarkers'       :  "m<BS>",
-        \ 'GotoNextLineAlpha'  :  "']",
-        \ 'GotoPrevLineAlpha'  :  "'[",
-        \ 'GotoNextSpotAlpha'  :  "`]",
-        \ 'GotoPrevSpotAlpha'  :  "`[",
-        \ 'GotoNextLineByPos'  :  "]'",
-        \ 'GotoPrevLineByPos'  :  "['",
-        \ 'GotoNextSpotByPos'  :  "mn",
-        \ 'GotoPrevSpotByPos'  :  "mp",
-        \ 'GotoNextMarker'     :  "mN",
-        \ 'GotoPrevMarker'     :  "mP",
-        \ 'GotoNextMarkerAny'  :  "]=",
-        \ 'GotoPrevMarkerAny'  :  "[=",
-        \ 'ListBufferMarks'    :  "ml",
-        \ 'ListBufferMarkers'  :  "mL"
-        \ }
-
-    " highligh for markers
-    let g:SignatureMarkerLineHL = "QuickFixLine"
-
-    " When a line has both marks and markers, display the sign for markers
-    let g:SignaturePrioritizeMarks = 0
-
-    VkhAdd 'plugin vim-signature: A plugin to toggle, display and navigate vim marks.'
-    VkhAdd 'mark: mm toggle a mark, mn/mp motion, ml list, m<space> clear all'
-    VkhAdd 'marker: m[0-9] toggle a marker, mN/mP motion, mL list, m<BS> clear all'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin nerdtree {
-    " ~/.vim/bundle/nerdtree/doc/NERDTree.txt
-
-    let g:NERDTreeQuitOnOpen = 1
-    let g:NERDTreeGitStatusWithFlags = 1
-    let g:NERDTreeIgnore = ['^node_modules$']
-    let g:NERDTreeWinSize = 32
-
-    map <leader>nn <ESC>:NERDTreeToggle<CR>
-    map <leader>nf <ESC>:NERDTreeFind<CR>
-
-    VkhAdd 'plugin nerdtree: A tree explorer plugin to rule the Vim world.'
-    VkhAdd '<leader>nn open nerdtree window. <leader>nf find current file in nerdtree.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-nerdtree-syntax-highlight {
-    " ~/.vim/bundle/vim-nerdtree-syntax-highlight/README.md
-
-    " nerdtree with vim-nerdtree-syntax-highlight is slow
-    " try https://github.com/tiagofumo/vim-nerdtree-syntax-highlight/issues/17
-    " and https://github.com/tiagofumo/vim-nerdtree-syntax-highlight/issues/6
-
-    " To improve syntax highlighting scroll performance, try this
-    " https://github.com/vim/vim/issues/1735
-    set regexpengine=1
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-devicons {
-    " ~/.vim/bundle/vim-devicons/README.md
-    " issue:
-    "  https://github.com/ryanoasis/vim-devicons/issues/274
-    " screenshot:
-    "  https://user-images.githubusercontent.com/24741314/60797287-939f2d80-a1a1-11e9-8e18-a19d3a5b1711.png
-    " fix:
-    "  https://github.com/ryanoasis/vim-devicons/issues/274#issuecomment-513560707
-    let g:rainbow_conf = {
-          \    'separately': {
-          \       'nerdtree': 0
-          \    }
-          \}
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-easymotion {
-    " ~/.vim/bundle/vim-easymotion/README.md
-    VkhAdd 'plugin vim-easymotion: <leader><leader>w jump forward <leader><leader>b jump backward.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-expand-region {
-    " ~/.vim/bundle/vim-expand-region/README.md
-    VkhAdd "plugin vim-expand-region: `+` to expand the visual selection and `_` to shrink it."
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin ctrlp {
-    " ~/.vim/bundle/ctrlp.vim/doc/ctrlp.txt
-
-    let g:ctrlp_max_files=0
-    let g:ctrlp_use_caching=1
-    let g:ctrlp_clear_cache_on_exit=1
-    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
-    VkhAdd 'ctrlp.vim: <c-p> open ctrlp window.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin ale {
-    " ~/.vim/bundle/ale/README.md
-
-    let g:ale_linters = {
-    \ 'javascript': ['jshint'],
-    \ 'python': ['pylint', 'python'],
-    \ 'go': ['go', 'golint', 'errcheck'],
-    \}
-
-    " Disable linting for minify or filetypes managed by other plugins
-    let g:ale_pattern_options = {
-    \ '\.min.js$': {'ale_enabled': 0},
-    \ '\.php$': {'ale_enabled': 0},
-    \ '\.py$': {'ale_enabled': 0},
-    \ }
-
-    " navigate between errors quickly
-    nmap <silent> [e <Plug>(ale_previous_wrap)
-    nmap <silent> ]e <Plug>(ale_next_wrap)
-
-    " specify what text should be used for signs
-    let g:ale_sign_error = 'ER'
-    let g:ale_sign_warning = 'WA'
-
-    " default is 200 ms, increase to 5s to save battery power
-    let g:ale_lint_delay = 5000
-
-    VkhAdd 'plugin ale: Syntax checking. ]e, [e to navigate errors.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin tagbar {
-    " ~/.vim/bundle/tagbar/doc/tagbar.txt
-    " plugin tagbar: requires apt install exuberant-ctags.
-    " ~/.vim/bundle/tagbar-javascript.vim/README.md
-    " plugin tagbar-javascript.vim: requires npm install -g esctags.
-
-    let g:tagbar_autofocus   = 1
-    let g:tagbar_autoclose   = 0
-    let g:tagbar_autoshowtag = 1
-    let g:tagbar_width = 32
-
-    map tt <ESC>:TagbarToggle<CR>
-
-    VkhAdd 'tt to open Tagbar window.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-fugitive & plugin gitgutter {
-    " ~/.vim/bundle/vim-gitgutter/doc/gitgutter.txt
-    " ~/.vim/bundle/vim-fugitive/doc/fugitive.txt
-
-    let g:gitgutter_enabled         = 1
-    let g:gitgutter_highlight_lines = 0
-
-    let g:my_git_view_type=''
-
-    map <leader>gt <ESC>:GitGutterToggle<CR>
-    map <leader>gb <ESC>:Gblame<CR>
-    map <leader>gl <ESC>:Gllog<CR>
-
-    VkhAdd "plugin vim-gitgutter: shows a git diff in the 'gutter' (sign column)"
-    VkhAdd "<leader>gt A Vim plugin which shows a git diff in the 'gutter' (sign column)."
-    VkhAdd '<]c> for next hunk, <[c> for previous hunk.'
-
-    VkhAdd 'plugin vim-fugitive: for Gblame and Glog'
-    VkhAdd '<leader>gb brings up an interactive vertical split with git blame output.'
-    VkhAdd '<leader>gl brings up commit history.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin easy_align {
-    " ~/.vim/bundle/vim-easy-align/README.md
-    " ~/.vim/bundle/vim-easy-align/EXAMPLES.md
-
-    let g:easy_align_delimiters = {
-          \ '>': { 'pattern': '>>\|=>\|>' },
-          \ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignore_groups': ['String'] },
-          \ '#': { 'pattern': '#\+', 'ignore_groups': ['String'] },
-          \ ']': {
-          \     'pattern':       '[[\]]',
-          \     'left_margin':   0,
-          \     'right_margin':  0,
-          \     'stick_to_left': 0
-          \   },
-          \ ')': {
-          \     'pattern':       '[()]',
-          \     'left_margin':   0,
-          \     'right_margin':  0,
-          \     'stick_to_left': 0
-          \   }
-          \ }
-
-    vnoremap <silent> <Enter> :LiveEasyAlign<Enter>
-
-    VkhAdd 'plugin vim-easy-align: (visual mode) <Enter>=='
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-commentary {
-    " ~/.vim/bundle/vim-commentary/README.markdown
-    VkhAdd 'plugin vim-commentary: gcc for single line or gcap for a paragraph.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin MatchTag {
-    " ~/.vim/bundle/MatchTag/README.mkd
-
-    " no options, and only works on html/xml ft
-    " example: ~/.vim/bundle/MatchTag/test.html
-    "
-    VkhAdd 'plugin MatchTag: highlights the matching HTML tag.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " alternate plugin for clean mode for copy/paste {
-
-    function! MY_PROC_CLEAN_MODE_TOGGLE()
-      if ! exists('g:my_clean_mode_toggle')
-        let g:my_clean_mode_toggle=0
-      endif
-
-      if g:my_clean_mode_toggle == 0
-        set paste
-        set nonu
-        set norelativenumber
-        set signcolumn=no
-        let g:my_clean_mode_toggle=1
-      else
-        set nopaste
-        set nu
-        set relativenumber
-        set signcolumn=yes
-        let g:my_clean_mode_toggle=0
-      endif
-    endfunction
-
-    map <leader>cc <ESC>:call MY_PROC_CLEAN_MODE_TOGGLE()<CR>
-
-    VkhAdd '<leader>cc enter/leave clean mode.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin startify {
+    " plugin vim-startify {
     " ~/.vim/bundle/vim-startify/doc/startify.txt
 
     " Define your own header. {
@@ -847,7 +607,359 @@
     VkhAdd 'plugin vim-startify: <leader>S open the fancy start screen for Vim. :SSave to save session.'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " plugin nerdtree {
+    " ~/.vim/bundle/nerdtree/doc/NERDTree.txt
+    " ~/.vim/bundle/nerdtree-git-plugin/README.md
+
+    let g:NERDTreeQuitOnOpen = 1
+    let g:NERDTreeGitStatusWithFlags = 1
+    let g:NERDTreeIgnore = ['^node_modules$']
+    let g:NERDTreeWinSize = 32
+    let g:NERDTreeGitStatusUseNerdFonts = 1
+
+    map <leader>nn <ESC>:NERDTreeToggle<CR>
+    map <leader>nf <ESC>:NERDTreeFind<CR>
+
+    VkhAdd 'nerdtree: <leader>nn open nerdtree window. <leader>nf find current file in nerdtree.'
+    " }
+
+    " plugin fzf.vim {
+    " ~/.vim/bundle/fzf/README-VIM.md
+    " ~/.vim/bundle/fzf.vim/README.md
+
+    noremap <silent> <C-p> :Files<CR>
+    noremap <silent> <expr> <leader>ff ':Rg '.expand('<cword>').'<CR>'
+    noremap <silent> <leader>fh :History<CR>
+    noremap <silent> <leader>ft :Tags<CR>
+    noremap <silent> <leader>fl :Lines<CR>
+    noremap <silent> <leader>fb :Buffers<CR>
+    noremap <silent> <leader>; :History:<CR>
+    noremap <silent> <leader>f: :History:<CR>
+    noremap <silent> <leader>f/ :History/<CR>
+
+    let g:fzf_preview_window = 'right:60%'
+    let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
+
+    VkhAdd 'fzf.vim: <c-p> open ctrlp window. <leader>ff for keyword search, and <leader>f? other fzf functions.'
+    " }
+
+    " plugin vim-rooter {
+    " ~/.vim/bundle/vim-rooter/README.mkd
+    let g:rooter_patterns = ['__vim_project_root', '.git/']
+    " }
+
+    " plugin vim-easymotion {
+    " ~/.vim/bundle/vim-easymotion/README.md
+    VkhAdd 'vim-easymotion: <leader><leader>w jump forward <leader><leader>b jump backward.'
+    " }
+
+    " plugin vim-expand-region {
+    " ~/.vim/bundle/vim-expand-region/README.md
+    let g:expand_region_text_objects = {
+                \ 'iw'  :0,
+                \ 'iW'  :0,
+                \ 'i"'  :1,
+                \ 'i''' :1,
+                \ 'i]'  :1,
+                \ 'ib'  :1,
+                \ 'iB'  :1,
+                \ 'ip'  :1,
+                \ 'if'  :1,
+                \ 'ic'  :1,
+                \ }
+    VkhAdd "vim-expand-region: `+` to expand the visual selection and `_` to shrink it."
+    " }
+
+    " plugin MatchTag {
+    " ~/.vim/bundle/MatchTag/README.mkd
+    " no options, and only works on html/xml ft
+    " example: ~/.vim/bundle/MatchTag/test.html
+    " }
+
+    " plugin vim-signature {
+    " ~/.vim/bundle/vim-signature/doc/signature.txt
+
+    " marks key mappings
+    let g:SignatureMap = {
+        \ 'Leader'             :  "m",
+        \ 'ToggleMarkAtLine'   :  "mm",
+        \ 'PurgeMarks'         :  "m<Space>",
+        \ 'PurgeMarkers'       :  "m<BS>",
+        \ 'GotoNextLineAlpha'  :  "']",
+        \ 'GotoPrevLineAlpha'  :  "'[",
+        \ 'GotoNextSpotAlpha'  :  "`]",
+        \ 'GotoPrevSpotAlpha'  :  "`[",
+        \ 'GotoNextLineByPos'  :  "]'",
+        \ 'GotoPrevLineByPos'  :  "['",
+        \ 'GotoNextSpotByPos'  :  "mn",
+        \ 'GotoPrevSpotByPos'  :  "mp",
+        \ 'GotoNextMarker'     :  "mN",
+        \ 'GotoPrevMarker'     :  "mP",
+        \ 'GotoNextMarkerAny'  :  "]=",
+        \ 'GotoPrevMarkerAny'  :  "[=",
+        \ 'ListBufferMarks'    :  "ml",
+        \ 'ListBufferMarkers'  :  "mL"
+        \ }
+
+    " highligh for markers
+    let g:SignatureMarkerLineHL = "QuickFixLine"
+
+    " When a line has both marks and markers, display the sign for markers
+    let g:SignaturePrioritizeMarks = 0
+
+    VkhAdd 'mark: mm toggle a mark, mn/mp motion, ml list, m<space> clear all'
+    VkhAdd 'marker: m[0-9] toggle a marker, mN/mP motion, mL list, m<BS> clear all'
+    " }
+
+    " plugin vim-fugitive & plugin gitgutter {
+    " ~/.vim/bundle/vim-gitgutter/doc/gitgutter.txt
+    " ~/.vim/bundle/vim-fugitive/doc/fugitive.txt
+
+    let g:gitgutter_enabled         = 1
+    let g:gitgutter_highlight_lines = 0
+
+    let g:my_git_view_type=''
+
+    map <leader>gt <ESC>:GitGutterToggle<CR>
+    map <leader>gb <ESC>:Gblame<CR>
+    map <leader>gl <ESC>:Gllog<CR>
+
+    VkhAdd "plugin vim-gitgutter: shows a git diff in the 'gutter' (sign column)"
+    VkhAdd "<leader>gt A Vim plugin which shows a git diff in the 'gutter' (sign column)."
+    VkhAdd '<]c> for next hunk, <[c> for previous hunk.'
+
+    VkhAdd 'plugin vim-fugitive: for Gblame and Glog'
+    VkhAdd '<leader>gb brings up an interactive vertical split with git blame output.'
+    VkhAdd '<leader>gl brings up commit history.'
+    " }
+
+    " plugin tagbar {
+    " ~/.vim/bundle/tagbar/doc/tagbar.txt
+    " plugin tagbar: requires apt install exuberant-ctags.
+    " ~/.vim/bundle/tagbar-javascript.vim/README.md
+    " plugin tagbar-javascript.vim: requires npm install -g esctags.
+
+    let g:tagbar_autofocus   = 1
+    let g:tagbar_autoclose   = 0
+    let g:tagbar_autoshowtag = 1
+    let g:tagbar_width = 32
+
+    map tt <ESC>:TagbarToggle<CR>
+
+    VkhAdd 'tagbar: tt to open Tagbar window.'
+    " }
+
+    " plugin ale {
+    " ~/.vim/bundle/ale/README.md
+
+    let g:ale_linters = {
+    \ 'javascript': ['jshint'],
+    \ 'python': ['pylint', 'python'],
+    \ 'go': ['go', 'golint', 'errcheck'],
+    \}
+
+    " Disable linting for minify or filetypes managed by other plugins
+    let g:ale_pattern_options = {
+    \ '\.min.js$': {'ale_enabled': 0},
+    \ '\.php$': {'ale_enabled': 0},
+    \ '\.py$': {'ale_enabled': 0},
+    \ }
+
+    " navigate between errors quickly
+    nmap <silent> [e <Plug>(ale_previous_wrap)
+    nmap <silent> ]e <Plug>(ale_next_wrap)
+
+    " specify what text should be used for signs
+    let g:ale_sign_error = 'ER'
+    let g:ale_sign_warning = 'WA'
+
+    " default is 200 ms, increase to 5s to save battery power
+    let g:ale_lint_delay = 5000
+
+    VkhAdd 'ale: ]e [e to navigate errors.'
+    " }
+
+    " plugin tmux-complete.vim {
+    " ~/.vim/bundle/tmux-complete.vim/README.md
+    VkhAdd 'vim-complete.vim: complete words visible in Tmux panes'
+    " }
+
+    " plugin vim-css-color {
+    " ~/.vim/bundle/vim-css-color/README.md
+    VkhAdd 'vim-css-color: A very fast, multi-syntax context-sensitive color name highlighter'
+    " }
+
+    " plugin jedi-vim {
+    " ~/.vim/bundle/jedi-vim/doc/jedi-vim.txt
+    let g:jedi#goto_command = "gd" " goto definition, if not found, fallback to assignment
+    let g:jedi#goto_definitions_command = ""
+    let g:jedi#goto_assignments_command = ""
+    let g:jedi#goto_stubs_command = ""
+    let g:jedi#documentation_command = "K"
+    let g:jedi#usages_command = "<leader>f"
+    let g:jedi#completions_command = ""
+    let g:jedi#rename_command = "<leader>rn"
+    VkhAdd 'jedi-vim: gd for definition, <leader>rn for rename, <leader>f for usage'
+    " }
+
+    " plugin vim-table-mode {
+    " ~/.vim/bundle/vim-table-mode/README.md
+    VkhAdd 'plugin vim-table-mode: <leader>tm to start automatic table creator & formatter'
+    " }
+
+    " plugin vim-markdown-toc {
+    " ~/.vim/bundle/vim-markdown-toc/README.md
+    VkhAdd 'vim-markdown-toc: :GenTocGFM to generate markdown TOC.'
+    " }
+
+    " plugin vim-easy_align {
+    " ~/.vim/bundle/vim-easy-align/README.md
+    " ~/.vim/bundle/vim-easy-align/EXAMPLES.md
+
+    let g:easy_align_delimiters = {
+          \ '>': { 'pattern': '>>\|=>\|>' },
+          \ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignore_groups': ['String'] },
+          \ '#': { 'pattern': '#\+', 'ignore_groups': ['String'] },
+          \ ']': {
+          \     'pattern':       '[[\]]',
+          \     'left_margin':   0,
+          \     'right_margin':  0,
+          \     'stick_to_left': 0
+          \   },
+          \ ')': {
+          \     'pattern':       '[()]',
+          \     'left_margin':   0,
+          \     'right_margin':  0,
+          \     'stick_to_left': 0
+          \   }
+          \ }
+
+    vnoremap <silent> <Enter> :LiveEasyAlign<Enter>
+
+    VkhAdd 'vim-easy-align: (VISUAL) <Enter>=='
+    " }
+
+    " plugin vim-indent-guides {
+    " ~/.vim/bundle/vim-indent-guides/README.markdown
+
+    " have indent guides enabled by default
+    let g:indent_guides_enable_on_vim_startup = 1
+    " customize the size of the indent guide
+    let g:indent_guides_guide_size = 1
+    " Use this option to control which indent level to start showing guides from.
+    let g:indent_guides_start_level = 2
+    " Use this option to specify a list of filetypes to disable the plugin for.
+    let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
+
+    " }
+
+    " plugin rainbow {
+    " ~/.vim/bundle/rainbow/README.md
+    let g:rainbow_active = 1
+    " }
+
+    " plugin vim-commentary {
+    " ~/.vim/bundle/vim-commentary/README.markdown
+    VkhAdd 'vim-commentary: gcc for single line or gcap for a paragraph.'
+    " }
+
+    " plugin vim-peekaboo {
+    " ~/.vim/bundle/vim-peekaboo/README.md
+    VkhAdd 'vim-peekaboo: " or @ in normal mode and <CTRL-R> in insert mode to see the contents of the registers'
+    " }
+
+    " plugin undotree {
+    " ~/.vim/bundle/undotree/README.md
+
+    " change windows layout for bigger diff area
+    let g:undotree_WindowLayout = 2
+
+    " get focus after being opened
+    let g:undotree_SetFocusWhenToggle = 1
+
+    " to toggle the undo-tree panel
+    nnoremap <leader>u :UndotreeToggle<cr>
+
+    VkhAdd 'undotree: <leader>u to open undo tree'
+    " }
+
+    " plugin thesaurus_query.vim {
+    " ~/.vim/bundle/thesaurus_query.vim/README.md
+    VkhAdd 'thesaurus_query.vim: <leader>cs to lookup synonyms of any word under cursor or phrase covered in visual mode, and replace it with an user chosen synonym'
+    " }
+
+    " plugin vim-visual-multi {
+    " ~/.vim/bundle/vim-visual-multi/README.md
+    VkhAdd 'vim-visual-multi: ctrl+N to select words, n to confirm, q to skip'
+    " }
+
+    " plugin vim-colorschemes {
+    " ~/.vim/bundle/vim-colorschemes/README.md
+    set t_Co=256
+    try
+    colorscheme PaperColor
+    catch
+    colorscheme murphy
+    endtry
+
+    set background=dark
+    " }
+
+    " plugin vim-nerdtree-syntax-highlight {
+    " ~/.vim/bundle/vim-nerdtree-syntax-highlight/README.md
+
+    " nerdtree with vim-nerdtree-syntax-highlight is slow
+    " try https://github.com/tiagofumo/vim-nerdtree-syntax-highlight/issues/17
+    " and https://github.com/tiagofumo/vim-nerdtree-syntax-highlight/issues/6
+
+    " To improve syntax highlighting scroll performance, try this
+    " https://github.com/vim/vim/issues/1735
+    set regexpengine=1
+    " }
+
+    " plugin vim-devicons {
+    " ~/.vim/bundle/vim-devicons/README.md
+    " issue:
+    "  https://github.com/ryanoasis/vim-devicons/issues/274
+    " screenshot:
+    "  https://user-images.githubusercontent.com/24741314/60797287-939f2d80-a1a1-11e9-8e18-a19d3a5b1711.png
+    " fix:
+    "  https://github.com/ryanoasis/vim-devicons/issues/274#issuecomment-513560707
+    let g:rainbow_conf = {
+          \    'separately': {
+          \       'nerdtree': 0
+          \    }
+          \}
+    " }
+
+    " alternate plugin for clean mode for copy/paste {
+
+    function! MY_PROC_CLEAN_MODE_TOGGLE()
+      if ! exists('g:my_clean_mode_toggle')
+        let g:my_clean_mode_toggle=0
+      endif
+
+      if g:my_clean_mode_toggle == 0
+        set paste
+        set nonu
+        set norelativenumber
+        set signcolumn=no
+        let g:my_clean_mode_toggle=1
+      else
+        set nopaste
+        set nu
+        set relativenumber
+        set signcolumn=yes
+        let g:my_clean_mode_toggle=0
+      endif
+    endfunction
+
+    map <leader>cc <ESC>:call MY_PROC_CLEAN_MODE_TOGGLE()<CR>
+
+    VkhAdd '<leader>cc enter/leave clean mode.'
+    " }
+
     " plugin lightline.vim {
     " ~/.vim/bundle/lightline.vim/README.md
     " plugin lightline-bufferline
@@ -987,113 +1099,10 @@
     VkhAdd 'gn to next buffer, gp to previous buffer, g[1-9] to move to tab n'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin jedi-vim {
-    " ~/.vim/bundle/jedi-vim/doc/jedi-vim.txt
-    let g:jedi#goto_command = "gd" " goto definition, if not found, fallback to assignment
-    let g:jedi#goto_definitions_command = ""
-    let g:jedi#goto_assignments_command = ""
-    let g:jedi#goto_stubs_command = ""
-    let g:jedi#documentation_command = "K"
-    let g:jedi#usages_command = "<leader>f"
-    let g:jedi#completions_command = ""
-    let g:jedi#rename_command = "<leader>rn"
-    VkhAdd 'plugin jedi-vim: awesome Python autocompletion with Vim'
-    VkhAdd 'gd for definition, <leader>rn for rename, <leader>f for usage'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-colorschemes {
-    " ~/.vim/bundle/vim-colorschemes/README.md
-    set t_Co=256
-    try
-    colorscheme PaperColor
-    catch
-    colorscheme murphy
-    endtry
-
-    set background=dark
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin rainbow {
-    " ~/.vim/bundle/rainbow/README.md
-    let g:rainbow_active = 1
-    VkhAdd 'plugin rainbow: help you read complex code by showing diff level of parentheses in diff color'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin ack.vim {
-    " ~/.vim/bundle/ack.vim/README.md
-    map <expr> <leader>f ':Ack '.expand('<cword>').'<cr>'
-    VkhAdd 'plugin ack.vim: source code search tool. <leader>f to search code.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-peekaboo {
-    " ~/.vim/bundle/vim-peekaboo/README.md
-    VkhAdd '" or @ in normal mode and <CTRL-R> in insert mode to see the contents of the registers'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin undotree {
-    " ~/.vim/bundle/undotree/README.md
-
-    " change windows layout for bigger diff area
-    let g:undotree_WindowLayout = 2
-
-    " get focus after being opened
-    let g:undotree_SetFocusWhenToggle = 1
-
-    " to toggle the undo-tree panel
-    nnoremap <leader>u :UndotreeToggle<cr>
-
-    VkhAdd 'plugin undotree: visualizes undo history, <leader>u to open undo tree'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-indent-guides {
-    " ~/.vim/bundle/vim-indent-guides/README.markdown
-
-    " have indent guides enabled by default
-    let g:indent_guides_enable_on_vim_startup = 1
-
-    " customize the size of the indent guide
-    let g:indent_guides_guide_size = 1
-
-    " Use this option to control which indent level to start showing guides from.
-    let g:indent_guides_start_level = 2
-
-    " Use this option to specify a list of filetypes to disable the plugin for.
-    let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
-
-    VkhAdd 'plugin vim-indent-guides: visually displaying indent levels'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-table-mode {
-    " ~/.vim/bundle/vim-table-mode/README.md
-    VkhAdd 'plugin vim-table-mode: <leader>tm to start automatic table creator & formatter'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin thesaurus_query.vim {
-    " ~/.vim/bundle/thesaurus_query.vim/README.md
-    VkhAdd 'plugin thesaurus_query.vim: <leader>cs to lookup synonyms of any word under cursor or phrase covered in visual mode, and replace it with an user chosen synonym'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-visual-multi {
-    " ~/.vim/bundle/vim-visual-multi/README.md
-    VkhAdd 'plugin vim-visual-multi: ctrl+N to select words, n to confirm, q to skip'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " plugin coc.nvim {
     " ~/.vim/bundle/coc.nvim/README.md
     " https://github.com/neoclide/coc.nvim#example-vim-configuration
 
-    " CoC plugins {
     let g:coc_global_extensions = [
                 \ 'coc-json',
                 \ 'coc-vimlsp',
@@ -1101,8 +1110,8 @@
                 \ 'coc-html',
                 \ 'coc-css',
                 \ 'coc-go',
+                \ 'coc-tsserver',
                 \ ]
-    " }
 
     " CoC Generic {
 
@@ -1200,7 +1209,7 @@
 
     " }
 
-    " Mappings for CoCList {
+    " CoCList Mappings {
 
         " Show all diagnostics.
         nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
@@ -1221,19 +1230,12 @@
 
     " }
 
-    VkhAdd 'plugin coc.nvim: Conquer of Completion'
     VkhAdd 'gd for definition, gy for type, gi for implementation, gf for reference'
-    VkhAdd 'try <leader>ac <leader>aap <leader>= <leader>rn'
+    VkhAdd 'Code actions: try <leader>ac <leader>aap <leader>= <leader>rn'
     VkhAdd ']g and [g for next diagnostic, and <leader>qf for quick fix'
     VkhAdd 'try cif in funcion, and cic in class.'
-    VkhAdd '<c-s> for coc selection'
+    VkhAdd '<c-s> for CoC selection'
     VkhAdd '<space>a,e,c,o,s,j,k,p for CoCList mappings'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-markdown-multi {
-    " ~/.vim/bundle/vim-markdown-multi/README.md
-    VkhAdd 'plugin vim-markdown-multi: :GenTocGFM to generate markdown TOC.'
     " }
 
 " }

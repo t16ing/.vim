@@ -11,11 +11,11 @@
 * [What is this for?](#what-is-this-for)
 * [Sensible Configurations](#sensible-configurations)
 * [Key Mappings](#key-mappings)
-    * [Buffer, Window, and Tab Motion](#buffer-window-and-tab-motion)
+    * [Line, Buffer, Window, and Tab Motion](#line-buffer-window-and-tab-motion)
     * [Edit and Formatting](#edit-and-formatting)
     * [Selection](#selection)
     * [Marks and Register](#marks-and-register)
-    * [File Finder](#file-finder)
+    * [File and Finder](#file-and-finder)
     * [Coding Navigation](#coding-navigation)
     * [Integrated Development Environment](#integrated-development-environment)
     * [Markdown](#markdown)
@@ -47,18 +47,21 @@ Customization for sensible, comfortable, light and powerful editor environment.
 
 Use ',' as leader key.
 
-### Buffer, Window, and Tab Motion
+### Line, Buffer, Window, and Tab Motion
 
-| Key              | Action                   |
-|------------------|--------------------------|
-| `Q`              | Close window.            |
-| `<leader>bt`     | Open buffer in new tab.  |
-| `<leader>bc`     | Close tab.               |
-| `<leader>bd`     | Close buffer.            |
-| `<c-w>-` `<c-w>` | Split window.            |
-| `<shift-arrow>`  | Window resize.           |
-| `bn` `bp`        | Next or previous buffer. |
-| `g<number>`      | Goto buffer n.           |
+| Key                      | Action                                   |
+|--------------------------|------------------------------------------|
+| `<leader>bt`             | Open buffer in new tab.                  |
+| `<leader>bc`             | Close tab.                               |
+| `<leader>bd`             | Close buffer.                            |
+| `<c-w>-` `<c-w>\| or \\` | Split window.                            |
+| `<shift-arrow>`          | Window resize.                           |
+| `<c-w>_`                 | Maximinze current window.                |
+| `gn` `gp` `g<tab>`       | Next or previous or last opened buffer.  |
+| `g<number>`              | Goto buffer n.                           |
+| `W` `B`                  | Faster word and back-word motion.        |
+| `<c-u>` `<c-d>`          | Scroll without moving cursor.            |
+| `<leader><leader>w or b` | Easy move to word (forward or backward). |
 
 ### Edit and Formatting
 
@@ -67,7 +70,7 @@ Use ',' as leader key.
 | `> < =`             | Quick indent.                        |
 | `<leader>=`         | Format selected code.                |
 | `<leader>tt`        | Expand tabs for buffer or selection. |
-| (visual)`<enter>==` | Quick alignment.                     |
+| (VISUAL)`<enter>==` | Quick alignment.                     |
 | `gcc`               | Toggle comment.                      |
 | `gcap`              | Toggle comment for a paragraph.      |
 | `<leader>u`         | Open undo tree.                      |
@@ -78,11 +81,8 @@ Use ',' as leader key.
 
 | Key                      | Action                                                  |
 |--------------------------|---------------------------------------------------------|
-| (visual)`* #`            | Search for current selection.                           |
+| (VISUAL)`* #`            | Search for current selection.                           |
 | `<leader>/`              | Disable highlight.                                      |
-| `W` `B`                  | Faster word and back-word motion.                       |
-| `<c-u>` `<c-d>`          | Scroll without moving cursor.                           |
-| `<leader><leader>w or b` | Easy move to word (forward or backward).                |
 | `+` or `_`               | Expand or shrink selection.                             |
 | `<c-n>`                  | Start multi-visual mode, n for confirm and q for quick. |
 | `cif` `vic`              | if (function) and ic (class) as text object.            |
@@ -99,15 +99,23 @@ Use ',' as leader key.
 | `m<space>` or `m<BS>` | Clear mark or marker.              |
 | `ml` or `mL`          | Liast mark or marker.              |
 | `"` or `@`            | Load from register.                |
-| (insert)`<ctrl-r>`    | Load from register in insert mode. |
+| (INSERT)`<ctrl-r>`    | Load from register in insert mode. |
 
-### File Finder
+### File and Finder
 
-| Key          | Action                          |
-|--------------|---------------------------------|
-| `<leader>nn` | Toggle nerdtree.                |
-| `<leader>nf` | Open nerdtree in file location. |
-| `<c-p>`      | Fuzzy find files.               |
+| Key          | Action                             |
+|--------------|------------------------------------|
+| `<leader>nn` | Toggle nerdtree.                   |
+| `<leader>nf` | Open nerdtree in file location.    |
+| `<c-p>`      | Fuzzy file finder.                 |
+| `<leader>ff` | Search for the keyword.            |
+| `<leader>fh` | Search for the opened files.       |
+| `<leader>ft` | Search for global tags.            |
+| `<leader>fl` | Search for the lines.              |
+| `<leader>fb` | Search for opened buffer.          |
+| `<leader>f:` | Search for command history.        |
+| `<leader>f/` | Search for searched patterns.      |
+| `<leader>;`  | Quick mapping for command history. |
 
 ### Coding Navigation
 
@@ -115,11 +123,11 @@ Use ',' as leader key.
 |--------------|------------------------|
 | `tt`         | Toggle tagbar.         |
 | `<leader>f`  | Search for code.       |
-| `]e` or `[e` | Navigate errors.       |
-| `gt`         | Toggle git sign.       |
-| `gb`         | Git blame.             |
-| `gl`         | Git log.               |
-| `]c` or `[c` | Navigate hunks.        |
+| `<leader>gb` | Open git blame.        |
+| `<leader>gl` | Open git log.          |
+| `<leader>gt` | Open git hunks.        |
+| `]e` or `[e` | Navigate lint errors.  |
+| `]c` or `[c` | Navigate git hunks.    |
 | `gd`         | Go to definition.      |
 | `gy`         | Go to type definition. |
 | `gi`         | Go to implementation.  |
@@ -129,16 +137,17 @@ Use ',' as leader key.
 
 ### Integrated Development Environment
 
-| Key             | Action                                                      |
-|-----------------|-------------------------------------------------------------|
-| (insert)`<c-o>` | Auto completion.                                            |
-| `K`             | Open document.                                              |
-| `<leader>a`     | Apply code action, ex: `<leader>aap` for current paragraph. |
-| `<leader>ac`    | Apply code action to current buffer.                        |
-| `<leader>qf`    | Apply quick fix to the problem of the current line.         |
-| `<leader>rn`    | Symbol rename.                                              |
-| `<leader>R`     | Complie and Run.                                            |
-| `<leader>T`     | Open terminal.                                              |
+| Key              | Action                                                      |
+|------------------|-------------------------------------------------------------|
+| (INTSERT)`<c-o>` | Auto completion.                                            |
+| `K`              | Open document.                                              |
+| `<leader>a`      | Apply code action, ex: `<leader>aap` for current paragraph. |
+| `<leader>ac`     | Apply code action to current buffer.                        |
+| `<leader>qf`     | Apply quick fix to the problem of the current line.         |
+| `<leader>rn`     | Symbol rename.                                              |
+| `<leader>f`      | Show name usages.                                           |
+| `<leader>R`      | Complie and Run.                                            |
+| `<leader>T`      | Open terminal.                                              |
 
 ### Markdown
 
@@ -174,19 +183,22 @@ Use ',' as leader key.
 
 ### Misc
 
-| Key               | Action                     |
-|-------------------|----------------------------|
-| `<leader>S`       | Open a fancy start screen. |
-| `<leader>rc`      | Open vimrc.                |
-| `<leader>rr`      | Reload vimrc.              |
-| `<leader><space>` | Edit next placeholder.     |
-| `tx`              | Place an AsciiArt.         |
+| Key               | Action                        |
+|-------------------|-------------------------------|
+| `Q`               | Close window.                 |
+| `S`               | Write buffer to current file. |
+| `<leader>S`       | Open a fancy start screen.    |
+| `<leader>rc`      | Open vimrc.                   |
+| `<leader>rr`      | Reload vimrc.                 |
+| `<leader><space>` | Edit next placeholder.        |
+| `tx`              | Place an AsciiArt.            |
 
 ## Commands
 
 | Command    | Action                                                   |
 |------------|----------------------------------------------------------|
 | :SudoWrite | Write with sudo, requires ssh-askpass to input password. |
+| :GenTocGFM | Generate markdown TOC for Github markdown.               |
 
 ## Plugins
 
@@ -203,12 +215,19 @@ Highlight:
     - `lightline-hunks`
     - `lightline-ale`
     - `vim-lightline-coc`
-- `ctrlp.vim`
-- `ack.vim`
-- `ale`
-- `jedi-vim`
-- `coc.nvim`
-- `tmux-completion`
+- `coc.nvim` extensions
+    - `coc-json`
+    - `coc-vimlsp`
+    - `coc-phpls`
+    - `coc-html`
+    - `coc-css`
+    - `coc-go`
+    - `coc-tsserver`
+- auto completion, syntax highlight, and linter checker
+    - `tmux-completion`
+    - `ale`
+    - `jedi-vim`
+- `fzf.vim`
 
 For other plugins, please check out the `vimrc` [Plugins manager: vim-plug]() section.
 

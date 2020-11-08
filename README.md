@@ -8,7 +8,7 @@
 
 <!-- vim-markdown-toc GFM -->
 
-* [What is this for?](#what-is-this-for)
+* [What is `.vim`](#what-is-vim)
 * [Sensible Configurations](#sensible-configurations)
 * [Key Mappings](#key-mappings)
     * [Line, Buffer, Window, and Tab Motion](#line-buffer-window-and-tab-motion)
@@ -20,7 +20,7 @@
     * [Integrated Development Environment](#integrated-development-environment)
     * [Markdown](#markdown)
     * [Spell](#spell)
-    * [CoC](#coc)
+    * [CoC List](#coc-list)
     * [Misc](#misc)
 * [Commands](#commands)
 * [Plugins](#plugins)
@@ -29,10 +29,9 @@
 
 <!-- vim-markdown-toc -->
 
-## What is this for?
+## What is `.vim`
 
-My personal vimrc configurations for vim/neovim.
-Customization for sensible, comfortable, light and powerful editor environment.
+The `.vim` is my personal vim/neovim configurations, for a sensible, comfortable, and powerful editor environment.
 
 ## Sensible Configurations
 
@@ -41,33 +40,36 @@ Customization for sensible, comfortable, light and powerful editor environment.
 - Persistent edit position and undo history, and auto read file changes from outside.
 - Indent: 4 spaces, expand tabs. Highlight for unwanted spaces.
 - System clipboard integrated.
-- colorscheme: PaperColor.
+- colorscheme: PaperColor Dark.
 
 ## Key Mappings
 
 Use ',' as leader key.
 
+Use ':' or ';' as command key.
+
 ### Line, Buffer, Window, and Tab Motion
 
-| Key                      | Action                                   |
-|--------------------------|------------------------------------------|
-| `<leader>bt`             | Open buffer in new tab.                  |
-| `<leader>bc`             | Close tab.                               |
-| `<leader>bd`             | Close buffer.                            |
-| `<c-w>-` `<c-w>\| or \\` | Split window.                            |
-| `<shift-arrow>`          | Window resize.                           |
-| `<c-w>_`                 | Maximinze current window.                |
-| `gn` `gp` `g<tab>`       | Next or previous or last opened buffer.  |
-| `g<number>`              | Goto buffer n.                           |
-| `W` `B`                  | Faster word and back-word motion.        |
-| `<c-u>` `<c-d>`          | Scroll without moving cursor.            |
-| `<leader><leader>w or b` | Easy move to word (forward or backward). |
+| Key                                      | Action                                   |
+|------------------------------------------|------------------------------------------|
+| `<leader>bt`                             | Open buffer in new tab.                  |
+| `<leader>bc`                             | Close tab.                               |
+| `<leader>bd`                             | Close buffer.                            |
+| `<c-w>-` `<c-w>`<code>\ or &#124;</code> | Split window.                            |
+| `<shift-arrow>`                          | Window resize.                           |
+| `<c-w>_`                                 | Maximinze current window.                |
+| `gn` `gp` `g<tab>`                       | Next or previous or last opened buffer.  |
+| `g<number>`                              | Goto buffer n.                           |
+| `W` `B`                                  | Faster word and back-word motion.        |
+| `<c-u>` `<c-d>`                          | Scroll without moving cursor.            |
+| `<leader><leader>w or b`                 | Easy move to word (forward or backward). |
 
 ### Edit and Formatting
 
 | Key                 | Action                               |
 |---------------------|--------------------------------------|
-| `> < =`             | Quick indent.                        |
+| `> < ==`            | Quick indent.                        |
+| (VISUAL)`=`         | Selected range indent.               |
 | `<leader>=`         | Format selected code.                |
 | `<leader>tt`        | Expand tabs for buffer or selection. |
 | (VISUAL)`<enter>==` | Quick alignment.                     |
@@ -78,14 +80,14 @@ Use ',' as leader key.
 
 ### Selection
 
-| Key                      | Action                                                  |
-|--------------------------|---------------------------------------------------------|
-| (VISUAL)`* #`            | Search for current selection.                           |
-| `<leader>/`              | Disable highlight.                                      |
-| `+` or `_`               | Expand or shrink selection.                             |
-| `<c-n>`                  | Start multi-visual mode, n for confirm and q for quick. |
-| `cif` `vic`              | if (function) and ic (class) as text object.            |
-| `<c-s>`                  | Language level selection expanding.                     |
+| Key           | Action                                                 |
+|---------------|--------------------------------------------------------|
+| (VISUAL)`* #` | Search for current selection.                          |
+| `<leader>/`   | Disable highlight.                                     |
+| `+` or `_`    | Expand or shrink selection.                            |
+| `<c-n>`       | Start multi-visual mode, n for confirm and q for skip. |
+| `cif` `vic`   | `f` (function) and `c` (class) as text object.         |
+| `<c-s>`       | Language level selection expanding.                    |
 
 ### Marks and Register
 
@@ -108,7 +110,7 @@ Use ',' as leader key.
 | `<leader>nf` | Open nerdtree in file location.    |
 | `<c-p>`      | Fuzzy file finder.                 |
 | `<leader>ff` | Search for the keyword.            |
-| `<leader>fh` | Search for the opened files.       |
+| `<leader>fh` | Search for the opened history.     |
 | `<leader>ft` | Search for global tags.            |
 | `<leader>fl` | Search for the lines.              |
 | `<leader>fb` | Search for opened buffer.          |
@@ -127,18 +129,19 @@ Use ',' as leader key.
 | `<leader>gt` | Open git hunks.        |
 | `]e` or `[e` | Navigate lint errors.  |
 | `]c` or `[c` | Navigate git hunks.    |
+| `]g` or `[g` | Navigate diagnostics.  |
 | `gd`         | Go to definition.      |
 | `gy`         | Go to type definition. |
 | `gi`         | Go to implementation.  |
 | `gr`         | Go to references.      |
 | `gf`         | Open file.             |
-| `]g` or `[g` | Navigate diagnostics.  |
 
 ### Integrated Development Environment
 
 | Key             | Action                                                      |
 |-----------------|-------------------------------------------------------------|
-| (INSERT)`<c-o>` | Auto completion.                                            |
+| (INSERT)`<tab>` | Auto completion.                                            |
+| (INSERT)`<c-o>` | Code Snippets.                                              |
 | `K`             | Open document.                                              |
 | `<leader>a`     | Apply code action, ex: `<leader>aap` for current paragraph. |
 | `<leader>ac`    | Apply code action to current buffer.                        |
@@ -150,11 +153,12 @@ Use ',' as leader key.
 
 ### Markdown
 
-| Key          | Action                      |
-|--------------|-----------------------------|
-| `<leader>tm` | Toggle markdown table mode. |
-| `<leader>tr` | Format markdown table mode. |
-| `:GenTocGFM` | Insert markdown TOC.        |
+| Key                 | Action                      |
+|---------------------|-----------------------------|
+| `<leader>tm`        | Toggle markdown table mode. |
+| `<leader>tr`        | Format markdown table mode. |
+| <code>&#124;</code> | Cell text object.           |
+| `:GenTocGFM`        | Insert markdown TOC.        |
 
 ### Spell
 
@@ -168,7 +172,7 @@ Use ',' as leader key.
 | `<leader>sc` | Apply spell correction         |
 | `<leader>cs` | List suggested synonym.        |
 
-### CoC
+### CoC List
 
 | Key             | Action                                  |
 |-----------------|-----------------------------------------|
@@ -222,13 +226,16 @@ Highlight:
     - `coc-css`
     - `coc-go`
     - `coc-tsserver`
-- auto completion, syntax highlight, and linter checker
+- other auto completion, syntax highlight, linter checker, snippets
     - `tmux-completion`
     - `ale`
     - `jedi-vim`
-- `fzf.vim`
-
-For other plugins, please check out the `vimrc` [Plugins manager: vim-plug]() section.
+    - `ultisnips` and `vim-snippets`
+- markdown family
+    - `vim-instant-markdown`
+    - `vim-table-mode`
+    - `vim-markdown-toc`
+- `fzf.vim` and `vim-rooter`
 
 ## Supporting Languages
 

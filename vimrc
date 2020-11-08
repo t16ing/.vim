@@ -340,6 +340,8 @@
             set splitbelow
             :sp
             :term go run .
+        elseif &filetype == 'markdown'
+            exec "InstantMarkdownPreview"
         endif
     endfunc
 
@@ -455,6 +457,10 @@
         Plug 'ap/vim-css-color'
           " A very fast, multi-syntax context-sensitive color name highlighter
 
+        Plug 'SirVer/ultisnips'
+        Plug 'honza/vim-snippets'
+          " UltiSnip and Snippets separate from the engine
+
     " }
 
     " Plugins - filetypes {
@@ -476,6 +482,8 @@
         " }
 
         " markdown {
+        Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+          " instantly preview finicky markdown files
         Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
           " <leader>tm to start automatic table creator & formatter
         Plug 'mzlogin/vim-markdown-toc', { 'on': 'GenTocGFM', 'for': ['text', 'markdown', 'vim-plug'] }
@@ -599,7 +607,7 @@
     " anytime <leader>S to launch Startify
     map <leader>S :Startify<CR>
 
-    VkhAdd 'plugin vim-startify: <leader>S open the fancy start screen for Vim. :SSave to save session.'
+    VkhAdd 'vim-startify: <leader>S open the fancy start screen. :SSave to save session.'
     " }
 
     " plugin nerdtree {
@@ -623,7 +631,7 @@
     " ~/.vim/bundle/fzf.vim/README.md
 
     noremap <silent> <C-p> :Files<CR>
-    noremap <leader>ff ':Rg '.expand('<cword>').'<CR>'
+    noremap <silent> <expr> <leader>ff ':Rg '.expand('<cword>').'<CR>'
     vnoremap <leader>ff y:Rg <C-R><C-R>"<CR>
     noremap <silent> <leader>fh :History<CR>
     noremap <silent> <leader>ft :Tags<CR>
@@ -786,6 +794,16 @@
     VkhAdd 'vim-css-color: A very fast, multi-syntax context-sensitive color name highlighter'
     " }
 
+    " plugin ultisnips and vim-snippets {
+    " ~/.vim/bundle/ultisnips/README.md
+    " snippets: ~/.vim/bundle/vim-snippets/snippets
+    let g:UltiSnipsExpandTrigger="<c-o>"
+    let g:UltiSnipsJumpForwardTrigger="<c-n>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+    let g:UltiSnipsEditSplit="horizontal"
+    VkhAdd 'ultisnips: <c-o> trigger snippets.'
+    " }
+
     " plugin jedi-vim {
     " ~/.vim/bundle/jedi-vim/doc/jedi-vim.txt
     let g:jedi#goto_command = "gd" " goto definition, if not found, fallback to assignment
@@ -797,13 +815,27 @@
     let g:jedi#completions_command = ""
     let g:jedi#rename_command = "<leader>rn"
     let g:jedi#popup_on_dot = 0
-    let g:jedi#completions_command = "<C-O>"
+    let g:jedi#completions_command = "<tab>"
     VkhAdd 'jedi-vim: gd for definition, <leader>rn for rename, <leader>f for usage'
+    " }
+
+    " plugin vim-instant-markdown {
+    " ~/.vim/bundle/vim-instant-markdown/README.md
+    let g:instant_markdown_slow = 0
+    let g:instant_markdown_autostart = 0
+    "let g:instant_markdown_open_to_the_world = 1
+    let g:instant_markdown_allow_unsafe_content = 0
+    let g:instant_markdown_mathjax = 1
+    let g:instant_markdown_browser = "google-chrome --incognito"
+    "let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+    let g:instant_markdown_port = 8888
+    let g:instant_markdown_autoscroll = 1
+    VkhAdd 'vim-instant-markdown: <leader>R to preview markdown.'
     " }
 
     " plugin vim-table-mode {
     " ~/.vim/bundle/vim-table-mode/README.md
-    VkhAdd 'plugin vim-table-mode: <leader>tm to start automatic table creator & formatter'
+    VkhAdd 'vim-table-mode: <leader>tm to start automatic table creator & formatter'
     " }
 
     " plugin vim-markdown-toc {
@@ -864,7 +896,7 @@
 
     " plugin vim-peekaboo {
     " ~/.vim/bundle/vim-peekaboo/README.md
-    VkhAdd 'vim-peekaboo: " or @ in normal mode and <CTRL-R> in insert mode to see the contents of the registers'
+    VkhAdd 'vim-peekaboo: (NORMAL)" or @ (INSERT) <CTRL-R> to see registers.'
     " }
 
     " plugin undotree {
@@ -1109,12 +1141,16 @@
         " Use <c-o> to trigger completion in insert mode.
         inoremap <silent><expr> <c-o> coc#refresh()
 
-        " Make <tab> and <s-tab> to choose completion item
+        " Make <tab> and <s-tab> to choose completion item {
         inoremap <silent><expr> <TAB>
                     \ pumvisible() ? "\<C-n>" :
                     \ <SID>check_back_space() ? "\<TAB>" :
                     \ coc#refresh()
         inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+        function! s:check_back_space() abort
+            let col = col('.') - 1
+            return !col || getline('.')[col - 1]  =~# '\s'
+        endfunction
         " }
 
         " Use `[g` and `]g` to navigate diagnostics {

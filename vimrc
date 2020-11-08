@@ -1138,9 +1138,6 @@
 
     " CoC Key Bindings {
 
-        " Use <c-o> to trigger completion in insert mode.
-        inoremap <silent><expr> <c-o> coc#refresh()
-
         " Make <tab> and <s-tab> to choose completion item {
         inoremap <silent><expr> <TAB>
                     \ pumvisible() ? "\<C-n>" :
@@ -1248,3 +1245,8 @@
     " }
 
 " }
+
+try
+    source ~/.vimrc.local
+catch
+endtry

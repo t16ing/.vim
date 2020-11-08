@@ -140,7 +140,7 @@ Use ':' or ';' as command key.
 
 | Key             | Action                                                      |
 |-----------------|-------------------------------------------------------------|
-| (INSERT)`<tab>` | Auto completion.                                            |
+| (INSERT)`<tab>` | Auto completion. (Jedi, CoC)                                |
 | (INSERT)`<c-o>` | Code Snippets.                                              |
 | `K`             | Open document.                                              |
 | `<leader>a`     | Apply code action, ex: `<leader>aap` for current paragraph. |

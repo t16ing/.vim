@@ -253,8 +253,8 @@
     nnoremap > >>
 
     " Tab to Space
-    nnoremap <LEADER>tt :%s/\t/    /g
-    vnoremap <LEADER>tt :s/\t/    /g
+    nnoremap <leader><leader>t :%s/\t/    /g
+    vnoremap <leader><leader>t :s/\t/    /g
 
 " }
 
@@ -350,16 +350,16 @@
 " Misc {
 
     " Open the vimrc file anytime
-    noremap <LEADER>rc :e ~/.vim/init.vim<CR>
+    noremap <leader>rc :e ~/.vim/init.vim<CR>
 
     " Reload vimrc
-    noremap <LEADER>rr :source ~/.vim/init.vim<CR>
+    noremap <leader>rr :source ~/.vim/init.vim<CR>
 
     " next placeholder <++> <++> <++>
-    noremap <LEADER><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
+    noremap <leader><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
     " opening a terminal window
-    noremap <LEADER>T :set splitbelow<CR>:split<CR>:res -10<CR>:term<CR>i
+    noremap <leader>T :set splitbelow<CR>:split<CR>:res -10<CR>:term<CR>i
 
     " call figlet
     noremap tx :r !figlet -f pagga 

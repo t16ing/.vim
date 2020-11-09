@@ -31,7 +31,9 @@
 
 ## What is `.vim`
 
-The `.vim` is my personal vim/neovim configurations, for a sensible, comfortable, and powerful editor environment.
+This is my personal vim/neovim configurations.
+
+It is designed for a sensible, comfortable, and powerful text and code editor environment.
 
 ## Sensible Configurations
 
@@ -71,8 +73,8 @@ Use ':' or ';' as command key.
 | `> < ==`            | Quick indent.                        |
 | (VISUAL)`=`         | Selected range indent.               |
 | `<leader>=`         | Format selected code.                |
-| `<leader>tt`        | Expand tabs for buffer or selection. |
-| (VISUAL)`<enter>==` | Quick alignment.                     |
+| `<leader><leader>t` | Expand tabs for buffer or selection. |
+| (VISUAL)`<enter>==` | Easy alignment.                      |
 | `gcc`               | Toggle comment.                      |
 | `gcap`              | Toggle comment for a paragraph.      |
 | `<leader>u`         | Open undo tree.                      |
@@ -123,7 +125,7 @@ Use ':' or ';' as command key.
 | Key          | Action                 |
 |--------------|------------------------|
 | `tt`         | Toggle tagbar.         |
-| `<leader>f`  | Search for code.       |
+| `<leader>ff` | Search for code.       |
 | `<leader>gb` | Open git blame.        |
 | `<leader>gl` | Open git log.          |
 | `<leader>gt` | Open git hunks.        |
@@ -158,7 +160,6 @@ Use ':' or ';' as command key.
 | `<leader>tm`        | Toggle markdown table mode. |
 | `<leader>tr`        | Format markdown table mode. |
 | <code>&#124;</code> | Cell text object.           |
-| `:GenTocGFM`        | Insert markdown TOC.        |
 
 ### Spell
 

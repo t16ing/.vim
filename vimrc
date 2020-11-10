@@ -415,7 +415,11 @@
         Plug 'Xuyuanp/nerdtree-git-plugin'
           " git notation for nerdtree
 
-        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        if empty(glob('~/.fzf')) " {
+            Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        else
+            set rtp+=~/.fzf
+        endif " }
         Plug 'junegunn/fzf.vim'
           " <c-p> open ctrlp window. <leader>ff for keyword search, and <leader>f? other fzf functions.
 
@@ -651,6 +655,7 @@
     " plugin vim-rooter {
     " ~/.vim/bundle/vim-rooter/README.mkd
     let g:rooter_patterns = ['__vim_project_root', '.git/']
+    let g:rooter_silent_chdir = 1
     " }
 
     " plugin vim-easymotion {
@@ -889,6 +894,11 @@
     let g:rainbow_active = 1
     " }
 
+    " plugin auto-pairs {
+    " ~/.vim/bundle/auto-pairs/README.md
+    let g:AutoPairsMapCh = 0
+    " }
+
     " plugin vim-commentary {
     " ~/.vim/bundle/vim-commentary/README.markdown
     VkhAdd 'vim-commentary: gcc for single line or gcap for a paragraph.'
@@ -928,9 +938,9 @@
     " ~/.vim/bundle/vim-colorschemes/README.md
     set t_Co=256
     try
-    colorscheme PaperColor
+        colorscheme PaperColor
     catch
-    colorscheme murphy
+        colorscheme murphy
     endtry
 
     set background=dark
@@ -1126,12 +1136,10 @@
 
         " Always show the signcolumn, otherwise it would shift the text each time {
         " diagnostics appear/become resolved.
-        if has("patch-8.1.1564")
-          " Recently vim can merge signcolumn and number column into one
-          set signcolumn=number
-        else
-          set signcolumn=yes
-        endif
+        try
+            set signcolumn=yes
+        catch
+        endtry
         " }
 
     " }

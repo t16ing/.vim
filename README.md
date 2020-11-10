@@ -25,6 +25,7 @@
 * [Commands](#commands)
 * [Plugins](#plugins)
 * [Supporting Languages](#supporting-languages)
+* [Compatibility](#compatibility)
 * [License](#license)
 
 <!-- vim-markdown-toc -->
@@ -246,6 +247,14 @@ Highlight:
 - `javascript`
 - `typescript`
 - `markdown`
+
+## Compatibility
+
+Versions of vim/nvim have been tested:
+
+- NVIM v0.4.3
+- Vim 8.1
+- Vim 7.4
 
 ## License
 

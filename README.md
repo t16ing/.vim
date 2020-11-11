@@ -71,6 +71,7 @@ Use ':' or ';' as command key.
 
 | Key                 | Action                               |
 |---------------------|--------------------------------------|
+| (VISUAL)S           | Surround.                            |
 | `> < ==`            | Quick indent.                        |
 | (VISUAL)`=`         | Selected range indent.               |
 | `<leader>=`         | Format selected code.                |
@@ -150,7 +151,6 @@ Use ':' or ';' as command key.
 | `<leader>ac`    | Apply code action to current buffer.                        |
 | `<leader>qf`    | Apply quick fix to the problem of the current line.         |
 | `<leader>rn`    | Symbol rename.                                              |
-| `<leader>f`     | Show name usages.                                           |
 | `<leader>R`     | Complie and Run.                                            |
 | `<leader>T`     | Open terminal.                                              |
 
@@ -188,15 +188,15 @@ Use ':' or ';' as command key.
 
 ### Misc
 
-| Key               | Action                        |
-|-------------------|-------------------------------|
-| `Q`               | Close window.                 |
-| `S`               | Write buffer to current file. |
-| `<leader>S`       | Open a fancy start screen.    |
-| `<leader>rc`      | Open vimrc.                   |
-| `<leader>rr`      | Reload vimrc.                 |
-| `<leader><space>` | Edit next placeholder.        |
-| `tx`              | Place an AsciiArt.            |
+| Key               | Action                     |
+|-------------------|----------------------------|
+| `Q`               | Close window.              |
+| `zz`              | Save the file.             |
+| `<leader>S`       | Open a fancy start screen. |
+| `<leader>rc`      | Open vimrc.                |
+| `<leader>rr`      | Reload vimrc.              |
+| `<leader><space>` | Edit next placeholder.     |
+| `tx`              | Place an AsciiArt.         |
 
 ## Commands
 

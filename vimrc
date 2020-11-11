@@ -56,8 +56,8 @@
     noremap ; :
 
     " Save and Quit
+    noremap zz :w<CR>
     noremap Q <c-w>q
-    noremap S :w<CR>
 
 " }
 
@@ -316,7 +316,7 @@
 
 " Compile and Run {
 
-	" Enable auto scroll. `startinsert` let Enter to leave Compile and Run.
+    " Enable auto scroll. `startinsert` let Enter to leave Compile and Run.
     try
         let g:neoterm_autoscroll = 1
         autocmd TermOpen term://* startinsert
@@ -408,7 +408,7 @@
 
     " }
 
-    " Plugins - Files {
+    " Plugins - Files and Navigation {
 
         Plug 'scrooloose/nerdtree'
           " <leader>nn open nerdtree window. <leader>nf find current file in nerdtree.'
@@ -426,19 +426,8 @@
         Plug 'airblade/vim-rooter'
           " changes the working directory to the project root when you open a file or directory
 
-    " }
-
-    " Plugins - Navigation {
-
-        Plug 'Lokaltog/vim-easymotion'
-          " <leader><leader>w forward move <leader><leader>b backward move
-        Plug 'terryma/vim-expand-region'
-          " Press + to expand the visual selection and _ to shrink it.
-        Plug 'gregsexton/MatchTag'
-          " Highlights the matching HTML tags
         Plug 'kshenoy/vim-signature'
           " Visible mark (m-*)
-
     " }
 
     " Plugins - Coding {
@@ -463,7 +452,7 @@
 
         Plug 'SirVer/ultisnips'
         Plug 'honza/vim-snippets'
-          " UltiSnip and Snippets separate from the engine
+          " UltiSnip as snippet engine. Snippets separate from the engine.
 
     " }
 
@@ -516,6 +505,12 @@
 
     " Plugins - Editing {
 
+        Plug 'terryma/vim-expand-region'
+          " Press + to expand the visual selection and _ to shrink it.
+        Plug 'tpope/vim-surround'
+          " All about surround. '+' then 'S' then surround.
+        Plug 'gregsexton/MatchTag'
+          " Highlights the matching HTML tags
         Plug 'tpope/vim-commentary'
           " gcc to comment out a line, gcap to comment out a paragraph
         Plug 'junegunn/vim-peekaboo'
@@ -658,34 +653,6 @@
     let g:rooter_silent_chdir = 1
     " }
 
-    " plugin vim-easymotion {
-    " ~/.vim/bundle/vim-easymotion/README.md
-    VkhAdd 'vim-easymotion: <leader><leader>w jump forward <leader><leader>b jump backward.'
-    " }
-
-    " plugin vim-expand-region {
-    " ~/.vim/bundle/vim-expand-region/README.md
-    let g:expand_region_text_objects = {
-                \ 'iw'  :0,
-                \ 'iW'  :0,
-                \ 'i"'  :1,
-                \ 'i''' :1,
-                \ 'i]'  :1,
-                \ 'ib'  :1,
-                \ 'iB'  :1,
-                \ 'ip'  :1,
-                \ 'if'  :1,
-                \ 'ic'  :1,
-                \ }
-    VkhAdd "vim-expand-region: `+` to expand the visual selection and `_` to shrink it."
-    " }
-
-    " plugin MatchTag {
-    " ~/.vim/bundle/MatchTag/README.mkd
-    " no options, and only works on html/xml ft
-    " example: ~/.vim/bundle/MatchTag/test.html
-    " }
-
     " plugin vim-signature {
     " ~/.vim/bundle/vim-signature/doc/signature.txt
 
@@ -816,8 +783,7 @@
     let g:jedi#goto_assignments_command = ""
     let g:jedi#goto_stubs_command = ""
     let g:jedi#documentation_command = "K"
-    let g:jedi#usages_command = "<leader>f"
-    let g:jedi#completions_command = ""
+    let g:jedi#usages_command = "gr"
     let g:jedi#rename_command = "<leader>rn"
     let g:jedi#popup_on_dot = 0
     let g:jedi#completions_command = "<tab>"
@@ -899,6 +865,34 @@
     let g:AutoPairsMapCh = 0
     " }
 
+    " plugin vim-expand-region {
+    " ~/.vim/bundle/vim-expand-region/README.md
+    let g:expand_region_text_objects = {
+                \ 'iw'  :0,
+                \ 'iW'  :0,
+                \ 'i"'  :1,
+                \ 'i''' :1,
+                \ 'i]'  :1,
+                \ 'ib'  :1,
+                \ 'iB'  :1,
+                \ 'ip'  :1,
+                \ 'if'  :1,
+                \ 'ic'  :1,
+                \ }
+    VkhAdd "vim-expand-region: `+` to expand the visual selection and `_` to shrink it."
+    " }
+
+    " plugin vim-surround {
+    " ~/.vim/bundle/vim-surround/README.markdown
+    VkhAdd "'+' then 'S' then surround."
+    " }
+
+    " plugin MatchTag {
+    " ~/.vim/bundle/MatchTag/README.mkd
+    " no options, and only works on html/xml ft
+    " example: ~/.vim/bundle/MatchTag/test.html
+    " }
+
     " plugin vim-commentary {
     " ~/.vim/bundle/vim-commentary/README.markdown
     VkhAdd 'vim-commentary: gcc for single line or gcap for a paragraph.'
@@ -917,6 +911,18 @@
 
     " get focus after being opened
     let g:undotree_SetFocusWhenToggle = 1
+
+    " Set to 1 to get short timestamps
+    let g:undotree_ShortIndicators = 1
+
+    " Set this to 1 to auto open the diff window.
+    let g:undotree_DiffAutoOpen = 1
+
+    " The function will be called after the undotree windows is initialized
+    function g:Undotree_CustomMap()
+        nmap <buffer> k <plug>UndotreeNextState
+        nmap <buffer> j <plug>UndotreePreviousState
+    endfunc
 
     " to toggle the undo-tree panel
     nnoremap <leader>u :UndotreeToggle<cr>

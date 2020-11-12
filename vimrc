@@ -492,8 +492,6 @@
 
     " Plugins - Formatting {
 
-        Plug 'junegunn/vim-easy-align'
-          " select, ENTER, =, =
         Plug 'nathanaelkane/vim-indent-guides'
           " visually displaying indent levels
         Plug 'luochen1990/rainbow'
@@ -814,33 +812,6 @@
     VkhAdd 'vim-markdown-toc: :GenTocGFM to generate markdown TOC.'
     " }
 
-    " plugin vim-easy_align {
-    " ~/.vim/bundle/vim-easy-align/README.md
-    " ~/.vim/bundle/vim-easy-align/EXAMPLES.md
-
-    let g:easy_align_delimiters = {
-          \ '>': { 'pattern': '>>\|=>\|>' },
-          \ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignore_groups': ['String'] },
-          \ '#': { 'pattern': '#\+', 'ignore_groups': ['String'] },
-          \ ']': {
-          \     'pattern':       '[[\]]',
-          \     'left_margin':   0,
-          \     'right_margin':  0,
-          \     'stick_to_left': 0
-          \   },
-          \ ')': {
-          \     'pattern':       '[()]',
-          \     'left_margin':   0,
-          \     'right_margin':  0,
-          \     'stick_to_left': 0
-          \   }
-          \ }
-
-    vnoremap <silent> <Enter> :LiveEasyAlign<Enter>
-
-    VkhAdd 'vim-easy-align: (VISUAL) <Enter>=='
-    " }
-
     " plugin vim-indent-guides {
     " ~/.vim/bundle/vim-indent-guides/README.markdown
 
@@ -937,7 +908,7 @@
 
     " plugin vim-visual-multi {
     " ~/.vim/bundle/vim-visual-multi/README.md
-    VkhAdd 'vim-visual-multi: ctrl+N to select words, n to confirm, q to skip'
+    VkhAdd 'vim-visual-multi: ctrl+N to select words, n to confirm, q to skip, \\a to align'
     " }
 
     " plugin vim-colorschemes {

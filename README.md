@@ -11,17 +11,17 @@
 * [What is `.vim`](#what-is-vim)
 * [Sensible Configurations](#sensible-configurations)
 * [Key Mappings](#key-mappings)
-    * [Line, Buffer, Window, and Tab Motion](#line-buffer-window-and-tab-motion)
-    * [Edit and Formatting](#edit-and-formatting)
-    * [Selection](#selection)
-    * [Marks and Register](#marks-and-register)
-    * [File and Finder](#file-and-finder)
-    * [Coding Navigation](#coding-navigation)
-    * [Integrated Development Environment](#integrated-development-environment)
-    * [Markdown](#markdown)
-    * [Spell](#spell)
-    * [CoC List](#coc-list)
-    * [Misc](#misc)
+	* [Line, Buffer, Window, and Tab Motion](#line-buffer-window-and-tab-motion)
+	* [Edit and Formatting](#edit-and-formatting)
+	* [Selection](#selection)
+	* [Marks and Register](#marks-and-register)
+	* [File and Finder](#file-and-finder)
+	* [Coding Navigation](#coding-navigation)
+	* [Integrated Development Environment](#integrated-development-environment)
+	* [Markdown](#markdown)
+	* [Spell](#spell)
+	* [CoC List](#coc-list)
+	* [Misc](#misc)
 * [Commands](#commands)
 * [Plugins](#plugins)
 * [Supporting Languages](#supporting-languages)
@@ -69,29 +69,30 @@ Use ':' or ';' as command key.
 
 ### Edit and Formatting
 
-| Key                 | Action                               |
-|---------------------|--------------------------------------|
-| (VISUAL)S           | Surround.                            |
-| `> < ==`            | Quick indent.                        |
-| (VISUAL)`=`         | Selected range indent.               |
-| `<leader>=`         | Format selected code.                |
-| `<leader><leader>t` | Expand tabs for buffer or selection. |
-| (VISUAL)`<enter>==` | Easy alignment.                      |
-| `gcc`               | Toggle comment.                      |
-| `gcap`              | Toggle comment for a paragraph.      |
-| `<leader>u`         | Open undo tree.                      |
-| `<leader>pp`        | Toggle paste mode.                   |
+| Key                 | Action                                            |
+|---------------------|---------------------------------------------------|
+| (VISUAL)S           | Surround.                                         |
+| `> < ==`            | Quick indent.                                     |
+| (VISUAL)`=`         | Selected range indent.                            |
+| `<leader>=`         | Format selected code.                             |
+| `<leader><leader>t` | Expand tabs for buffer or selection.              |
+| (EXTRA)`\\a`        | Visual multi selection and align.                 |
+| (EXTRA)`\\N`        | Visual multi selection and insert leading number. |
+| `gcc`               | Toggle comment.                                   |
+| `gcap`              | Toggle comment for a paragraph.                   |
+| `<leader>u`         | Open undo tree.                                   |
+| `<leader>pp`        | Toggle paste mode.                                |
 
 ### Selection
 
-| Key           | Action                                                 |
-|---------------|--------------------------------------------------------|
-| (VISUAL)`* #` | Search for current selection.                          |
-| `<leader>/`   | Disable highlight.                                     |
-| `+` or `_`    | Expand or shrink selection.                            |
-| `<c-n>`       | Start multi-visual mode, n for confirm and q for skip. |
-| `cif` `vic`   | `f` (function) and `c` (class) as text object.         |
-| `<c-s>`       | Language level selection expanding.                    |
+| Key           | Action                                                                                       |
+|---------------|----------------------------------------------------------------------------------------------|
+| (VISUAL)`* #` | Search for current selection.                                                                |
+| `<leader>/`   | Disable highlight.                                                                           |
+| `+` or `_`    | Expand or shrink selection.                                                                  |
+| `<c-n>`       | Start multi-visual (EXTRA) mode, n for confirm, q for skip, `[ ]` for  selection navigation. |
+| `cif` `vic`   | `f` (function) and `c` (class) as text object.                                               |
+| `<c-s>`       | Language level selection expanding.                                                          |
 
 ### Marks and Register
 

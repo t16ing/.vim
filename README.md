@@ -11,17 +11,17 @@
 * [What is `.vim`](#what-is-vim)
 * [Sensible Configurations](#sensible-configurations)
 * [Key Mappings](#key-mappings)
-	* [Line, Buffer, Window, and Tab Motion](#line-buffer-window-and-tab-motion)
-	* [Edit and Formatting](#edit-and-formatting)
-	* [Selection](#selection)
-	* [Marks and Register](#marks-and-register)
-	* [File and Finder](#file-and-finder)
-	* [Coding Navigation](#coding-navigation)
-	* [Integrated Development Environment](#integrated-development-environment)
-	* [Markdown](#markdown)
-	* [Spell](#spell)
-	* [CoC List](#coc-list)
-	* [Misc](#misc)
+    * [Line, Buffer, Window, and Tab Motion](#line-buffer-window-and-tab-motion)
+    * [Edit and Formatting](#edit-and-formatting)
+    * [Selection](#selection)
+    * [Marks and Register](#marks-and-register)
+    * [File and Finder](#file-and-finder)
+    * [Coding Navigation](#coding-navigation)
+    * [Integrated Development Environment](#integrated-development-environment)
+    * [Markdown](#markdown)
+    * [Spell](#spell)
+    * [CoC List](#coc-list)
+    * [Misc](#misc)
 * [Commands](#commands)
 * [Plugins](#plugins)
 * [Supporting Languages](#supporting-languages)
@@ -244,6 +244,7 @@ Highlight:
 
 - Dockerfile
 - `python` (by `jedi.vim`)
+- `c/c++`
 - `php`
 - `javascript`
 - `typescript`

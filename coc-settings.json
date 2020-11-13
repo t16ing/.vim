@@ -57,5 +57,28 @@
     "javascript.showUnused": true,
     "javascript.suggest.names": true,
     "javascript.suggestionActions.enabled": true,
-    "json.format.enable": true
+    "json.format.enable": true,
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        }
+    }
 }

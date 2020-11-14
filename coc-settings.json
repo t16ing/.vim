@@ -41,6 +41,8 @@
     "diagnostic.virtualTextPrefix": " ❯❯❯ ",
     "diagnostic.virtualText": true,
     "codeLens.enable": true,
+    "list.nextKeymap": "<c-n>",
+    "list.previousKeymap": "<c-p>",
     "coc.preferences.formatOnSaveFiletypes": [
         "html",
         "css",

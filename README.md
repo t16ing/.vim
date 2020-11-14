@@ -146,7 +146,7 @@ Use ':' or ';' as command key.
 
 | Key             | Action                                                      |
 |-----------------|-------------------------------------------------------------|
-| (INSERT)`<tab>` | Auto completion. (Jedi, CoC)                                |
+| (INSERT)`<tab>` | Auto completion.                                            |
 | (INSERT)`<c-o>` | Code Snippets.                                              |
 | `K`             | Open document.                                              |
 | `<leader>a`     | Apply code action, ex: `<leader>aap` for current paragraph. |
@@ -230,10 +230,10 @@ Highlight:
     - `coc-css`
     - `coc-go`
     - `coc-tsserver`
+    - `coc-pyright`
 - other auto completion, syntax highlight, linter checker, snippets
     - `tmux-completion`
     - `ale`
-    - `jedi-vim`
     - `ultisnips` and `vim-snippets`
 - markdown family
     - `vim-instant-markdown`

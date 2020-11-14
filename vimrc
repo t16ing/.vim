@@ -458,11 +458,6 @@
 
     " Plugins - filetypes {
 
-        " python {
-        Plug 'davidhalter/jedi-vim', {'for': 'python'}
-          " Auto-complete for python, gd for definition, <leader>rn for rename, <leader>f for usage
-        " }
-
         " javascript {
         Plug 'nikvdp/ejs-syntax', {'for': 'ejs'}
           " syntax for ejs
@@ -783,20 +778,6 @@
     VkhAdd 'ultisnips: <c-o> trigger snippets.'
     " }
 
-    " plugin jedi-vim {
-    " ~/.vim/bundle/jedi-vim/doc/jedi-vim.txt
-    let g:jedi#goto_command = "gd" " goto definition, if not found, fallback to assignment
-    let g:jedi#goto_definitions_command = ""
-    let g:jedi#goto_assignments_command = ""
-    let g:jedi#goto_stubs_command = ""
-    let g:jedi#documentation_command = "K"
-    let g:jedi#usages_command = "gr"
-    let g:jedi#rename_command = "<leader>rn"
-    let g:jedi#popup_on_dot = 0
-    let g:jedi#completions_command = "<tab>"
-    VkhAdd 'jedi-vim: gd for definition, <leader>rn for rename, <leader>f for usage'
-    " }
-
     " plugin vim-instant-markdown {
     " ~/.vim/bundle/vim-instant-markdown/README.md
     let g:instant_markdown_slow = 0
@@ -1113,6 +1094,7 @@
                 \ 'coc-css',
                 \ 'coc-go',
                 \ 'coc-tsserver',
+                \ 'coc-pyright',
                 \ ]
 
     " CoC Generic {

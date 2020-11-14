@@ -634,12 +634,21 @@
     noremap <silent> <leader>ft :Tags<CR>
     noremap <silent> <leader>fl :Lines<CR>
     noremap <silent> <leader>fb :Buffers<CR>
+    noremap <silent> <leader>fg :BCommits<CR>
     noremap <silent> <leader>; :History:<CR>
     noremap <silent> <leader>f: :History:<CR>
     noremap <silent> <leader>f/ :History/<CR>
 
-    let g:fzf_preview_window = 'right:60%'
+    " [Buffers] Jump to the existing window if possible
+    let g:fzf_buffers_jump = 1
+    " [[B]Commits] Customize the options used by 'git log':
     let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+    " [Tags] Command to generate tags file
+    let g:fzf_tags_command = 'ctags -R'
+
+    " default option: Preview window on the right with 50% width
+    let g:fzf_preview_window = 'right:60%'
+    " Default fzf layout { 'window': { 'width': 0.9, 'height': 0.6 } }
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
     VkhAdd 'fzf.vim: <c-p> open ctrlp window. <leader>f for other fzf functions.'

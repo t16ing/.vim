@@ -109,19 +109,20 @@ Use ':' or ';' as command key.
 
 ### File and Finder
 
-| Key          | Action                             |
-|--------------|------------------------------------|
-| `<leader>nn` | Toggle nerdtree.                   |
-| `<leader>nf` | Open nerdtree in file location.    |
-| `<c-p>`      | Fuzzy file finder.                 |
-| `<leader>ff` | Search for the keyword.            |
-| `<leader>fh` | Search for the opened history.     |
-| `<leader>ft` | Search for global tags.            |
-| `<leader>fl` | Search for the lines.              |
-| `<leader>fb` | Search for opened buffer.          |
-| `<leader>f:` | Search for command history.        |
-| `<leader>f/` | Search for searched patterns.      |
-| `<leader>;`  | Quick mapping for command history. |
+| Key          | Action                              |
+|--------------|-------------------------------------|
+| `<leader>nn` | Toggle nerdtree.                    |
+| `<leader>nf` | Open nerdtree in file location.     |
+| `<c-p>`      | Fuzzy file finder.                  |
+| `<leader>ff` | Search for the keyword.             |
+| `<leader>fh` | Search for the opened history.      |
+| `<leader>ft` | Search for global tags.             |
+| `<leader>fl` | Search for the lines.               |
+| `<leader>fb` | Search for opened buffer.           |
+| `<leader>fg` | Git commits for the current buffer. |
+| `<leader>f:` | Search for command history.         |
+| `<leader>f/` | Search for searched patterns.       |
+| `<leader>;`  | Quick mapping for command history.  |
 
 ### Coding Navigation
 

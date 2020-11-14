@@ -350,10 +350,10 @@
 " Misc {
 
     " Open the vimrc file anytime
-    noremap <leader>rc :e ~/.vim/init.vim<CR>
+    noremap <leader>rc :e ~/.vim/vimrc<CR>
 
     " Reload vimrc
-    noremap <leader>rr :source ~/.vim/init.vim<CR>
+    noremap <leader>rr :source ~/.vim/vimrc<CR>
 
     " next placeholder <++> <++> <++>
     noremap <leader><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
@@ -580,7 +580,7 @@
 
     " hardcoded files or directories that will always be shown {
     let g:startify_bookmarks = [
-        \ '~/.vimrc',
+        \ '~/.vim/vimrc',
         \ '~/.zshrc',
         \ '~/.tmux.conf',
         \ '~/.config/ranger/rc.conf',

@@ -1050,8 +1050,11 @@
         let g:lightline#coc#indicator_errors = "(g)\uf05e "
         let g:lightline#coc#indicator_ok = ""
 
-        " register lightline#coc compoments
-        call lightline#coc#register()
+        " register lightline#coc compoments {
+        try
+            call lightline#coc#register()
+        catch
+        endtry " }
 
     " }
 

@@ -307,13 +307,6 @@
 
 " }
 
-" Snippet {
-
-    " Markdown
-    source ~/.vim/snippets/markdown.vim
-
-" }
-
 " Compile and Run {
 
     " Enable auto scroll. `startinsert` let Enter to leave Compile and Run.
@@ -770,11 +763,12 @@
 
     " plugin ultisnips and vim-snippets {
     " ~/.vim/bundle/ultisnips/README.md
-    " snippets: ~/.vim/bundle/vim-snippets/snippets
     let g:UltiSnipsExpandTrigger="<c-o>"
     let g:UltiSnipsJumpForwardTrigger="<c-n>"
     let g:UltiSnipsJumpBackwardTrigger="<c-p>"
     let g:UltiSnipsEditSplit="horizontal"
+    " snippets: ~/.vim/bundle/vim-snippets/snippets
+    source ~/.vim/snippets/markdown.vim
     VkhAdd 'ultisnips: <c-o> trigger snippets.'
     " }
 

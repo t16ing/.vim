@@ -269,6 +269,10 @@
         set clipboard+=unnamed
         set clipboard+=unnamedplus
 
+        " Map delete to named register so the content will not be overwritten
+        nnoremap d "xd
+        vnoremap d "xd
+
         " set persistent undo {
         if !isdirectory("~/.vim/undodir")
             silent !mkdir -p ~/.vim/undodir

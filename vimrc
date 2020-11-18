@@ -269,10 +269,6 @@
         set clipboard+=unnamed
         set clipboard+=unnamedplus
 
-        " Map delete to named register so the content will not be overwritten
-        nnoremap d "xd
-        vnoremap d "xd
-
         " set persistent undo {
         if !isdirectory("~/.vim/undodir")
             silent !mkdir -p ~/.vim/undodir
@@ -488,8 +484,6 @@
           " visually displaying indent levels
         Plug 'luochen1990/rainbow'
           " rainbow parentheses {[()]}
-        Plug 'jiangmiao/auto-pairs'
-          " Insert or delete brackets, parens, quotes in pair.
 
     " }
 
@@ -511,6 +505,8 @@
           " <leader>cs to lookup synonyms of any word under cursor or phrase covered in visual mode, and replace it with an user chosen synonym
         Plug 'mg979/vim-visual-multi'
           " ctrl+N to select words, n to confirm, q to skip
+        Plug 'maxbrunsfeld/vim-yankstack'
+          " <a-p> cycle backward through your history of yanks
 
     " }
 
@@ -819,11 +815,6 @@
     let g:rainbow_active = 1
     " }
 
-    " plugin auto-pairs {
-    " ~/.vim/bundle/auto-pairs/README.md
-    let g:AutoPairsMapCh = 0
-    " }
-
     " plugin vim-expand-region {
     " ~/.vim/bundle/vim-expand-region/README.md
     let g:expand_region_text_objects = {
@@ -897,6 +888,11 @@
     " plugin vim-visual-multi {
     " ~/.vim/bundle/vim-visual-multi/README.md
     VkhAdd 'vim-visual-multi: ctrl+N to select words, n to confirm, q to skip, \\a to align'
+    " }
+
+    " plugin vim-yankstack {
+    " ~/.vim/bundle/vim-yankstack/README.md
+    VkhAdd '<a-p> cycle backward through your history of yanks'
     " }
 
     " plugin vim-colorschemes {

@@ -82,6 +82,7 @@ Use ':' or ';' as command key.
 | `gcap`              | Toggle comment for a paragraph.                   |
 | `<leader>u`         | Open undo tree.                                   |
 | `<leader>pp`        | Toggle paste mode.                                |
+| `<a-p>`             | Cycle back yank history.                          |
 
 ### Selection
 

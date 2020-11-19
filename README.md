@@ -61,7 +61,7 @@ Use ':' or ';' as command key.
 | `<c-w>-` `<c-w>`<code>\ or &#124;</code> | Split window.                            |
 | `<shift-arrow>`                          | Window resize.                           |
 | `<c-w>_`                                 | Maximinze current window.                |
-| `gn` `gp` `g<tab>`                       | Next or previous or last opened buffer.  |
+| `gj` `gk` `g<tab>`                       | Next or previous or last opened buffer.  |
 | `g<number>`                              | Goto buffer n.                           |
 | `W` `B`                                  | Faster word and back-word motion.        |
 | `<c-u>` `<c-d>`                          | Scroll without moving cursor.            |

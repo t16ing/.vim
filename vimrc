@@ -170,8 +170,8 @@
     " Move around between buffers, windows, and tabs {
 
         " Buffer switching
-        nmap gn :bn<cr>
-        nmap gp :bp<cr>
+        nmap gj :bn<cr>
+        nmap gk :bp<cr>
         nmap g<tab> :b#<cr>
 
         " ,bt to open buffer in tab; ,bc to close tab; ,bd to close buffer

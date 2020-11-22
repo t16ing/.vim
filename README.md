@@ -24,7 +24,7 @@
     * [Misc](#misc)
 * [Commands](#commands)
 * [Plugins](#plugins)
-* [Supporting Languages](#supporting-languages)
+* [Support Languages](#support-languages)
 * [Compatibility](#compatibility)
 * [License](#license)
 
@@ -213,7 +213,6 @@ Use ':' or ';' as command key.
 Highlight:
 
 - `vim-plug`: plugin manager.
-        Plug 'flazz/vim-colorschemes'
 - `nerdtree` family
     - `nerdtree-git-plugin`
     - `vim-nerdtree-syntax-highlight`
@@ -232,7 +231,7 @@ Highlight:
     - `coc-go`
     - `coc-tsserver`
     - `coc-pyright`
-- other auto completion, syntax highlight, linter checker, snippets
+- auto completion, syntax highlight, linter checker, snippets
     - `tmux-completion`
     - `ale`
     - `ultisnips` and `vim-snippets`
@@ -242,9 +241,9 @@ Highlight:
     - `vim-markdown-toc`
 - `fzf.vim` and `vim-rooter`
 
-## Supporting Languages
+## Support Languages
 
-- Dockerfile
+- `Dockerfile`
 - `python` (by `jedi.vim`)
 - `c/c++`
 - `php`
@@ -254,7 +253,7 @@ Highlight:
 
 ## Compatibility
 
-Versions of vim/nvim have been tested:
+Below vim/neovim versions have been tested:
 
 - NVIM v0.4.3
 - Vim 8.1

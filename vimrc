@@ -869,7 +869,7 @@
     let g:undotree_DiffAutoOpen = 1
 
     " The function will be called after the undotree windows is initialized
-    function g:Undotree_CustomMap()
+    function! g:Undotree_CustomMap()
         nmap <buffer> k <plug>UndotreeNextState
         nmap <buffer> j <plug>UndotreePreviousState
     endfunc

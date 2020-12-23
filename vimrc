@@ -1041,6 +1041,12 @@
                 \ 'coc-json',
                 \ 'coc-vimlsp',
                 \ 'coc-phpls',
+                \ 'coc-html',
+                \ 'coc-css',
+                \ 'coc-go',
+                \ 'coc-tsserver',
+                \ 'coc-pyright',
+                \ 'coc-omnisharp',
                 \ ]
     " }
 

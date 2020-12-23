@@ -1,6 +1,6 @@
-autoload
-bundle
+autoload/
+bundle/
 session/
-spell
-undodir
-*.swp
+spell/
+undodir/
+swap/

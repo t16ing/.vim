@@ -38,7 +38,7 @@
     set nobackup
 
     " set swap folder to .vim/swap
-    set directory^=$HOME/.vim//
+    set directory^=$HOME/.vim/swap/
 
     " opening a new file when the current buffer has unsaved changes causes files to be hidden instead of closed
     set hid
@@ -52,6 +52,13 @@
     " With a map leader it's possible to do extra key combinations
     let mapleader = ","
 
+    " Quicker command mode
+    noremap ; :
+
+    " Save and Quit
+    noremap zz :w<CR>
+    noremap Q <c-w>q
+
 " }
 
 " User Interface {
@@ -64,8 +71,8 @@
         " precede each line with its line number
         set nu
 
-        " Show the line number relative to the line with the cursor (syntax highlight performance impacted)
-        set rnu
+        " Don't show the line number relative to the line with the cursor (syntax highlight performance impacted)
+        set nornu
 
         " show the cursor position all the time
         set ruler
@@ -107,26 +114,20 @@
         set mat=2
 
         " Visual mode pressing * or # searches for the current selection
-        vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-        vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+        vnoremap <silent> * :<C-u>call VisualSelection()<CR>/<C-R>=@/<CR><CR>
+        vnoremap <silent> # :<C-u>call VisualSelection()<CR>?<C-R>=@/<CR><CR>
 
         " helper function for current selection {
         function! CmdLine(str)
             call feedkeys(":" . a:str)
         endfunction
 
-        function! VisualSelection(direction, extra_filter) range
+        function! VisualSelection() range
             let l:saved_reg = @"
             execute "normal! vgvy"
 
             let l:pattern = escape(@", "\\/.*'$^~[]")
             let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-            if a:direction == 'gv'
-                call CmdLine("Ack '" . l:pattern . "' " )
-            elseif a:direction == 'replace'
-                call CmdLine("%s" . '/'. l:pattern . '/')
-            endif
 
             let @/ = l:pattern
             let @" = l:saved_reg
@@ -134,6 +135,9 @@
 
         " Disable highlight by <leader>/
         map <silent> <leader>/ :noh<cr>
+
+        " Do not keep last highlight when opening VIM
+        exec "nohlsearch"
 
     " }
 
@@ -166,8 +170,9 @@
     " Move around between buffers, windows, and tabs {
 
         " Buffer switching
-        nmap gn :bn<cr>
-        nmap gp :bp<cr>
+        nmap gj :bn<cr>
+        nmap gk :bp<cr>
+        nmap g<tab> :b#<cr>
 
         " ,bt to open buffer in tab; ,bc to close tab; ,bd to close buffer
         nmap <leader>bt :tab split<cr>
@@ -181,7 +186,6 @@
         map <c-w>- :set splitbelow<cr>:split<cr>
         map <c-w>\| :set splitright<cr>:vsplit<cr>
         map <c-w>\ :set splitright<cr>:vsplit<cr>
-        map Q <c-w>q
 
         " Windows resizing
         map <s-up> :res+1<cr>
@@ -240,13 +244,17 @@
     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
     autocmd BufWinLeave * call clearmatches()
 
+    " make tab indent and unwanted space more visible
+    set list
+    set listchars=tab:\|\ ,trail:▫
+
     " make indent faster
     nnoremap < <<
     nnoremap > >>
 
     " Tab to Space
-    nnoremap <LEADER>tt :%s/\t/    /g
-    vnoremap <LEADER>tt :s/\t/    /g
+    nnoremap <leader><leader>t :%s/\t/    /g
+    vnoremap <leader><leader>t :s/\t/    /g
 
 " }
 
@@ -258,7 +266,8 @@
         map <leader>pp :setlocal paste!<cr>
 
         " Share clipboard with system
-        set clipboard=unnamedplus
+        set clipboard+=unnamed
+        set clipboard+=unnamedplus
 
         " set persistent undo {
         if !isdirectory("~/.vim/undodir")
@@ -300,27 +309,32 @@
 
 " Compile and Run {
 
-    command! AutoScrollDown while 1 | let c=getchar(1) | if c != 0 | break | else | exec "norm! gj" | sleep 10 m | redraw | endif | endwhile
+    " Enable auto scroll. `startinsert` let Enter to leave Compile and Run.
+    try
+        let g:neoterm_autoscroll = 1
+        autocmd TermOpen term://* startinsert
+    catch
+    endtry
 
     noremap <leader>R :call CompileRun()<CR>
-    func! CompileRun()
+    function! CompileRun()
         exec "w"
-        if &filetype == 'vim'
-            noremap :source %<CR>
-        elseif &filetype == 'dockerfile'
+        if &filetype == 'dockerfile'
             set splitbelow
             :sp
             :term docker build -t '%:p:h:t':local -f % .
-            :AutoScrollDown
-            :bd!
         elseif &filetype == 'json'
-            " to run package.json scripts, move cursor to script name and
-            " press <leader>R to start npm run <script>
+            " How to run package.json scripts:
+            " - move cursor to script name and press <leader>R to start npm run <script>
             set splitbelow
             :sp
-            :execute 'term npm run ' . shellescape(expand('<cword>'))
-            :AutoScrollDown
-            :bd!
+            :exec 'term npm run ' . shellescape(expand('<cword>'))
+        elseif &filetype == 'go'
+            set splitbelow
+            :sp
+            :term go run .
+        elseif &filetype == 'markdown'
+            exec "InstantMarkdownPreview"
         endif
     endfunc
 
@@ -329,16 +343,22 @@
 " Misc {
 
     " Open the vimrc file anytime
-    noremap <LEADER>rc :e ~/.vim/init.vim<CR>
+    noremap <leader>rc :e ~/.vim/vimrc<CR>
+
+    " Reload vimrc
+    noremap <leader>rr :source ~/.vim/vimrc<CR>
 
     " next placeholder <++> <++> <++>
-    noremap <LEADER><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
+    noremap <leader><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
     " opening a terminal window
-    noremap <LEADER>T :set splitbelow<CR>:split<CR>:res -10<CR>:term<CR>i
+    noremap <leader>T :set splitbelow<CR>:split<CR>:res -10<CR>:term<CR>i
 
     " call figlet
     noremap tx :r !figlet -f pagga 
+
+    " sudo write
+    command! SudoWrite :w !SUDO_ASKPASS=`which ssh-askpass` sudo -A tee %
 
 " }
 
@@ -377,94 +397,116 @@
           " gn to next buffer, gp to previous buffer, g[1-9] to buffer n
         Plug 'sinetoami/lightline-hunks'
         Plug 'maximbaz/lightline-ale'
+        Plug 'josa42/vim-lightline-coc'
 
     " }
 
-    " Plugins - Files {
+    " Plugins - Files and Navigation {
 
         Plug 'scrooloose/nerdtree'
           " <leader>nn open nerdtree window. <leader>nf find current file in nerdtree.'
         Plug 'Xuyuanp/nerdtree-git-plugin'
           " git notation for nerdtree
-        Plug 'ctrlpvim/ctrlp.vim'
-          " <c-p> for ctrlp, <leader>o for buffer window
-        Plug 'mileszs/ack.vim', {'on': 'Ack'}
-          " <leader>f code search tool
 
-    " }
+        if empty(glob('~/.fzf')) " {
+            Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        else
+            set rtp+=~/.fzf
+        endif " }
+        Plug 'junegunn/fzf.vim'
+          " <c-p> open ctrlp window. <leader>ff for keyword search, and <leader>f? other fzf functions.
 
-    " Plugins - Navigation {
+        Plug 'airblade/vim-rooter'
+          " changes the working directory to the project root when you open a file or directory
 
-        Plug 'Lokaltog/vim-easymotion'
-          " <leader><leader>w forward move <leader><leader>b backward move
-        Plug 'terryma/vim-expand-region'
-          " Press + to expand the visual selection and _ to shrink it.
-        Plug 'gregsexton/MatchTag'
-          " Highlights the matching HTML tags
         Plug 'kshenoy/vim-signature'
           " Visible mark (m-*)
-
     " }
 
     " Plugins - Coding {
 
-        Plug 'dense-analysis/ale'
-          " Visible ERROR and warning, <c-j> for next error, <c-k> for previous error.
         Plug 'tpope/vim-fugitive'
           " <leader>gb git blame <leader>gl git log
         Plug 'airblade/vim-gitgutter'
-          " <leader>gt Visible git sign <]c> for next hunk, <[c> for previous hunk.
+          " <leader>gt Visible git sign ]c and [c for hunk navigation.
+
         Plug 'majutsushi/tagbar'
           " tt to open tag bar; ctags required
-        Plug 'luochen1990/rainbow'
-          " rainbow parentheses {[()]}
-        Plug 'nathanaelkane/vim-indent-guides'
-          " visually displaying indent levels
+
+        Plug 'dense-analysis/ale'
+          " Visible linter ERROR and warning, ]e and [e for error navigation.
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
-          " Conquer of Completion
+          " Conquer of Completion, ]g and [g for error navigation.
         Plug 'wellle/tmux-complete.vim'
           " complete words visible in Tmux panes
+
+        Plug 'ap/vim-css-color'
+          " A very fast, multi-syntax context-sensitive color name highlighter
+
+        Plug 'SirVer/ultisnips'
+        Plug 'honza/vim-snippets'
+          " UltiSnip as snippet engine. Snippets separate from the engine.
 
     " }
 
     " Plugins - filetypes {
 
-        Plug 'davidhalter/jedi-vim', {'for': 'python'}
-          " Auto-complete for python, gd for definition, <leader>rn for rename, <leader>f for usage
-
+        " javascript {
         Plug 'nikvdp/ejs-syntax', {'for': 'ejs'}
           " syntax for ejs
         Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
           " syntax for ts
-
         Plug 'hushicai/tagbar-javascript.vim'
           " tagbar for js; have to load early, otherwise not working
         Plug 'moll/vim-node'
           " gf in node.js require(...)
+        " }
 
+        " markdown {
+        Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+          " instantly preview finicky markdown files
+        Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
+          " <leader>tm to start automatic table creator & formatter
+        Plug 'mzlogin/vim-markdown-toc', { 'on': 'GenTocGFM', 'for': ['text', 'markdown', 'vim-plug'] }
+          " :GenTocGFM to generate markdown TOC for Github markdown
+        " }
+
+        " gpg {
         Plug 'jamessan/vim-gnupg'
           " transparent editing of gpg encrypted files: ".gpg", ".pgp" or ".asc" suffix
+        " }
+
+    " }
+
+    " Plugins - Formatting {
+
+        Plug 'nathanaelkane/vim-indent-guides'
+          " visually displaying indent levels
+        Plug 'luochen1990/rainbow'
+          " rainbow parentheses {[()]}
 
     " }
 
     " Plugins - Editing {
 
-        Plug 'junegunn/vim-easy-align'
-          " select, ENTER, =, =
+        Plug 'terryma/vim-expand-region'
+          " Press + to expand the visual selection and _ to shrink it.
+        Plug 'tpope/vim-surround'
+          " All about surround. '+' then 'S' then surround.
+        Plug 'gregsexton/MatchTag'
+          " Highlights the matching HTML tags
         Plug 'tpope/vim-commentary'
           " gcc to comment out a line, gcap to comment out a paragraph
         Plug 'junegunn/vim-peekaboo'
           " extends " and @ in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
         Plug 'mbbill/undotree'
           " visualizes undo history, <leader>u to open undo tree
-        Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
-          " <leader>tm to start automatic table creator & formatter
-        Plug 'mzlogin/vim-markdown-toc'
-          " :GenTocGFM to generate markdown TOC for Github markdown
         Plug 'Ron89/thesaurus_query.vim'
           " <leader>cs to lookup synonyms of any word under cursor or phrase covered in visual mode, and replace it with an user chosen synonym
         Plug 'mg979/vim-visual-multi'
           " ctrl+N to select words, n to confirm, q to skip
+        Plug 'maxbrunsfeld/vim-yankstack'
+          " <a-p> cycle backward through your history of yanks
 
     " }
 
@@ -481,29 +523,131 @@
     " }
 
     call plug#end()
+
 "}
 
 " Plugins Configs {
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vandomkeyhint {
+    " plugin vim-vandomkeyhint {
     " ~/.vim/bundle/vim-vandomkeyhint/autoload/vandomkeyhint.vim
     " This has to be prior than any VkhAdd command
     " Has to be done here to avoid following "VkhAdd" from leading to error
     let vkh_readme=expand('~/.vim/bundle/vim-vandomkeyhint/README.md')
     if !filereadable(vkh_readme)
-      echo "Installing vandomkeyhint.."
-      echo ""
-      silent !mkdir -p ~/.vim/bundle/vim-vandomkeyhint
-      silent !git clone https://github.com/t16ing/vim-vandomkeyhint ~/.vim/bundle/vim-vandomkeyhint
+        echo "Installing vandomkeyhint.."
+        echo ""
+        silent !mkdir -p ~/.vim/bundle/vim-vandomkeyhint
+        silent !git clone https://github.com/t16ing/vim-vandomkeyhint ~/.vim/bundle/vim-vandomkeyhint
     endif
     set rtp+=~/.vim/bundle/vim-vandomkeyhint/
     call vandomkeyhint#rc()
-
-    VkhAdd 'plugin vandomkeyhint: Vim plugin to install and show user-defined hints.'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " plugin vim-startify {
+    " ~/.vim/bundle/vim-startify/doc/startify.txt
+
+    " Define your own header. {
+    let g:ascii = [
+        \ '  ____  __   _   ____  _  _  ___',
+        \ ' (_  _)/  ) / ) (_  _)( \( )/ __)',
+        \ '   )(   )( / _ \ _)(_  )  (( (_-.',
+        \ '  (__) (__)\___/(____)(_)\_)\___/',]
+    let g:startify_custom_header =
+        \ 'startify#pad(g:ascii + startify#fortune#boxed())'
+    " }
+
+    " Startify displays lists. Each list consists of a `type` and optionally a `header` and custom `indices`. {
+    let g:startify_lists = [
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+        \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ ]
+    " }
+
+    " hardcoded files or directories that will always be shown {
+    let g:startify_bookmarks = [
+        \ '~/.vim/vimrc',
+        \ '~/.zshrc',
+        \ '~/.tmux.conf',
+        \ '~/.config/ranger/rc.conf',
+        \ '~/README.md',
+        \ '~/.vim/README.md',
+        \ '~/.config/ranger/README.md' ]
+    " }
+
+    " The directory to save/load sessions to/from.
+    let g:startify_session_dir = '~/.vim/session'
+
+    " Automatically update sessions
+    let g:startify_session_persistence=1
+
+    " updates oldfiles on-the-fly, so that :Startify is always up-to-date.
+    let g:startify_update_oldfiles = 0
+
+    " Unicode box-drawing characters will be used instead.
+    let g:startify_fortune_use_unicode = 1
+
+    " anytime <leader>S to launch Startify
+    map <leader>S :Startify<CR>
+
+    VkhAdd 'vim-startify: <leader>S open the fancy start screen. :SSave to save session.'
+    " }
+
+    " plugin nerdtree {
+    " ~/.vim/bundle/nerdtree/doc/NERDTree.txt
+    " ~/.vim/bundle/nerdtree-git-plugin/README.md
+
+    let g:NERDTreeQuitOnOpen = 1
+    let g:NERDTreeGitStatusWithFlags = 1
+    let g:NERDTreeIgnore = ['^node_modules$']
+    let g:NERDTreeWinSize = 32
+    let g:NERDTreeGitStatusUseNerdFonts = 1
+
+    map <leader>nn <ESC>:NERDTreeToggle<CR>
+    map <leader>nf <ESC>:NERDTreeFind<CR>
+
+    VkhAdd 'nerdtree: <leader>nn open nerdtree window. <leader>nf find current file in nerdtree.'
+    " }
+
+    " plugin fzf.vim {
+    " ~/.vim/bundle/fzf/README-VIM.md
+    " ~/.vim/bundle/fzf.vim/README.md
+
+    noremap <silent> <C-p> :Files<CR>
+    noremap <silent> <expr> <leader>ff ':Rg '.expand('<cword>').'<CR>'
+    vnoremap <leader>ff y:Rg <C-R><C-R>"<CR>
+    noremap <silent> <leader>fh :History<CR>
+    noremap <silent> <leader>ft :Tags<CR>
+    noremap <silent> <leader>fl :Lines<CR>
+    noremap <silent> <leader>fb :Buffers<CR>
+    noremap <silent> <leader>fg :BCommits<CR>
+    noremap <silent> <leader>; :History:<CR>
+    noremap <silent> <leader>f: :History:<CR>
+    noremap <silent> <leader>f/ :History/<CR>
+
+    " [Buffers] Jump to the existing window if possible
+    let g:fzf_buffers_jump = 1
+    " [[B]Commits] Customize the options used by 'git log':
+    let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+    " [Tags] Command to generate tags file
+    let g:fzf_tags_command = 'ctags -R'
+
+    " default option: Preview window on the right with 50% width
+    let g:fzf_preview_window = 'right:60%'
+    " Default fzf layout { 'window': { 'width': 0.9, 'height': 0.6 } }
+    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
+
+    VkhAdd 'fzf.vim: <c-p> open ctrlp window. <leader>f for other fzf functions.'
+    " }
+
+    " plugin vim-rooter {
+    " ~/.vim/bundle/vim-rooter/README.mkd
+    let g:rooter_patterns = ['__vim_project_root', '.git/']
+    let g:rooter_silent_chdir = 1
+    " }
+
     " plugin vim-signature {
     " ~/.vim/bundle/vim-signature/doc/signature.txt
 
@@ -535,125 +679,10 @@
     " When a line has both marks and markers, display the sign for markers
     let g:SignaturePrioritizeMarks = 0
 
-    VkhAdd 'plugin vim-signature: A plugin to toggle, display and navigate vim marks.'
     VkhAdd 'mark: mm toggle a mark, mn/mp motion, ml list, m<space> clear all'
     VkhAdd 'marker: m[0-9] toggle a marker, mN/mP motion, mL list, m<BS> clear all'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin nerdtree {
-    " ~/.vim/bundle/nerdtree/doc/NERDTree.txt
-
-    let g:NERDTreeQuitOnOpen = 1
-    let g:NERDTreeGitStatusWithFlags = 1
-    let g:NERDTreeIgnore = ['^node_modules$']
-    let g:NERDTreeWinSize = 32
-
-    map <leader>nn <ESC>:NERDTreeToggle<CR>
-    map <leader>nf <ESC>:NERDTreeFind<CR>
-
-    VkhAdd 'plugin nerdtree: A tree explorer plugin to rule the Vim world.'
-    VkhAdd '<leader>nn open nerdtree window. <leader>nf find current file in nerdtree.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-nerdtree-syntax-highlight {
-    " ~/.vim/bundle/vim-nerdtree-syntax-highlight/README.md
-
-    " nerdtree with vim-nerdtree-syntax-highlight is slow
-    " try https://github.com/tiagofumo/vim-nerdtree-syntax-highlight/issues/17
-    " and https://github.com/tiagofumo/vim-nerdtree-syntax-highlight/issues/6
-
-    " To improve syntax highlighting scroll performance, try this
-    " https://github.com/vim/vim/issues/1735
-    set regexpengine=1
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-devicons {
-    " ~/.vim/bundle/vim-devicons/README.md
-    " issue:
-    "  https://github.com/ryanoasis/vim-devicons/issues/274
-    " screenshot:
-    "  https://user-images.githubusercontent.com/24741314/60797287-939f2d80-a1a1-11e9-8e18-a19d3a5b1711.png
-    " fix:
-    "  https://github.com/ryanoasis/vim-devicons/issues/274#issuecomment-513560707
-    let g:rainbow_conf = {
-          \    'separately': {
-          \       'nerdtree': 0
-          \    }
-          \}
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-easymotion {
-    " ~/.vim/bundle/vim-easymotion/README.md
-    VkhAdd 'plugin vim-easymotion: <leader><leader>w jump forward <leader><leader>b jump backward.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-expand-region {
-    " ~/.vim/bundle/vim-expand-region/README.md
-    VkhAdd "plugin vim-expand-region: `+` to expand the visual selection and `_` to shrink it."
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin ctrlp {
-    " ~/.vim/bundle/ctrlp.vim/doc/ctrlp.txt
-
-    let g:ctrlp_max_files=0
-    let g:ctrlp_use_caching=1
-    let g:ctrlp_clear_cache_on_exit=1
-    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
-    VkhAdd 'ctrlp.vim: <c-p> open ctrlp window.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin ale {
-    " ~/.vim/bundle/ale/README.md
-
-    let g:ale_linters = {
-    \ 'javascript': ['jshint'],
-    \ 'python': ['pylint', 'python'],
-    \ 'go': ['go', 'golint', 'errcheck'],
-    \}
-
-    " navigate between errors quickly
-    nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-    nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-    " specify what text should be used for signs
-    let g:ale_sign_error = 'ER'
-    let g:ale_sign_warning = 'WA'
-
-    " default is 200 ms, increase to 5s to save battery power
-    let g:ale_lint_delay = 5000
-
-    " pyhon default mode, set 'indent' to 2 space, and other stuff.
-    autocmd FileType python setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab smarttab textwidth=100
-
-    VkhAdd 'plugin ale: Syntax checking. c-k, c-j to navigate errors.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin tagbar {
-    " ~/.vim/bundle/tagbar/doc/tagbar.txt
-    " plugin tagbar: requires apt install exuberant-ctags.
-    " ~/.vim/bundle/tagbar-javascript.vim/README.md
-    " plugin tagbar-javascript.vim: requires npm install -g esctags.
-
-    let g:tagbar_autofocus   = 1
-    let g:tagbar_autoclose   = 0
-    let g:tagbar_autoshowtag = 1
-    let g:tagbar_width = 32
-
-    map tt <ESC>:TagbarToggle<CR>
-
-    VkhAdd 'tt to open Tagbar window.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " plugin vim-fugitive & plugin gitgutter {
     " ~/.vim/bundle/vim-gitgutter/doc/gitgutter.txt
     " ~/.vim/bundle/vim-fugitive/doc/fugitive.txt
@@ -676,132 +705,235 @@
     VkhAdd '<leader>gl brings up commit history.'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin easy_align {
-    " ~/.vim/bundle/vim-easy-align/README.md
-    " ~/.vim/bundle/vim-easy-align/EXAMPLES.md
+    " plugin tagbar {
+    " ~/.vim/bundle/tagbar/doc/tagbar.txt
+    " plugin tagbar: requires apt install exuberant-ctags.
+    " ~/.vim/bundle/tagbar-javascript.vim/README.md
+    " plugin tagbar-javascript.vim: requires npm install -g esctags.
 
-    let g:easy_align_delimiters = {
-          \ '>': { 'pattern': '>>\|=>\|>' },
-          \ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignore_groups': ['String'] },
-          \ '#': { 'pattern': '#\+', 'ignore_groups': ['String'] },
-          \ ']': {
-          \     'pattern':       '[[\]]',
-          \     'left_margin':   0,
-          \     'right_margin':  0,
-          \     'stick_to_left': 0
-          \   },
-          \ ')': {
-          \     'pattern':       '[()]',
-          \     'left_margin':   0,
-          \     'right_margin':  0,
-          \     'stick_to_left': 0
-          \   }
-          \ }
+    let g:tagbar_autofocus   = 1
+    let g:tagbar_autoclose   = 0
+    let g:tagbar_autoshowtag = 1
+    let g:tagbar_width = 32
 
-    vnoremap <silent> <Enter> :LiveEasyAlign<Enter>
+    map tt <ESC>:TagbarToggle<CR>
 
-    VkhAdd 'plugin vim-easy-align: (visual mode) <Enter>=='
+    VkhAdd 'tagbar: tt to open Tagbar window.'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-commentary {
-    " ~/.vim/bundle/vim-commentary/README.markdown
-    VkhAdd 'plugin vim-commentary: gcc for single line or gcap for a paragraph.'
+    " plugin ale {
+    " ~/.vim/bundle/ale/README.md
+
+    let g:ale_linters = {
+    \ 'javascript': ['jshint'],
+    \ 'python': ['pylint', 'python'],
+    \ 'go': ['go', 'golint', 'errcheck'],
+    \}
+
+    " Disable linting for minify or filetypes managed by other plugins
+    let g:ale_pattern_options = {
+    \ '\.min.js$': {'ale_enabled': 0},
+    \ '\.php$': {'ale_enabled': 0},
+    \ '\.py$': {'ale_enabled': 0},
+    \ }
+
+    " navigate between errors quickly
+    nmap <silent> [e <Plug>(ale_previous_wrap)
+    nmap <silent> ]e <Plug>(ale_next_wrap)
+
+    " specify what text should be used for signs
+    let g:ale_sign_error = 'ER'
+    let g:ale_sign_warning = 'WA'
+
+    " default is 200 ms, increase to 5s to save battery power
+    let g:ale_lint_delay = 5000
+
+    VkhAdd 'ale: ]e [e to navigate errors.'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " plugin tmux-complete.vim {
+    " ~/.vim/bundle/tmux-complete.vim/README.md
+    VkhAdd 'vim-complete.vim: complete words visible in Tmux panes'
+    " }
+
+    " plugin vim-css-color {
+    " ~/.vim/bundle/vim-css-color/README.md
+    VkhAdd 'vim-css-color: A very fast, multi-syntax context-sensitive color name highlighter'
+    " }
+
+    " plugin ultisnips and vim-snippets {
+    " ~/.vim/bundle/ultisnips/README.md
+    let g:UltiSnipsExpandTrigger="<c-o>"
+    let g:UltiSnipsJumpForwardTrigger="<c-n>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+    let g:UltiSnipsEditSplit="horizontal"
+    " snippets: ~/.vim/bundle/vim-snippets/snippets
+    source ~/.vim/snippets/markdown.vim
+    VkhAdd 'ultisnips: <c-o> trigger snippets.'
+    " }
+
+    " plugin vim-instant-markdown {
+    " ~/.vim/bundle/vim-instant-markdown/README.md
+    let g:instant_markdown_slow = 0
+    let g:instant_markdown_autostart = 0
+    "let g:instant_markdown_open_to_the_world = 1
+    let g:instant_markdown_allow_unsafe_content = 0
+    let g:instant_markdown_mathjax = 1
+    let g:instant_markdown_browser = "google-chrome --incognito"
+    "let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+    let g:instant_markdown_port = 8888
+    let g:instant_markdown_autoscroll = 1
+    VkhAdd 'vim-instant-markdown: <leader>R to preview markdown.'
+    " }
+
+    " plugin vim-table-mode {
+    " ~/.vim/bundle/vim-table-mode/README.md
+    VkhAdd 'vim-table-mode: <leader>tm to start automatic table creator & formatter'
+    " }
+
+    " plugin vim-markdown-toc {
+    " ~/.vim/bundle/vim-markdown-toc/README.md
+    VkhAdd 'vim-markdown-toc: :GenTocGFM to generate markdown TOC.'
+    " }
+
+    " plugin vim-indent-guides {
+    " ~/.vim/bundle/vim-indent-guides/README.markdown
+
+    " have indent guides enabled by default
+    let g:indent_guides_enable_on_vim_startup = 1
+    " customize the size of the indent guide
+    let g:indent_guides_guide_size = 1
+    " Use this option to control which indent level to start showing guides from.
+    let g:indent_guides_start_level = 2
+    " Use this option to specify a list of filetypes to disable the plugin for.
+    let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
+
+    " }
+
+    " plugin rainbow {
+    " ~/.vim/bundle/rainbow/README.md
+    let g:rainbow_active = 1
+    " }
+
+    " plugin vim-expand-region {
+    " ~/.vim/bundle/vim-expand-region/README.md
+    let g:expand_region_text_objects = {
+                \ 'iw'  :0,
+                \ 'iW'  :0,
+                \ 'i"'  :1,
+                \ 'i''' :1,
+                \ 'i]'  :1,
+                \ 'ib'  :1,
+                \ 'iB'  :1,
+                \ 'ip'  :1,
+                \ 'if'  :1,
+                \ 'ic'  :1,
+                \ }
+    VkhAdd "vim-expand-region: `+` to expand the visual selection and `_` to shrink it."
+    " }
+
+    " plugin vim-surround {
+    " ~/.vim/bundle/vim-surround/README.markdown
+    VkhAdd "'+' then 'S' then surround."
+    " }
+
     " plugin MatchTag {
     " ~/.vim/bundle/MatchTag/README.mkd
-
     " no options, and only works on html/xml ft
     " example: ~/.vim/bundle/MatchTag/test.html
-    "
-    VkhAdd 'plugin MatchTag: highlights the matching HTML tag.'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " alternate plugin for clean mode for copy/paste {
-
-    function MY_PROC_CLEAN_MODE_TOGGLE()
-      if ! exists('g:my_clean_mode_toggle')
-        let g:my_clean_mode_toggle=0
-      endif
-
-      if g:my_clean_mode_toggle == 0
-        set paste
-        set nonu
-        set norelativenumber
-        set signcolumn=no
-        let g:my_clean_mode_toggle=1
-      else
-        set nopaste
-        set nu
-        set relativenumber
-        set signcolumn=yes
-        let g:my_clean_mode_toggle=0
-      endif
-    endfunction
-
-    map <leader>cc <ESC>:call MY_PROC_CLEAN_MODE_TOGGLE()<CR>
-
-    VkhAdd '<leader>cc enter/leave clean mode.'
+    " plugin vim-commentary {
+    " ~/.vim/bundle/vim-commentary/README.markdown
+    VkhAdd 'vim-commentary: gcc for single line or gcap for a paragraph.'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin startify {
-    " ~/.vim/bundle/vim-startify/doc/startify.txt
-
-    " Define your own header. {
-    let g:ascii = [
-        \ '  ____  __   _   ____  _  _  ___',
-        \ ' (_  _)/  ) / ) (_  _)( \( )/ __)',
-        \ '   )(   )( / _ \ _)(_  )  (( (_-.',
-        \ '  (__) (__)\___/(____)(_)\_)\___/',]
-    let g:startify_custom_header =
-        \ 'startify#pad(g:ascii + startify#fortune#boxed())'
+    " plugin vim-peekaboo {
+    " ~/.vim/bundle/vim-peekaboo/README.md
+    VkhAdd 'vim-peekaboo: (NORMAL)" or @ (INSERT) <CTRL-R> to see registers.'
     " }
 
-    " Startify displays lists. Each list consists of a `type` and optionally a `header` and custom `indices`. {
-    let g:startify_lists = [
-        \ { 'type': 'sessions',  'header': ['   Sessions']       },
-        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
-        \ { 'type': 'files',     'header': ['   MRU']            },
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-        \ { 'type': 'commands',  'header': ['   Commands']       },
-        \ ]
+    " plugin undotree {
+    " ~/.vim/bundle/undotree/README.md
+
+    " change windows layout for bigger diff area
+    let g:undotree_WindowLayout = 2
+
+    " get focus after being opened
+    let g:undotree_SetFocusWhenToggle = 1
+
+    " Set to 1 to get short timestamps
+    let g:undotree_ShortIndicators = 1
+
+    " Set this to 1 to auto open the diff window.
+    let g:undotree_DiffAutoOpen = 1
+
+    " The function will be called after the undotree windows is initialized
+    function! g:Undotree_CustomMap()
+        nmap <buffer> k <plug>UndotreeNextState
+        nmap <buffer> j <plug>UndotreePreviousState
+    endfunc
+
+    " to toggle the undo-tree panel
+    nnoremap <leader>u :UndotreeToggle<cr>
+
+    VkhAdd 'undotree: <leader>u to open undo tree'
     " }
 
-    " hardcoded files or directories that will always be shown {
-    let g:startify_bookmarks = [
-        \ '~/.vimrc',
-        \ '~/.zshrc',
-        \ '~/.tmux.conf',
-        \ '~/.config/ranger/rc.conf',
-        \ '~/README.md',
-        \ '~/.vim/README.md',
-        \ '~/.config/ranger/README.md' ]
+    " plugin thesaurus_query.vim {
+    " ~/.vim/bundle/thesaurus_query.vim/README.md
+    VkhAdd 'thesaurus_query.vim: <leader>cs to lookup synonyms'
     " }
 
-    " The directory to save/load sessions to/from.
-    let g:startify_session_dir = '~/.vim/session'
-
-    " Automatically update sessions
-    let g:startify_session_persistence=1
-
-    " updates oldfiles on-the-fly, so that :Startify is always up-to-date.
-    let g:startify_update_oldfiles = 0
-
-    " Unicode box-drawing characters will be used instead.
-    let g:startify_fortune_use_unicode = 1
-
-    " anytime <leader>S to launch Startify
-    map <leader>S :Startify<CR>
-
-    VkhAdd 'plugin vim-startify: <leader>S open the fancy start screen for Vim. :SSave to save session.'
+    " plugin vim-visual-multi {
+    " ~/.vim/bundle/vim-visual-multi/README.md
+    VkhAdd 'vim-visual-multi: ctrl+N to select words, n to confirm, q to skip, \\a to align'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " plugin vim-yankstack {
+    " ~/.vim/bundle/vim-yankstack/README.md
+    VkhAdd '<a-p> cycle backward through your history of yanks'
+    " }
+
+    " plugin vim-colorschemes {
+    " ~/.vim/bundle/vim-colorschemes/README.md
+    set t_Co=256
+    try
+        colorscheme PaperColor
+    catch
+        colorscheme murphy
+    endtry
+
+    set background=dark
+    " }
+
+    " plugin vim-nerdtree-syntax-highlight {
+    " ~/.vim/bundle/vim-nerdtree-syntax-highlight/README.md
+
+    " nerdtree with vim-nerdtree-syntax-highlight is slow
+    " try https://github.com/tiagofumo/vim-nerdtree-syntax-highlight/issues/17
+    " and https://github.com/tiagofumo/vim-nerdtree-syntax-highlight/issues/6
+
+    " To improve syntax highlighting scroll performance, try this
+    " https://github.com/vim/vim/issues/1735
+    set regexpengine=1
+    " }
+
+    " plugin vim-devicons {
+    " ~/.vim/bundle/vim-devicons/README.md
+    " issue:
+    "  https://github.com/ryanoasis/vim-devicons/issues/274
+    " screenshot:
+    "  https://user-images.githubusercontent.com/24741314/60797287-939f2d80-a1a1-11e9-8e18-a19d3a5b1711.png
+    " fix:
+    "  https://github.com/ryanoasis/vim-devicons/issues/274#issuecomment-513560707
+    let g:rainbow_conf = {
+          \    'separately': {
+          \       'nerdtree': 0
+          \    }
+          \}
+    " }
+
     " plugin lightline.vim {
     " ~/.vim/bundle/lightline.vim/README.md
     " plugin lightline-bufferline
@@ -810,6 +942,8 @@
     " ~/.vim/bundle/lightline-hunks/README.md
     " plugin lightline-ale
     " ~/.vim/bundle/lightline-ale/README.md
+    " plugin vim-lightline-coc
+    " ~/.vim/bundle/vim-lightline-coc/README.md
 
     " lightline {
     let g:lightline = {
@@ -825,12 +959,11 @@
         \ 'right': [ [ 'lineinfo' ],
         \            [ 'percent' ],
         \            [ 'filetype', 'fileencoding', 'fileformat' ],
-        \            [ 'cocstatus' ],
+        \            [ 'coc_errors', 'coc_warnings', 'coc_ok', 'coc_status' ],
         \            [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ],
         \ ] }
     let g:lightline.component_function = {
         \ 'hunks': 'lightline#hunks#composer',
-        \ 'cocstatus': 'coc#status',
         \ }
     let g:lightline.tabline = {
         \ 'left': [ [ 'buffers' ] ],
@@ -876,12 +1009,28 @@
     endfunction
     " }
 
-    " icons as ale indicators {
-    let g:lightline#ale#indicator_checking = "..."
-    let g:lightline#ale#indicator_infos = "\uf129 "
-    let g:lightline#ale#indicator_warnings = "\uf071 "
-    let g:lightline#ale#indicator_errors = "\uf05e "
-    let g:lightline#ale#indicator_ok = ""
+    " lightlien-ale indicators and configs {
+
+        let g:lightline#ale#indicator_checking = "..."
+        let g:lightline#ale#indicator_infos = "(e)\uf129 "
+        let g:lightline#ale#indicator_warnings = "(e)\uf071 "
+        let g:lightline#ale#indicator_errors = "(e)\uf05e "
+        let g:lightline#ale#indicator_ok = ""
+
+    " }
+
+    " vim-lightline-coc indicators and configs {
+
+        let g:lightline#coc#indicator_warnings = "(g)\uf071 "
+        let g:lightline#coc#indicator_errors = "(g)\uf05e "
+        let g:lightline#coc#indicator_ok = ""
+
+        " register lightline#coc compoments {
+        try
+            call lightline#coc#register()
+        catch
+        endtry " }
+
     " }
 
     " `-- INSERT --` is unnecessary anymore because the mode information is displayed in the statusline.
@@ -920,9 +1069,6 @@
     nmap g9 <Plug>lightline#bufferline#go(9)
     " }
 
-    " force lightline update coc status
-    autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
-
     VkhAdd "plugin vim-airline: Lean & mean status/tabline for vim that's light as air."
     VkhAdd '<c-o> jump backward. <c-i> jump forward.'
     VkhAdd '<leader>- or <leader>| to splie window. Q to close window.'
@@ -930,113 +1076,10 @@
     VkhAdd 'gn to next buffer, gp to previous buffer, g[1-9] to move to tab n'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin jedi-vim {
-    " ~/.vim/bundle/jedi-vim/doc/jedi-vim.txt
-    let g:jedi#goto_command = "gd" " goto definition, if not found, fallback to assignment
-    let g:jedi#goto_definitions_command = ""
-    let g:jedi#goto_assignments_command = ""
-    let g:jedi#goto_stubs_command = ""
-    let g:jedi#documentation_command = "K"
-    let g:jedi#usages_command = "<leader>f"
-    let g:jedi#completions_command = ""
-    let g:jedi#rename_command = "<leader>rn"
-    VkhAdd 'plugin jedi-vim: awesome Python autocompletion with Vim'
-    VkhAdd 'gd for definition, <leader>rn for rename, <leader>f for usage'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-colorschemes {
-    " ~/.vim/bundle/vim-colorschemes/README.md
-    set t_Co=256
-    try
-    colorscheme PaperColor
-    catch
-    colorscheme murphy
-    endtry
-
-    set background=dark
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin rainbow {
-    " ~/.vim/bundle/rainbow/README.md
-    let g:rainbow_active = 1
-    VkhAdd 'plugin rainbow: help you read complex code by showing diff level of parentheses in diff color'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin ack.vim {
-    " ~/.vim/bundle/ack.vim/README.md
-    map <expr> <leader>f ':Ack '.expand('<cword>').'<cr>'
-    VkhAdd 'plugin ack.vim: source code search tool. <leader>f to search code.'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-peekaboo {
-    " ~/.vim/bundle/vim-peekaboo/README.md
-    VkhAdd '" or @ in normal mode and <CTRL-R> in insert mode to see the contents of the registers'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin undotree {
-    " ~/.vim/bundle/undotree/README.md
-
-    " change windows layout for bigger diff area
-    let g:undotree_WindowLayout = 2
-
-    " get focus after being opened
-    let g:undotree_SetFocusWhenToggle = 1
-
-    " to toggle the undo-tree panel
-    nnoremap <leader>u :UndotreeToggle<cr>
-
-    VkhAdd 'plugin undotree: visualizes undo history, <leader>u to open undo tree'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-indent-guides {
-    " ~/.vim/bundle/vim-indent-guides/README.markdown
-
-    " have indent guides enabled by default
-    let g:indent_guides_enable_on_vim_startup = 1
-
-    " customize the size of the indent guide
-    let g:indent_guides_guide_size = 1
-
-    " Use this option to control which indent level to start showing guides from.
-    let g:indent_guides_start_level = 2
-
-    " Use this option to specify a list of filetypes to disable the plugin for.
-    let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
-
-    VkhAdd 'plugin vim-indent-guides: visually displaying indent levels'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-table-mode {
-    " ~/.vim/bundle/vim-table-mode/README.md
-    VkhAdd 'plugin vim-table-mode: <leader>tm to start automatic table creator & formatter'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin thesaurus_query.vim {
-    " ~/.vim/bundle/thesaurus_query.vim/README.md
-    VkhAdd 'plugin thesaurus_query.vim: <leader>cs to lookup synonyms of any word under cursor or phrase covered in visual mode, and replace it with an user chosen synonym'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-visual-multi {
-    " ~/.vim/bundle/vim-visual-multi/README.md
-    VkhAdd 'plugin vim-visual-multi: ctrl+N to select words, n to confirm, q to skip'
-    " }
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " plugin coc.nvim {
-    " ~/.vim/bundle/coc.nvim/README.md
+    " ~/.vim/bundle/coc.nvim/Readme.md
     " https://github.com/neoclide/coc.nvim#example-vim-configuration
 
-    " coc plugins {
     let g:coc_global_extensions = [
                 \ 'coc-json',
                 \ 'coc-vimlsp',
@@ -1048,131 +1091,136 @@
                 \ 'coc-pyright',
                 \ 'coc-omnisharp',
                 \ ]
+
+    " CoC Generic {
+
+        " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
+        set updatetime=500
+
+        " Don't pass messages to |ins-completion-menu|.
+        set shortmess+=c
+
+        " Always show the signcolumn, otherwise it would shift the text each time {
+        " diagnostics appear/become resolved.
+        try
+            set signcolumn=yes
+        catch
+        endtry
+        " }
+
     " }
 
-    " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
-    set updatetime=500
+    " CoC Key Bindings {
 
-    " Don't pass messages to |ins-completion-menu|.
-    set shortmess+=c
+        " Make <tab> and <s-tab> to choose completion item {
+        inoremap <silent><expr> <TAB>
+                    \ pumvisible() ? "\<C-n>" :
+                    \ <SID>check_back_space() ? "\<TAB>" :
+                    \ coc#refresh()
+        inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+        function! s:check_back_space() abort
+            let col = col('.') - 1
+            return !col || getline('.')[col - 1]  =~# '\s'
+        endfunction
+        " }
 
-    " Always show the signcolumn, otherwise it would shift the text each time {
-    " diagnostics appear/become resolved.
-    if has("patch-8.1.1564")
-      " Recently vim can merge signcolumn and number column into one
-      set signcolumn=number
-    else
-      set signcolumn=yes
-    endif
+        " Use `[g` and `]g` to navigate diagnostics {
+        " Use `<space>a` or `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+        nmap <silent> [g <Plug>(coc-diagnostic-prev)
+        nmap <silent> ]g <Plug>(coc-diagnostic-next)
+        " }
+
+        " GoTo code navigation. {
+        nmap <silent> gd <Plug>(coc-definition)
+        nmap <silent> gy <Plug>(coc-type-definition)
+        nmap <silent> gi <Plug>(coc-implementation)
+        nmap <silent> gr <Plug>(coc-references)
+        " }
+
+        " Use K to show documentation in preview window. {
+        nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+        function! s:show_documentation()
+          if (index(['vim','help'], &filetype) >= 0)
+            execute 'h '.expand('<cword>')
+          elseif (coc#rpc#ready())
+            call CocActionAsync('doHover')
+          else
+            execute '!' . &keywordprg . " " . expand('<cword>')
+          endif
+        endfunction
+        " }
+
+        " Symbol renaming.
+        nmap <leader>rn <Plug>(coc-rename)
+
+        " Formatting selected code.
+        xmap <leader>=  <Plug>(coc-format-selected)
+        nmap <leader>=  <Plug>(coc-format-selected)
+
+        " Applying codeAction to the selected region. {
+        " Example: `<leader>aap` for current paragraph
+        xmap <leader>a  <Plug>(coc-codeaction-selected)
+        nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+        " Remap keys for applying codeAction to the current buffer.
+        nmap <leader>ac  <Plug>(coc-codeaction)
+        " Apply AutoFix to problem on the current line.
+        nmap <leader>qf  <Plug>(coc-fix-current)
+        " }
+
+        " Map function (f) and class (c) text objects {
+        " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+        xmap if <Plug>(coc-funcobj-i)
+        omap if <Plug>(coc-funcobj-i)
+        xmap af <Plug>(coc-funcobj-a)
+        omap af <Plug>(coc-funcobj-a)
+        xmap ic <Plug>(coc-classobj-i)
+        omap ic <Plug>(coc-classobj-i)
+        xmap ac <Plug>(coc-classobj-a)
+        omap ac <Plug>(coc-classobj-a)
+        " }
+
+        " Use CTRL-S for selections ranges. {
+        " Requires 'textDocument/selectionRange' support of language server.
+        nmap <silent> <c-s> <Plug>(coc-range-select)
+        xmap <silent> <c-s> <Plug>(coc-range-select)
+        " }
+
     " }
 
-    " Use <c-o> to trigger completion in insert mode.
-    inoremap <silent><expr> <c-o> coc#refresh()
+    " CoCList Mappings {
 
-    " Make <CR> auto-select the first completion item and notify coc.nvim to {
-    " format on enter, <cr> could be remapped by other vim plugin
-    inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                                  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+        " Show all diagnostics.
+        nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+        " Manage extensions.
+        nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+        " Show commands.
+        nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+        " Find symbol of current document.
+        nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+        " Search workspace symbols.
+        nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+        " Do default action for next item.
+        nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+        " Do default action for previous item.
+        nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+        " Resume latest coc list.
+        nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
     " }
 
-    " Use `[g` and `]g` to navigate diagnostics {
-    " Use `<space>a` or `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-    nmap <silent> [g <Plug>(coc-diagnostic-prev)
-    nmap <silent> ]g <Plug>(coc-diagnostic-next)
-    " }
-
-    " GoTo code navigation. {
-    nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> gy <Plug>(coc-type-definition)
-    nmap <silent> gi <Plug>(coc-implementation)
-    nmap <silent> gr <Plug>(coc-references)
-    " }
-
-    " Use K to show documentation in preview window. {
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-    function! s:show_documentation()
-      if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-      elseif (coc#rpc#ready())
-        call CocActionAsync('doHover')
-      else
-        execute '!' . &keywordprg . " " . expand('<cword>')
-      endif
-    endfunction
-    " }
-
-    " Symbol renaming.
-    nmap <leader>rn <Plug>(coc-rename)
-
-    " Formatting selected code.
-    xmap <leader>=  <Plug>(coc-format-selected)
-    nmap <leader>=  <Plug>(coc-format-selected)
-
-    " Applying codeAction to the selected region. {
-    " Example: `<leader>aap` for current paragraph
-    xmap <leader>a  <Plug>(coc-codeaction-selected)
-    nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-    " Remap keys for applying codeAction to the current buffer.
-    nmap <leader>ac  <Plug>(coc-codeaction)
-    " Apply AutoFix to problem on the current line.
-    nmap <leader>qf  <Plug>(coc-fix-current)
-    " }
-
-    " Map function (f) and class (c) text objects {
-    " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-    xmap if <Plug>(coc-funcobj-i)
-    omap if <Plug>(coc-funcobj-i)
-    xmap af <Plug>(coc-funcobj-a)
-    omap af <Plug>(coc-funcobj-a)
-    xmap ic <Plug>(coc-classobj-i)
-    omap ic <Plug>(coc-classobj-i)
-    xmap ac <Plug>(coc-classobj-a)
-    omap ac <Plug>(coc-classobj-a)
-    " }
-
-    " Use CTRL-S for selections ranges. {
-    " Requires 'textDocument/selectionRange' support of language server.
-    nmap <silent> <c-s> <Plug>(coc-range-select)
-    xmap <silent> <c-s> <Plug>(coc-range-select)
-    " }
-
-    " Mappings for CoCList {
-    " Show all diagnostics.
-    nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-    " Manage extensions.
-    nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-    " Show commands.
-    nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-    " Find symbol of current document.
-    nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-    " Search workspace symbols.
-    nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-    " Do default action for next item.
-    nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-    " Do default action for previous item.
-    nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-    " Resume latest coc list.
-    nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-    " }
-
-    " use coc-explorer as nerdtree
-    map <leader>ne <ESC>:CocCommand explorer<CR>
-
-    VkhAdd 'plugin coc.nvim: Conquer of Completion'
     VkhAdd 'gd for definition, gy for type, gi for implementation, gf for reference'
-    VkhAdd 'try <leader>ac <leader>aap <leader>= <leader>rn'
+    VkhAdd 'Code actions: try <leader>ac <leader>aap <leader>= <leader>rn'
     VkhAdd ']g and [g for next diagnostic, and <leader>qf for quick fix'
     VkhAdd 'try cif in funcion, and cic in class.'
-    VkhAdd '<c-s> for coc selection'
+    VkhAdd '<c-s> for CoC selection'
     VkhAdd '<space>a,e,c,o,s,j,k,p for CoCList mappings'
     " }
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " plugin vim-markdown-multi {
-    " ~/.vim/bundle/vim-markdown-multi/README.md
-    VkhAdd 'plugin vim-markdown-multi: :GenTocGFM to generate markdown TOC.'
-    " }
-
 " }
+
+try
+    source ~/.vimrc.local
+catch
+endtry

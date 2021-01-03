@@ -60,7 +60,7 @@ Use ':' or ';' as command key.
 | `<leader>bd`                             | Close buffer.                            |
 | `<c-w>-` `<c-w>`<code>\ or &#124;</code> | Split window.                            |
 | `<shift-arrow>`                          | Window resize.                           |
-| `<c-w>_`                                 | Maximinze current window.                |
+| `<c-w>_`                                 | Maximize current window.                 |
 | `gj` `gk` `g<tab>`                       | Next or previous or last opened buffer.  |
 | `g<number>`                              | Goto buffer n.                           |
 | `W` `B`                                  | Faster word and back-word motion.        |
@@ -104,7 +104,7 @@ Use ':' or ';' as command key.
 | `m<number>`           | Toggle marker.                     |
 | `mN` or `mP`          | Next or previous marker.           |
 | `m<space>` or `m<BS>` | Clear mark or marker.              |
-| `ml` or `mL`          | Liast mark or marker.              |
+| `ml` or `mL`          | List mark or marker.               |
 | `"` or `@`            | Load from register.                |
 | (INSERT)`<ctrl-r>`    | Load from register in insert mode. |
 
@@ -154,7 +154,7 @@ Use ':' or ';' as command key.
 | `<leader>ac`    | Apply code action to current buffer.                        |
 | `<leader>qf`    | Apply quick fix to the problem of the current line.         |
 | `<leader>rn`    | Symbol rename.                                              |
-| `<leader>R`     | Complie and Run.                                            |
+| `<leader>R`     | Compile and Run.                                            |
 | `<leader>T`     | Open terminal.                                              |
 
 ### Markdown

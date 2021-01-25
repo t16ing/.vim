@@ -834,7 +834,7 @@
 
     " plugin vim-surround {
     " ~/.vim/bundle/vim-surround/README.markdown
-    VkhAdd "'+' then 'S' then surround."
+    VkhAdd "'+' then 's' then surround."
     " }
 
     " plugin MatchTag {

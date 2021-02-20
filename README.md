@@ -17,6 +17,8 @@
     * [Marks and Register](#marks-and-register)
     * [File and Finder](#file-and-finder)
     * [Coding Navigation](#coding-navigation)
+    * [Git Navigation](#git-navigation)
+    * [Warning/Error Navigation](#warningerror-navigation)
     * [Integrated Development Environment](#integrated-development-environment)
     * [Markdown](#markdown)
     * [Spell](#spell)
@@ -53,193 +55,190 @@ Use ':' or ';' as command key.
 
 ### Line, Buffer, Window, and Tab Motion
 
-Tab:
+Buffer and Line:
 
-| Key                | Action                  |
-|--------------------|-------------------------|
-| `<leader>bt`       | Open buffer in new tab. |
-| `:tabn` or `:tabp` | Next or previous tab.   |
-| `<leader>bc`       | Close tab.              |
+| Key                    | Action                                  |
+|------------------------|-----------------------------------------|
+| **`gj` `gk` `g<tab>`** | Next or previous or last opened buffer. |
+| **`g<number>`**        | Goto buffer n.                          |
+| **`<leader>bd`**       | Close buffer.                           |
+| `W` `B`                | Faster word and back-word motion.       |
+| `z.`                   | Put current line to center of screen.   |
+| `z-`                   | Put current line to bottom of screen.   |
 
 Window:
 
-| Key                                      | Action                    |
-|------------------------------------------|---------------------------|
-| `<c-w>-` `<c-w>`<code>\ or &#124;</code> | Split window.             |
-| `<c-w>` then `j` or `k` or `h` or `l`    | Move around in windows.   |
-| `<c-w>_`                                 | Maximinze current window. |
-| `<shift-arrow>`                          | Window resize.            |
-| `Q`                                      | Close window.             |
-| `q`                                      | Close a quick window.     |
+| Key                                          | Action                                                        |
+|----------------------------------------------|---------------------------------------------------------------|
+| **`<c-w>-` `<c-w>`<code>\ or &#124;</code>** | Split window.                                                 |
+| **`<c-w>` then `j` or `k` or `h` or `l`**    | Move around in windows.                                       |
+| `<c-w>` then `J` or `K` or `H` or `L`        | Move current window to topmost/bottommost/leftmost/rightmost. |
+| `<c-w>_`                                     | Maximinze current window.                                     |
+| `Q`                                          | Close current window.                                         |
+| `q`                                          | Close a quick window.                                         |
 
-Buffer:
+Tab:
 
-| Key                      | Action                                   |
-|--------------------------|------------------------------------------|
-| `gj` `gk` `g<tab>`       | Next or previous or last opened buffer.  |
-| `g<number>`              | Goto buffer n.                           |
-| `<leader>bd`             | Close buffer.                            |
-
-Line:
-
-| Key                      | Action                                   |
-|--------------------------|------------------------------------------|
-| `W` `B`                  | Faster word and back-word motion.        |
-| `<c-u>` `<c-d>`          | Scroll without moving cursor.            |
-| `<leader><leader>w or b` | Easy move to word (forward or backward). |
+| Key        | Action                |
+|------------|-----------------------|
+| :tab split | Open new tab.         |
+| :tabc      | Close current tab.    |
+| :tabn      | Move to next tab.     |
+| :tabp      | Move to previous tab. |
 
 ### Edit and Formatting
 
 Coding style:
 
-| Key                  | Action                               |
-|----------------------|--------------------------------------|
-| `>` and `<` and `==` | Quick indent.                        |
-| (VISUAL)`=`          | Selected range indent.               |
-| `<leader>=`          | Format selected code.                |
-| `<leader><leader>t`  | Expand tabs for buffer or selection. |
+| Key                      | Action                               |
+|--------------------------|--------------------------------------|
+| **`>` and `<` and `==`** | Quick indent.                        |
+| **(VISUAL)`=`**          | Selected range indent.               |
+| `<leader>=`              | Format selected code.                |
+| `<leader><leader>t`      | Expand tabs for buffer or selection. |
 
 Code comment:
 
-| Key                 | Action                                            |
-|---------------------|---------------------------------------------------|
-| `gcc`               | Toggle comment.                                   |
-| `gcap`              | Toggle comment for a paragraph.                   |
+| Key    | Action                          |
+|--------|---------------------------------|
+| `gcc`  | Toggle comment.                 |
+| `gcap` | Toggle comment for a paragraph. |
 
 Clipboard:
 
-| Key                 | Action                                            |
-|---------------------|---------------------------------------------------|
-| `<leader>u`         | Open undo tree.                                   |
-| `<leader>pp`        | Toggle paste mode.                                |
-| `<a-p>`             | Cycle back yank history.                          |
+| Key          | Action                   |
+|--------------|--------------------------|
+| `<leader>u`  | Open undo tree.          |
+| `<leader>pp` | Toggle paste mode.       |
+| `<a-p>`      | Cycle back yank history. |
 
 ### Selection
 
 For searching:
 
-| Key                      | Action                        |
-|--------------------------|-------------------------------|
-| (VISUAL) then `*` or `#` | Search for current selection. |
-| `<leader>/`              | Disable highlight.            |
+| Key                          | Action                        |
+|------------------------------|-------------------------------|
+| **(VISUAL) then `*` or `#`** | Search for current selection. |
+| **`<leader>/`**              | Disable highlight.            |
 
 Surround editing:
 
-| Key               | Action                                         |
-|-------------------|------------------------------------------------|
-| `+` or `_`        | Selection expanding or shrinking.              |
-| `<c-s>`           | Language level selection expanding.            |
-| (VISUAL) then `s` | Surround edit.                                 |
-| `cif` `vic`       | `f` (function) and `c` (class) as text object. |
+| Key                   | Action                                         |
+|-----------------------|------------------------------------------------|
+| **`+` or `_`**        | Selection expanding or shrinking.              |
+| `<c-s>`               | (coc) Language level selection expanding.      |
+| **(VISUAL) then `S`** | Surround edit.                                 |
+| **`cif` `vic`**       | `f` (function) and `c` (class) as text object. |
 
 Multiple selection editing:
 
-| `<c-n>`            | Start multi-visual (EXTRA) mode, n for confirm, q for skip, `[ ]` for  selection navigation. |
-| `<c-n>` then `\\a` | Visual multi selection and align.                                                            |
-| `<c-n>` then `\\N` | Visual multi selection and insert leading number.                                            |
+| Key                 | Action                                                                                 |
+|---------------------|----------------------------------------------------------------------------------------|
+| **`<c-n>`**         | Start multi-visual (EXTRA) mode: n confirm and q skip; `[ ]` for selection navigation. |
+| *`<c-n>` then `\\a` | Visual multi selection and align.                                                      |
+| `<c-n>` then `\\N`  | Visual multi selection and insert leading number.                                      |
 
 ### Marks and Register
 
-Mark:
-
-| Key                | Action                             |
-|--------------------|------------------------------------|
-| `mm`               | Toggle mark.                       |
-| `mn` or `mp`       | Next or previous mark.             |
-| `m<space>`         | Clear mark.                        |
-| `ml`               | List mark.                         |
-
 Marker:
 
-| Key                | Action                             |
-|--------------------|------------------------------------|
-| `m<number>`        | Toggle marker.                     |
-| `mN` or `mP`       | Next or previous marker.           |
-| m<BS>`             | Clear mark or marker.              |
-| `mL`               | Liast mark or marker.              |
+| Key              | Action                   |
+|------------------|--------------------------|
+| **`m<number>`**  | Toggle marker.           |
+| **`mn` or `mp`** | Next or previous marker. |
+| **`m<Space>`**   | Clear mark or marker.    |
+| **`ml`**         | Liast mark or marker.    |
 
 Register:
 
 | Key                | Action                             |
 |--------------------|------------------------------------|
-| `"` or `@`         | Load from register.                |
+| *`"` or `@`*       | Load from register.                |
 | (INSERT)`<ctrl-r>` | Load from register in insert mode. |
 
 ### File and Finder
 
 File manager:
 
-| Key          | Action                              |
-|--------------|-------------------------------------|
-| `<leader>nn` | Toggle nerdtree.                    |
-| `<leader>nf` | Open nerdtree in file location.     |
+| Key              | Action                          |
+|------------------|---------------------------------|
+| **`<leader>nn`** | Toggle nerdtree.                |
+| **`<leader>nf`** | Open nerdtree in file location. |
 
 Fuzzy finder:
 
-| Key          | Action                              |
-|--------------|-------------------------------------|
-| `<c-p>`      | Fuzzy file finder.                  |
-| `<leader>ff` | Search for the keyword.             |
-| `<leader>fh` | Search for the opened history.      |
-| `<leader>ft` | Search for global tags.             |
-| `<leader>fl` | Search for the lines.               |
-| `<leader>fb` | Search for opened buffer.           |
-| `<leader>fg` | Git commits for the current buffer. |
-| `<leader>f:` | Search for command history.         |
-| `<leader>f/` | Search for searched patterns.       |
-| `<leader>;`  | Quick mapping for command history.  |
+| Key              | Action                              |
+|------------------|-------------------------------------|
+| **`<c-p>`**      | Fuzzy file finder.                  |
+| **`<leader>ff`** | Search for the keyword.             |
+| **`<leader>;`**  | Quick mapping for command history.  |
+| **`<leader>/`**  | Search for searched patterns.       |
+| **`<leader>fg`** | Git commits for the current buffer. |
+| `<leader>fh`     | Search for the opened history.      |
+| `<leader>ft`     | Search for global tags.             |
+| `<leader>fl`     | Search for the lines.               |
+| `<leader>fb`     | Search for opened buffer.           |
 
 ### Coding Navigation
 
-| Key                  | Action                 |
-|----------------------|------------------------|
-| `tt`                 | Toggle tagbar.         |
-| (VISUAL)`<leader>ff` | Search for code.       |
-| `<leader>gb`         | Open git blame.        |
-| `<leader>gl`         | Open git log.          |
-| `<leader>gt`         | Open git hunks.        |
-| `]e` or `[e`         | Navigate lint errors.  |
-| `]c` or `[c`         | Navigate git hunks.    |
-| `]g` or `[g`         | Navigate diagnostics.  |
-| `gd`                 | Go to definition.      |
-| `gy`                 | Go to type definition. |
-| `gi`                 | Go to implementation.  |
-| `gr`                 | Go to references.      |
-| `gf`                 | Open file.             |
+| Key      | Action                 |
+|----------|------------------------|
+| **`tt`** | Toggle tagbar.         |
+| **`gd`** | Go to definition.      |
+| **`gf`** | Open file.             |
+| `gy`     | Go to type definition. |
+| `gi`     | Go to implementation.  |
+| `gr`     | Go to references.      |
+
+### Git Navigation
+
+| Key              | Action              |
+|------------------|---------------------|
+| **`<leader>gb`** | Open git blame.     |
+| **`<leader>gl`** | Open git log.       |
+| `<leader>gt`     | Toggle git hunks.   |
+| `]c` or `[c`     | Navigate git hunks. |
+
+### Warning/Error Navigation
+
+| Key          | Action                |
+|--------------|-----------------------|
+| `]e` or `[e` | Navigate lint errors. |
+| `]g` or `[g` | Navigate diagnostics. |
 
 ### Integrated Development Environment
 
-| Key             | Action                                                      |
-|-----------------|-------------------------------------------------------------|
-| (INSERT)`<tab>` | Auto completion.                                            |
-| (INSERT)`<c-o>` | Code Snippets.                                              |
-| `K`             | Open document.                                              |
-| `<leader>a`     | Apply code action, ex: `<leader>aap` for current paragraph. |
-| `<leader>ac`    | Apply code action to current buffer.                        |
-| `<leader>qf`    | Apply quick fix to the problem of the current line.         |
-| `<leader>rn`    | Symbol rename.                                              |
-| `<leader>R`     | Compile and Run.                                            |
-| `<leader>T`     | Open terminal.                                              |
+| Key                 | Action                                                      |
+|---------------------|-------------------------------------------------------------|
+| **(INSERT)`<tab>`** | Auto completion.                                            |
+| **(INSERT)`<c-o>`** | Code Snippets.                                              |
+| **`K`**             | Open document.                                              |
+| `<leader>a`         | Apply code action, ex: `<leader>aap` for current paragraph. |
+| `<leader>ac`        | Apply code action to current buffer.                        |
+| `<leader>qf`        | Apply quick fix to the problem of the current line.         |
+| `<leader>rn`        | Symbol rename.                                              |
+| `<leader>R`         | Compile and Run.                                            |
+| `<leader>T`         | Open terminal.                                              |
 
 ### Markdown
 
-| Key                 | Action                      |
-|---------------------|-----------------------------|
-| `<leader>tm`        | Toggle markdown table mode. |
-| `<leader>tr`        | Format markdown table mode. |
-| <code>&#124;</code> | Cell text object.           |
+| Key                   | Action                      |
+|-----------------------|-----------------------------|
+| **`<leader>tm`**      | Toggle markdown table mode. |
+| `<leader>tr`          | Format markdown table mode. |
+| `<code>&#124;</code>` | Cell text object.           |
 
 ### Spell
 
-| Key          | Action                         |
-|--------------|--------------------------------|
-| `<leader>ss` | Toggle spell mode.             |
-| `<leader>sn` | Next typo.                     |
-| `<leader>sp` | Previous typo.                 |
-| `<leader>sa` | Add word to dict.              |
-| `<leader>s?` | Show all suggested correction. |
-| `<leader>sc` | Apply spell correction         |
-| `<leader>cs` | List suggested synonym.        |
+| Key             | Action                         |
+|-----------------|--------------------------------|
+| **`<leader>ss`* | Toggle spell mode.             |
+| **`<leader>sn`* | Next typo.                     |
+| `<leader>sp`    | Previous typo.                 |
+| **`<leader>sa`* | Add word to dict.              |
+| `<leader>s?`    | Show all suggested correction. |
+| **`<leader>sc`* | Apply spell correction         |
+| **`<leader>cs`* | List suggested synonym.        |
 
 ### CoC List
 
@@ -255,15 +254,14 @@ Fuzzy finder:
 
 ### Misc
 
-| Key               | Action                     |
-|-------------------|----------------------------|
-| `Q`               | Close window.              |
-| `zz`              | Save the file.             |
-| `<leader>S`       | Open a fancy start screen. |
-| `<leader>rc`      | Open vimrc.                |
-| `<leader>rr`      | Reload vimrc.              |
-| `<leader><space>` | Edit next placeholder.     |
-| `tx`              | Place an AsciiArt.         |
+| Key               | Action                      |
+|-------------------|-----------------------------|
+| `zz`              | Save the file.              |
+| `<leader>S`       | Open a fancy start screen.  |
+| `<leader>rc`      | Open vimrc.                 |
+| `<leader>rr`      | Reload vimrc.               |
+| `<leader><space>` | Edit next placeholder <++>. |
+| `tx`              | Place an AsciiArt.          |
 
 ## Commands
 

@@ -151,10 +151,6 @@
         noremap W 5w
         noremap B 5b
 
-        " Ctrl + U and D to scroll without moving cursor
-        noremap <c-u> 5<c-y>
-        noremap <c-d> 5<c-e>
-
         " When editing a file, always jump to the last known cursor position.
         " Don't do it when the position is invalid or when inside an event handler
         " (happens when dropping a file on gvim).
@@ -167,16 +163,12 @@
 
     " }
 
-    " Move around between buffers, windows, and tabs {
+    " Move around between buffers, and windows {
 
         " Buffer switching
         nmap gj :bn<cr>
         nmap gk :bp<cr>
         nmap g<tab> :b#<cr>
-
-        " ,bt to open buffer in tab; ,bc to close tab; ,bd to close buffer
-        nmap <leader>bt :tab split<cr>
-        nmap <leader>bc :tabclose<cr>
         nmap <leader>bd :bd<cr>
 
         " beauty windows separator
@@ -186,12 +178,6 @@
         map <c-w>- :set splitbelow<cr>:split<cr>
         map <c-w>\| :set splitright<cr>:vsplit<cr>
         map <c-w>\ :set splitright<cr>:vsplit<cr>
-
-        " Windows resizing
-        map <s-up> :res+1<cr>
-        map <s-down> :res-1<cr>
-        map <s-left> :vertical res-5<cr>
-        map <s-right> :vertical res+5<cr>
 
         " Always show tabline = 2
         set showtabline=2
@@ -624,8 +610,7 @@
     noremap <silent> <leader>fb :Buffers<CR>
     noremap <silent> <leader>fg :BCommits<CR>
     noremap <silent> <leader>; :History:<CR>
-    noremap <silent> <leader>f: :History:<CR>
-    noremap <silent> <leader>f/ :History/<CR>
+    noremap <silent> <leader>/ :History/<CR>
 
     " [Buffers] Jump to the existing window if possible
     let g:fzf_buffers_jump = 1
@@ -654,23 +639,11 @@
     " marks key mappings
     let g:SignatureMap = {
         \ 'Leader'             :  "m",
-        \ 'ToggleMarkAtLine'   :  "mm",
-        \ 'PurgeMarks'         :  "m<Space>",
-        \ 'PurgeMarkers'       :  "m<BS>",
-        \ 'GotoNextLineAlpha'  :  "']",
-        \ 'GotoPrevLineAlpha'  :  "'[",
-        \ 'GotoNextSpotAlpha'  :  "`]",
-        \ 'GotoPrevSpotAlpha'  :  "`[",
-        \ 'GotoNextLineByPos'  :  "]'",
-        \ 'GotoPrevLineByPos'  :  "['",
-        \ 'GotoNextSpotByPos'  :  "mn",
-        \ 'GotoPrevSpotByPos'  :  "mp",
-        \ 'GotoNextMarker'     :  "mN",
-        \ 'GotoPrevMarker'     :  "mP",
-        \ 'GotoNextMarkerAny'  :  "]=",
-        \ 'GotoPrevMarkerAny'  :  "[=",
-        \ 'ListBufferMarks'    :  "ml",
-        \ 'ListBufferMarkers'  :  "mL"
+        \ 'PurgeMarks'         :  "m<BS>",
+        \ 'PurgeMarkers'       :  "m<Space>",
+        \ 'GotoNextMarkerAny'  :  "mn",
+        \ 'GotoPrevMarkerAny'  :  "mp",
+        \ 'ListBufferMarkers'  :  "ml"
         \ }
 
     " highligh for markers

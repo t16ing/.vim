@@ -639,11 +639,23 @@
     " marks key mappings
     let g:SignatureMap = {
         \ 'Leader'             :  "m",
-        \ 'PurgeMarks'         :  "m<BS>",
-        \ 'PurgeMarkers'       :  "m<Space>",
-        \ 'GotoNextMarkerAny'  :  "mn",
-        \ 'GotoPrevMarkerAny'  :  "mp",
-        \ 'ListBufferMarkers'  :  "ml"
+        \ 'ToggleMarkAtLine'   :  "mm",
+        \ 'PurgeMarks'         :  "m<Space>",
+        \ 'PurgeMarkers'       :  "m<BS>",
+        \ 'GotoNextLineAlpha'  :  "']",
+        \ 'GotoPrevLineAlpha'  :  "'[",
+        \ 'GotoNextSpotAlpha'  :  "`]",
+        \ 'GotoPrevSpotAlpha'  :  "`[",
+        \ 'GotoNextLineByPos'  :  "]'",
+        \ 'GotoPrevLineByPos'  :  "['",
+        \ 'GotoNextSpotByPos'  :  "mn",
+        \ 'GotoPrevSpotByPos'  :  "mp",
+        \ 'GotoNextMarker'     :  "mN",
+        \ 'GotoPrevMarker'     :  "mP",
+        \ 'GotoNextMarkerAny'  :  "]=",
+        \ 'GotoPrevMarkerAny'  :  "[=",
+        \ 'ListBufferMarks'    :  "ml",
+        \ 'ListBufferMarkers'  :  "mL"
         \ }
 
     " highligh for markers

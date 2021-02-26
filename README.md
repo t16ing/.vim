@@ -140,14 +140,14 @@ Multiple selection editing:
 
 ### Marks and Register
 
-Marker:
+Marks:
 
-| Key              | Action                   |
-|------------------|--------------------------|
-| **`m<number>`**  | Toggle marker.           |
-| **`mn` or `mp`** | Next or previous marker. |
-| **`m<Space>`**   | Clear mark or marker.    |
-| **`ml`**         | Liast mark or marker.    |
+| Key              | Action                  |
+|------------------|-------------------------|
+| **`mm`**         | Toggle marks.           |
+| **`mn` or `mp`** | Next or previous marks. |
+| **`m<Space>`**   | Clear marks.            |
+| **`ml`**         | Liast marks.            |
 
 Register:
 

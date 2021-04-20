@@ -10,20 +10,33 @@
 
 * [What is `.vim`](#what-is-vim)
 * [Sensible Configurations](#sensible-configurations)
-* [Key Mappings](#key-mappings)
-    * [Line, Buffer, Window, and Tab Motion](#line-buffer-window-and-tab-motion)
+* [General Key Mappings](#general-key-mappings)
+    * [Buffer and Line](#buffer-and-line)
+    * [Window](#window)
+    * [Tab](#tab)
     * [Edit and Formatting](#edit-and-formatting)
-    * [Selection](#selection)
-    * [Marks and Register](#marks-and-register)
-    * [File and Finder](#file-and-finder)
-    * [Coding Navigation](#coding-navigation)
+    * [Clipboard](#clipboard)
+    * [Misc](#misc)
+* [Featuring](#featuring)
+    * [File Management (`,nn`)](#file-management-nn)
+    * [Marks and Register (`mm`)](#marks-and-register-mm)
+    * [Fuzzy Finder (`,ff`)](#fuzzy-finder-ff)
+    * [Markdown (`,tm`)](#markdown-tm)
+    * [Spell Feature (`,ss`)](#spell-feature-ss)
+    * [Code Navigation (`gd` and etc.)](#code-navigation-gd-and-etc)
+    * [Select then Search](#select-then-search)
+    * [Surround Editing (`+` then `S`)](#surround-editing--then-s)
+    * [Multiple Selection Editing (`<c-n>`)](#multiple-selection-editing-c-n)
+* [Integrated Development Environment](#integrated-development-environment)
+    * [Tagbar](#tagbar)
+    * [Auto Complete](#auto-complete)
+    * [Documentation](#documentation)
     * [Git Navigation](#git-navigation)
     * [Warning/Error Navigation](#warningerror-navigation)
-    * [Integrated Development Environment](#integrated-development-environment)
-    * [Markdown](#markdown)
-    * [Spell](#spell)
+    * [Code Comment](#code-comment)
+    * [Refactoring](#refactoring)
+    * [Compile and Run](#compile-and-run)
     * [CoC List](#coc-list)
-    * [Misc](#misc)
 * [Commands](#commands)
 * [Plugins](#plugins)
 * [Support Languages](#support-languages)
@@ -47,15 +60,13 @@ It is designed as a sensible and powerful editor environment.
 - Integrate with system clipboard.
 - colorscheme: PaperColor Dark.
 
-## Key Mappings
+## General Key Mappings
 
 Use ',' as leader key.
 
 Use ':' or ';' as command key.
 
-### Line, Buffer, Window, and Tab Motion
-
-Buffer and Line:
+### Buffer and Line
 
 | Key                    | Action                                  |
 |------------------------|-----------------------------------------|
@@ -66,7 +77,7 @@ Buffer and Line:
 | `z.`                   | Put current line to center of screen.   |
 | `z-`                   | Put current line to bottom of screen.   |
 
-Window:
+### Window
 
 | Key                                          | Action                                                        |
 |----------------------------------------------|---------------------------------------------------------------|
@@ -77,7 +88,7 @@ Window:
 | `Q`                                          | Close current window.                                         |
 | `q`                                          | Close a quick window.                                         |
 
-Tab:
+### Tab
 
 | Key        | Action                |
 |------------|-----------------------|
@@ -88,8 +99,6 @@ Tab:
 
 ### Edit and Formatting
 
-Coding style:
-
 | Key                      | Action                               |
 |--------------------------|--------------------------------------|
 | **`>` and `<` and `==`** | Quick indent.                        |
@@ -97,14 +106,7 @@ Coding style:
 | `<leader>=`              | Format selected code.                |
 | `<leader><leader>t`      | Expand tabs for buffer or selection. |
 
-Code comment:
-
-| Key    | Action                          |
-|--------|---------------------------------|
-| `gcc`  | Toggle comment.                 |
-| `gcap` | Toggle comment for a paragraph. |
-
-Clipboard:
+### Clipboard
 
 | Key          | Action                   |
 |--------------|--------------------------|
@@ -112,33 +114,27 @@ Clipboard:
 | `<leader>pp` | Toggle paste mode.       |
 | `<a-p>`      | Cycle back yank history. |
 
-### Selection
+### Misc
 
-For searching:
+| Key               | Action                      |
+|-------------------|-----------------------------|
+| `zz`              | Save the file.              |
+| `<leader>S`       | Open a fancy start screen.  |
+| `<leader>rc`      | Open vimrc.                 |
+| `<leader>rr`      | Reload vimrc.               |
+| `<leader><space>` | Edit next placeholder <++>. |
+| `tx`              | Place an AsciiArt.          |
 
-| Key                          | Action                        |
-|------------------------------|-------------------------------|
-| **(VISUAL) then `*` or `#`** | Search for current selection. |
-| **`<leader>/`**              | Disable highlight.            |
+## Featuring
 
-Surround editing:
+### File Management (`,nn`)
 
-| Key                   | Action                                         |
-|-----------------------|------------------------------------------------|
-| **`+` or `_`**        | Selection expanding or shrinking.              |
-| `<c-s>`               | (coc) Language level selection expanding.      |
-| **(VISUAL) then `S`** | Surround edit.                                 |
-| **`cif` `vic`**       | `f` (function) and `c` (class) as text object. |
+| Key              | Action                          |
+|------------------|---------------------------------|
+| **`<leader>nn`** | Toggle nerdtree.                |
+| **`<leader>nf`** | Open nerdtree in file location. |
 
-Multiple selection editing:
-
-| Key                 | Action                                                                                 |
-|---------------------|----------------------------------------------------------------------------------------|
-| **`<c-n>`**         | Start multi-visual (EXTRA) mode: n confirm and q skip; `[ ]` for selection navigation. |
-| *`<c-n>` then `\\a` | Visual multi selection and align.                                                      |
-| `<c-n>` then `\\N`  | Visual multi selection and insert leading number.                                      |
-
-### Marks and Register
+### Marks and Register (`mm`)
 
 Marks:
 
@@ -156,39 +152,116 @@ Register:
 | *`"` or `@`*       | Load from register.                |
 | (INSERT)`<ctrl-r>` | Load from register in insert mode. |
 
-### File and Finder
+### Fuzzy Finder (`,ff`)
 
-File manager:
+How to start `Fuzzy Finder` feature:
 
-| Key              | Action                          |
-|------------------|---------------------------------|
-| **`<leader>nn`** | Toggle nerdtree.                |
-| **`<leader>nf`** | Open nerdtree in file location. |
+| Key              | Action                                     |
+|------------------|--------------------------------------------|
+| **`<leader>fp`** | Fuzzy file finder.                         |
+| **`<leader>ff`** | Search for the selected or cursor keyword. |
+| **`<leader>f:`** | Input the keyword and search.              |
 
-Fuzzy finder:
+`Fuzzy Finder` key mappings:
 
 | Key              | Action                              |
 |------------------|-------------------------------------|
-| **`<c-p>`**      | Fuzzy file finder.                  |
-| **`<leader>ff`** | Search for the keyword.             |
-| **`<leader>;`**  | Quick mapping for command history.  |
-| **`<leader>/`**  | Search for searched patterns.       |
+| **`<leader>f;`** | Quick mapping for command history.  |
+| **`<leader>f/`** | Search for searched patterns.       |
 | **`<leader>fg`** | Git commits for the current buffer. |
 | `<leader>fh`     | Search for the opened history.      |
 | `<leader>ft`     | Search for global tags.             |
 | `<leader>fl`     | Search for the lines.               |
 | `<leader>fb`     | Search for opened buffer.           |
 
-### Coding Navigation
+### Markdown (`,tm`)
+
+How to enable `Markdown` feature:
+
+| Key                   | Action                      |
+|-----------------------|-----------------------------|
+| **`<leader>tm`**      | Toggle markdown table mode. |
+
+`Markdown` key mappings:
+
+| Key                   | Action                      |
+|-----------------------|-----------------------------|
+| `<leader>tr`          | Format markdown table mode. |
+| `<code>&#124;</code>` | Cell text object.           |
+
+### Spell Feature (`,ss`)
+
+How to enable `Spell` feature:
+
+| Key              | Action             |
+|------------------|--------------------|
+| **`<leader>ss`** | Toggle spell mode. |
+
+`Spell` key mappings:
+
+| Key             | Action                         |
+|-----------------|--------------------------------|
+| **`<leader>sn`* | Next typo.                     |
+| `<leader>sp`    | Previous typo.                 |
+| **`<leader>sa`* | Add word to dict.              |
+| `<leader>s?`    | Show all suggested correction. |
+| **`<leader>sc`* | Apply spell correction         |
+| **`<leader>cs`* | List suggested synonym.        |
+
+### Code Navigation (`gd` and etc.)
 
 | Key      | Action                 |
 |----------|------------------------|
-| **`tt`** | Toggle tagbar.         |
 | **`gd`** | Go to definition.      |
 | **`gf`** | Open file.             |
 | `gy`     | Go to type definition. |
 | `gi`     | Go to implementation.  |
 | `gr`     | Go to references.      |
+
+### Select then Search
+
+| Key                          | Action                        |
+|------------------------------|-------------------------------|
+| **(VISUAL) then `*` or `#`** | Search for current selection. |
+| **`<leader>/`**              | Disable highlight.            |
+
+### Surround Editing (`+` then `S`)
+
+| Key                   | Action                                         |
+|-----------------------|------------------------------------------------|
+| **`+` or `_`**        | Selection expanding or shrinking.              |
+| `<c-s>`               | (coc) Language level selection expanding.      |
+| **(VISUAL) then `S`** | Surround edit.                                 |
+| **`cif` `vic`**       | `f` (function) and `c` (class) as text object. |
+
+### Multiple Selection Editing (`<c-n>`)
+
+| Key                  | Action                                                                                 |
+|----------------------|----------------------------------------------------------------------------------------|
+| **`<c-n>`**          | Start multi-visual (EXTRA) mode: n confirm and q skip; `[ ]` for selection navigation. |
+| *`<c-n>` then `\\a`* | Visual multi selection and align.                                                      |
+| `<c-n>` then `\\N`   | Visual multi selection and insert leading number.                                      |
+
+## Integrated Development Environment
+
+### Tagbar
+
+| Key       | Action         |
+|-----------|----------------|
+| **`,tt`** | Toggle tagbar. |
+
+### Auto Complete
+
+| Key                 | Action                                                      |
+|---------------------|-------------------------------------------------------------|
+| **(INSERT)`<tab>`** | Auto completion.                                            |
+| **(INSERT)`<c-o>`** | Code Snippets.                                              |
+
+### Documentation
+
+| Key                 | Action                                                      |
+|---------------------|-------------------------------------------------------------|
+| **`K`**             | Open document.                                              |
 
 ### Git Navigation
 
@@ -206,39 +279,28 @@ Fuzzy finder:
 | `]e` or `[e` | Navigate lint errors. |
 | `]g` or `[g` | Navigate diagnostics. |
 
-### Integrated Development Environment
+### Code Comment
+
+| Key    | Action                          |
+|--------|---------------------------------|
+| `gcc`  | Toggle comment.                 |
+| `gcap` | Toggle comment for a paragraph. |
+
+### Refactoring
 
 | Key                 | Action                                                      |
 |---------------------|-------------------------------------------------------------|
-| **(INSERT)`<tab>`** | Auto completion.                                            |
-| **(INSERT)`<c-o>`** | Code Snippets.                                              |
-| **`K`**             | Open document.                                              |
 | `<leader>a`         | Apply code action, ex: `<leader>aap` for current paragraph. |
 | `<leader>ac`        | Apply code action to current buffer.                        |
 | `<leader>qf`        | Apply quick fix to the problem of the current line.         |
 | `<leader>rn`        | Symbol rename.                                              |
+
+### Compile and Run
+
+| Key                 | Action                                                      |
+|---------------------|-------------------------------------------------------------|
 | `<leader>R`         | Compile and Run.                                            |
 | `<leader>T`         | Open terminal.                                              |
-
-### Markdown
-
-| Key                   | Action                      |
-|-----------------------|-----------------------------|
-| **`<leader>tm`**      | Toggle markdown table mode. |
-| `<leader>tr`          | Format markdown table mode. |
-| `<code>&#124;</code>` | Cell text object.           |
-
-### Spell
-
-| Key             | Action                         |
-|-----------------|--------------------------------|
-| **`<leader>ss`* | Toggle spell mode.             |
-| **`<leader>sn`* | Next typo.                     |
-| `<leader>sp`    | Previous typo.                 |
-| **`<leader>sa`* | Add word to dict.              |
-| `<leader>s?`    | Show all suggested correction. |
-| **`<leader>sc`* | Apply spell correction         |
-| **`<leader>cs`* | List suggested synonym.        |
 
 ### CoC List
 
@@ -251,17 +313,6 @@ Fuzzy finder:
 | `<space>s`      | List CoC symbols.                       |
 | `<space>j or k` | Do default next or previous CoC action. |
 | `<space>p`      | Resume previous CoC list.               |
-
-### Misc
-
-| Key               | Action                      |
-|-------------------|-----------------------------|
-| `zz`              | Save the file.              |
-| `<leader>S`       | Open a fancy start screen.  |
-| `<leader>rc`      | Open vimrc.                 |
-| `<leader>rr`      | Reload vimrc.               |
-| `<leader><space>` | Edit next placeholder <++>. |
-| `tx`              | Place an AsciiArt.          |
 
 ## Commands
 

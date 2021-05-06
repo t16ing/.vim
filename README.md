@@ -23,7 +23,7 @@
     * [Fuzzy Finder (`,ff`)](#fuzzy-finder-ff)
     * [Markdown (`,tm`)](#markdown-tm)
     * [Spell Feature (`,ss`)](#spell-feature-ss)
-    * [Code Navigation (`gd` and etc.)](#code-navigation-gd-and-etc)
+    * [Code Navigation (`gd` and moving forward/backward.)](#code-navigation-gd-and-moving-forwardbackward)
     * [Select then Search](#select-then-search)
     * [Surround Editing (`+` then `S`)](#surround-editing--then-s)
     * [Multiple Selection Editing (`<c-n>`)](#multiple-selection-editing-c-n)
@@ -208,15 +208,17 @@ How to enable `Spell` feature:
 | **`<leader>sc`* | Apply spell correction         |
 | **`<leader>cs`* | List suggested synonym.        |
 
-### Code Navigation (`gd` and etc.)
+### Code Navigation (`gd` and moving forward/backward.)
 
-| Key      | Action                 |
-|----------|------------------------|
-| **`gd`** | Go to definition.      |
-| **`gf`** | Open file.             |
-| `gy`     | Go to type definition. |
-| `gi`     | Go to implementation.  |
-| `gr`     | Go to references.      |
+| Key                | Action                          |
+|--------------------|---------------------------------|
+| **`gd`**           | Go to definition.               |
+| **`gf`**           | Open file.                      |
+| `gy`               | Go to type definition.          |
+| `gi`               | Go to implementation.           |
+| `gr`               | Go to references.               |
+| **`<c-o>`**        | Jump back to previous location. |
+| **`<c-i>, <tab>`** | Jump forward to next location.  |
 
 ### Select then Search
 

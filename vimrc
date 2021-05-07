@@ -139,6 +139,9 @@
         " Do not keep last highlight when opening VIM
         exec "nohlsearch"
 
+        " Highlight cursor variables
+        autocmd CursorMoved * exe printf('match Todo /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+
     " }
 
     " Move around of lines {
@@ -272,8 +275,8 @@
 
     " spell {
 
-        " Turn on spell checking
-        set spell
+        " Turn off spell checking
+        set nospell
 
         " Pressing <leader>ss will toggle and untoggle spell checking
         noremap <leader>ss :setlocal spell!<cr>
@@ -601,16 +604,19 @@
     " ~/.vim/bundle/fzf/README-VIM.md
     " ~/.vim/bundle/fzf.vim/README.md
 
-    noremap <silent> <C-p> :Files<CR>
     noremap <silent> <expr> <leader>ff ':Rg '.expand('<cword>').'<CR>'
     vnoremap <leader>ff y:Rg <C-R><C-R>"<CR>
+    noremap <silent> <leader>fp :Files<CR>
     noremap <silent> <leader>fh :History<CR>
     noremap <silent> <leader>ft :Tags<CR>
     noremap <silent> <leader>fl :Lines<CR>
+    noremap <silent> <expr> <leader>f* ':Lines '.expand('<cword>').'<CR>'
+    vnoremap <leader>f* y:Lines <C-R><C-R>"<CR>
     noremap <silent> <leader>fb :Buffers<CR>
     noremap <silent> <leader>fg :BCommits<CR>
-    noremap <silent> <leader>; :History:<CR>
-    noremap <silent> <leader>/ :History/<CR>
+    noremap <silent> <leader>f; :History:<CR>
+    noremap <silent> <leader>f/ :History/<CR>
+    noremap <leader>f: :Rg 
 
     " [Buffers] Jump to the existing window if possible
     let g:fzf_buffers_jump = 1
@@ -701,9 +707,9 @@
     let g:tagbar_autoshowtag = 1
     let g:tagbar_width = 32
 
-    map tt <ESC>:TagbarToggle<CR>
+    map <leader>tt <ESC>:TagbarToggle<CR>
 
-    VkhAdd 'tagbar: tt to open Tagbar window.'
+    VkhAdd 'tagbar: ,tt to open Tagbar window.'
     " }
 
     " plugin ale {
@@ -720,6 +726,8 @@
     \ '\.min.js$': {'ale_enabled': 0},
     \ '\.php$': {'ale_enabled': 0},
     \ '\.py$': {'ale_enabled': 0},
+    \ '\.h$': {'ale_enabled': 0},
+    \ '\.cpp$': {'ale_enabled': 0},
     \ }
 
     " navigate between errors quickly

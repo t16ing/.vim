@@ -607,6 +607,8 @@
     noremap <silent> <leader>fh :History<CR>
     noremap <silent> <leader>ft :Tags<CR>
     noremap <silent> <leader>fl :Lines<CR>
+    noremap <silent> <expr> <leader>f* ':Lines '.expand('<cword>').'<CR>'
+    vnoremap <leader>f* y:Lines <C-R><C-R>"<CR>
     noremap <silent> <leader>fb :Buffers<CR>
     noremap <silent> <leader>fg :BCommits<CR>
     noremap <silent> <leader>f; :History:<CR>

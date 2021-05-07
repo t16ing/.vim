@@ -161,6 +161,7 @@ How to start `Fuzzy Finder` feature:
 | **`<leader>fp`** | Fuzzy file finder.                         |
 | **`<leader>ff`** | Search for the selected or cursor keyword. |
 | **`<leader>f:`** | Input the keyword and search.              |
+| `<leader>f*`     | Search for current word.                   |
 
 `Fuzzy Finder` key mappings:
 
@@ -222,10 +223,11 @@ How to enable `Spell` feature:
 
 ### Select then Search
 
-| Key                          | Action                        |
-|------------------------------|-------------------------------|
-| **(VISUAL) then `*` or `#`** | Search for current selection. |
-| **`<leader>/`**              | Disable highlight.            |
+| Key                          | Action                                        |
+|------------------------------|-----------------------------------------------|
+| **(VISUAL) then `*` or `#`** | Search for current selection.                 |
+| (VISUAL) `<leader>f*`        | Search for current selection in fuzzy finder. |
+| **`<leader>/`**              | Disable highlight.                            |
 
 ### Surround Editing (`+` then `S`)
 
@@ -235,6 +237,7 @@ How to enable `Spell` feature:
 | `<c-s>`               | (coc) Language level selection expanding.      |
 | **(VISUAL) then `S`** | Surround edit.                                 |
 | **`cif` `vic`**       | `f` (function) and `c` (class) as text object. |
+| **cs\"\'**            | Replace surround symbol.                       |
 
 ### Multiple Selection Editing (`<c-n>`)
 

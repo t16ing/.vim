@@ -139,6 +139,9 @@
         " Do not keep last highlight when opening VIM
         exec "nohlsearch"
 
+        " Highlight cursor variables
+        autocmd CursorMoved * exe printf('match Todo /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+
     " }
 
     " Move around of lines {

@@ -23,16 +23,13 @@
     * [Fuzzy Finder (`,ff`)](#fuzzy-finder-ff)
     * [Markdown (`,tm`)](#markdown-tm)
     * [Spell Feature (`,ss`)](#spell-feature-ss)
-    * [Code Navigation (`gd` and moving forward/backward.)](#code-navigation-gd-and-moving-forwardbackward)
     * [Select then Search](#select-then-search)
     * [Surround Editing (`+` then `S`)](#surround-editing--then-s)
     * [Multiple Selection Editing (`<c-n>`)](#multiple-selection-editing-c-n)
 * [Integrated Development Environment](#integrated-development-environment)
-    * [Tagbar](#tagbar)
-    * [Auto Complete](#auto-complete)
+    * [How to Navigate Source Code](#how-to-navigate-source-code)
+    * [Auto Completion](#auto-completion)
     * [Documentation](#documentation)
-    * [Git Navigation](#git-navigation)
-    * [Warning/Error Navigation](#warningerror-navigation)
     * [Code Comment](#code-comment)
     * [Refactoring](#refactoring)
     * [Compile and Run](#compile-and-run)
@@ -53,10 +50,10 @@ It is designed as a sensible and powerful editor environment.
 
 ## Sensible Configurations
 
-- Sensible motion, search, fold, and precede.
+- Sensible motion, search, fold, and precede configuration.
 - More file format and encoding are supported.
-- Persistent edit position and undo history. Auto read file changes from outside.
-- Indent: 4 spaces, expand tabs. Highlight on tabs and unwanted spaces.
+- Persistent editing position and undo history. Auto update buffer while file changes.
+- Indent: 4 spaces, expand tabs. Highlight tabs and unwanted spaces.
 - Integrate with system clipboard.
 - colorscheme: PaperColor Dark.
 
@@ -143,7 +140,7 @@ Marks:
 | **`mm`**         | Toggle marks.           |
 | **`mn` or `mp`** | Next or previous marks. |
 | **`m<Space>`**   | Clear marks.            |
-| **`ml`**         | Liast marks.            |
+| **`ml`**         | List marks.             |
 
 Register:
 
@@ -179,9 +176,9 @@ How to start `Fuzzy Finder` feature:
 
 How to enable `Markdown` feature:
 
-| Key                   | Action                      |
-|-----------------------|-----------------------------|
-| **`<leader>tm`**      | Toggle markdown table mode. |
+| Key              | Action                      |
+|------------------|-----------------------------|
+| **`<leader>tm`** | Toggle markdown table mode. |
 
 `Markdown` key mappings:
 
@@ -208,18 +205,6 @@ How to enable `Spell` feature:
 | `<leader>s?`    | Show all suggested correction. |
 | **`<leader>sc`* | Apply spell correction         |
 | **`<leader>cs`* | List suggested synonym.        |
-
-### Code Navigation (`gd` and moving forward/backward.)
-
-| Key                | Action                          |
-|--------------------|---------------------------------|
-| **`gd`**           | Go to definition.               |
-| **`gf`**           | Open file.                      |
-| `gy`               | Go to type definition.          |
-| `gi`               | Go to implementation.           |
-| `gr`               | Go to references.               |
-| **`<c-o>`**        | Jump back to previous location. |
-| **`<c-i>, <tab>`** | Jump forward to next location.  |
 
 ### Select then Search
 
@@ -249,13 +234,43 @@ How to enable `Spell` feature:
 
 ## Integrated Development Environment
 
-### Tagbar
+### How to Navigate Source Code
+
+Code Navigation (`gd` and moving forward/backward.):
+
+| Key                | Action                          |
+|--------------------|---------------------------------|
+| **`gd`**           | Go to definition.               |
+| **`gf`**           | Open file.                      |
+| `gy`               | Go to type definition.          |
+| `gi`               | Go to implementation.           |
+| `gr`               | Go to references.               |
+| **`<c-o>`**        | Jump back to previous location. |
+| **`<c-i>, <tab>`** | Jump forward to next location.  |
+
+Use Tagbar:
 
 | Key       | Action         |
 |-----------|----------------|
 | **`,tt`** | Toggle tagbar. |
 
-### Auto Complete
+Git Navigation:
+
+| Key              | Action              |
+|------------------|---------------------|
+| **`<leader>gb`** | Open git blame.     |
+| **`<leader>gl`** | Open git log.       |
+| `<leader>gt`     | Toggle git hunks.   |
+| `]c` or `[c`     | Navigate git hunks. |
+
+Warning/Error Navigation:
+
+| Key          | Action                |
+|--------------|-----------------------|
+| `]e` or `[e` | Navigate lint errors. |
+| `]g` or `[g` | Navigate diagnostics. |
+
+### Auto Completion
 
 | Key                 | Action                                                      |
 |---------------------|-------------------------------------------------------------|
@@ -267,22 +282,6 @@ How to enable `Spell` feature:
 | Key                 | Action                                                      |
 |---------------------|-------------------------------------------------------------|
 | **`K`**             | Open document.                                              |
-
-### Git Navigation
-
-| Key              | Action              |
-|------------------|---------------------|
-| **`<leader>gb`** | Open git blame.     |
-| **`<leader>gl`** | Open git log.       |
-| `<leader>gt`     | Toggle git hunks.   |
-| `]c` or `[c`     | Navigate git hunks. |
-
-### Warning/Error Navigation
-
-| Key          | Action                |
-|--------------|-----------------------|
-| `]e` or `[e` | Navigate lint errors. |
-| `]g` or `[g` | Navigate diagnostics. |
 
 ### Code Comment
 

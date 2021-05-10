@@ -1062,11 +1062,9 @@
     nmap g9 <Plug>lightline#bufferline#go(9)
     " }
 
-    VkhAdd "plugin vim-airline: Lean & mean status/tabline for vim that's light as air."
-    VkhAdd '<c-o> jump backward. <c-i> jump forward.'
-    VkhAdd '<leader>- or <leader>| to splie window. Q to close window.'
-    VkhAdd ',bt to open buffer in tab; ,bc to close current tab; ,bd to close buffer'
+    VkhAdd "plugin vim-lightline: Lean & mean status/tabline for vim that's light as air."
     VkhAdd 'gn to next buffer, gp to previous buffer, g[1-9] to move to tab n'
+    VkhAdd '<leader>bd to close buffer'
     " }
 
     " plugin coc.nvim {

@@ -50,9 +50,9 @@ It is designed as a sensible and powerful editor environment.
 
 ## Sensible Configurations
 
-- Sensible motion, search, fold, and precede configuration.
+- Sensible motion, search, fold, and precede each line with its line number.
 - More file format and encoding are supported.
-- Persistent editing position and undo history. Auto update buffer while file changes.
+- Persistent editing position and undo history. Auto read when a file is changed from the outside
 - Indent: 4 spaces, expand tabs. Highlight tabs and unwanted spaces.
 - Integrate with system clipboard.
 - colorscheme: PaperColor Dark.

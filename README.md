@@ -34,7 +34,6 @@
     * [Refactoring](#refactoring)
     * [Compile and Run](#compile-and-run)
     * [CoC List](#coc-list)
-* [Commands](#commands)
 * [Plugins](#plugins)
 * [Support Languages](#support-languages)
 * [Compatibility](#compatibility)
@@ -122,6 +121,10 @@ Use ':' or ';' as command key.
 | `<leader><space>` | Edit next placeholder <++>. |
 | `tx`              | Place an AsciiArt.          |
 
+| Command    | Action                                                   |
+|------------|----------------------------------------------------------|
+| :SudoWrite | Write with sudo, requires ssh-askpass to input password. |
+
 ## Featuring
 
 ### File Management (`,nn`)
@@ -186,6 +189,12 @@ How to enable `Markdown` feature:
 |-----------------------|-----------------------------|
 | `<leader>tr`          | Format markdown table mode. |
 | `<code>&#124;</code>` | Cell text object.           |
+
+Generate Markdown TOC:
+
+| Command    | Action                                                   |
+|------------|----------------------------------------------------------|
+| :GenTocGFM | Generate markdown TOC for Github markdown.               |
 
 ### Spell Feature (`,ss`)
 
@@ -252,7 +261,7 @@ Use Tagbar:
 
 | Key       | Action         |
 |-----------|----------------|
-| **`,tt`** | Toggle tagbar. |
+| **`<leader>tt`** | Toggle tagbar. |
 
 Git Navigation:
 
@@ -318,13 +327,6 @@ Warning/Error Navigation:
 | `<space>j or k` | Do default next or previous CoC action. |
 | `<space>p`      | Resume previous CoC list.               |
 
-## Commands
-
-| Command    | Action                                                   |
-|------------|----------------------------------------------------------|
-| :SudoWrite | Write with sudo, requires ssh-askpass to input password. |
-| :GenTocGFM | Generate markdown TOC for Github markdown.               |
-
 ## Plugins
 
 Highlight:
@@ -361,7 +363,7 @@ Highlight:
 ## Support Languages
 
 - `Dockerfile`
-- `python` (by `jedi.vim`)
+- `python`
 - `c/c++`
 - `php`
 - `javascript`

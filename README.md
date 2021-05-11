@@ -22,7 +22,7 @@
     * [Marks and Register (`mm`)](#marks-and-register-mm)
     * [Fuzzy Finder (`,ff`)](#fuzzy-finder-ff)
     * [Markdown (`,tm`)](#markdown-tm)
-    * [Spell Feature (`,ss`)](#spell-feature-ss)
+    * [Spell Feature (`,,s`)](#spell-feature-s)
     * [Select then Search](#select-then-search)
     * [Surround Editing (`+` then `S`)](#surround-editing--then-s)
     * [Multiple Selection Editing (`<c-n>`)](#multiple-selection-editing-c-n)
@@ -52,7 +52,7 @@ It is designed as a sensible and powerful editor environment.
 - Sensible motion, search, fold, and precede each line with its line number.
 - More file format and encoding are supported.
 - Persistent editing position and undo history. Auto read when a file is changed from the outside
-- Indent: 4 spaces, expand tabs. Highlight tabs and unwanted spaces.
+- Indent: 2 spaces, expand tabs. Highlight tabs and unwanted spaces.
 - Integrate with system clipboard.
 - colorscheme: PaperColor Dark.
 
@@ -101,14 +101,15 @@ Use ':' or ';' as command key.
 | **(VISUAL)`=`**          | Selected range indent.               |
 | `<leader>=`              | Format selected code.                |
 | `<leader><leader>t`      | Expand tabs for buffer or selection. |
+| `<leader><leader>w`      | Toggle word wrap on and off.         |
 
 ### Clipboard
 
-| Key          | Action                   |
-|--------------|--------------------------|
-| `<leader>u`  | Open undo tree.          |
-| `<leader>pp` | Toggle paste mode.       |
-| `<a-p>`      | Cycle back yank history. |
+| Key                 | Action                   |
+|---------------------|--------------------------|
+| `<leader>u`         | Open undo tree.          |
+| `<leader><leader>p` | Toggle paste mode.       |
+| `<a-p>`             | Cycle back yank history. |
 
 ### Misc
 
@@ -196,13 +197,13 @@ Generate Markdown TOC:
 |------------|----------------------------------------------------------|
 | :GenTocGFM | Generate markdown TOC for Github markdown.               |
 
-### Spell Feature (`,ss`)
+### Spell Feature (`,,s`)
 
 How to enable `Spell` feature:
 
-| Key              | Action             |
-|------------------|--------------------|
-| **`<leader>ss`** | Toggle spell mode. |
+| Key                     | Action             |
+|-------------------------|--------------------|
+| **`<leader><leader>s`** | Toggle spell mode. |
 
 `Spell` key mappings:
 

@@ -203,22 +203,28 @@
     set smartindent
     set wrap
 
-    " modern indent: 1 tab = 4 spaces, use space instead
+    " modern indent: 1 tab = 2 spaces, use space instead
     set expandtab
     set tabstop=8
-    set softtabstop=4
-    set shiftwidth=4
+    set softtabstop=2
+    set shiftwidth=2
     set smarttab
 
     " fold by indent and fold by default
     set foldmethod=indent
     set foldlevel=10
 
-    " For all text files set 'textwidth' to 78 characters.
-    autocmd FileType text setlocal textwidth=78
+    " For all text files set 'textwidth' to 80
+    autocmd FileType text setlocal textwidth=80
+
+    " Useful to align text to 80 characters
+    set colorcolumn=80
 
     " When off lines will not wrap and only part of long lines will be displayed
     set nowrap
+
+    " Toggle word wrap on and off
+    map <leader><leader>w :setlocal nowrap!<cr>
 
     " modeline only take effect in first 2 lines or last 2 lines
     set modeline
@@ -252,7 +258,7 @@
     " copy/paste and undo {
 
         " Toggle paste mode on and off
-        map <leader>pp :setlocal paste!<cr>
+        map <leader><leader>p :setlocal paste!<cr>
 
         " Share clipboard with system
         set clipboard+=unnamed
@@ -278,8 +284,8 @@
         " Turn off spell checking
         set nospell
 
-        " Pressing <leader>ss will toggle and untoggle spell checking
-        noremap <leader>ss :setlocal spell!<cr>
+        " Pressing <leader><leader>s will toggle and untoggle spell checking
+        noremap <leader><leader>s :setlocal spell!<cr>
 
         " sn: next typo
         noremap <leader>sn ]s

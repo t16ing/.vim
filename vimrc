@@ -1,5 +1,5 @@
 " Modeline and Metadata
-" vim: set shiftwidth=4 tabstop=4 softtabstop=4 expandtab smarttab textwidth=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set shiftwidth=4 tabstop=4 softtabstop=4 expandtab smarttab textwidth=78 foldmarker={,} foldlevel=0 foldmethod=marker:
 " Maintainer:
 "           ____  __   _   ____  _  _  ___
 "          (_  _)/  ) / ) (_  _)( \( )/ __)
@@ -420,7 +420,7 @@
           " <leader>gt Visible git sign ]c and [c for hunk navigation.
 
         Plug 'majutsushi/tagbar'
-          " tt to open tag bar; ctags required
+          " <leader>tt to open tag bar; ctags required
 
         Plug 'dense-analysis/ale'
           " Visible linter ERROR and warning, ]e and [e for error navigation.
@@ -709,7 +709,7 @@
 
     map <leader>tt <ESC>:TagbarToggle<CR>
 
-    VkhAdd 'tagbar: ,tt to open Tagbar window.'
+    VkhAdd 'tagbar: <leader>tt to open Tagbar window.'
     " }
 
     " plugin ale {

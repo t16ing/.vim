@@ -220,6 +220,9 @@
     " Useful to align text to 80 characters
     set colorcolumn=80
 
+    " wrap but do not change the text
+    set wrap linebreak
+
     " When off lines will not wrap and only part of long lines will be displayed
     set nowrap
 

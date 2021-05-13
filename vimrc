@@ -203,11 +203,11 @@
     set smartindent
     set wrap
 
-    " modern indent: 1 tab = 2 spaces, use space instead
+    " modern indent: 1 tab = 4 spaces, use space instead
     set expandtab
     set tabstop=8
-    set softtabstop=2
-    set shiftwidth=2
+    set softtabstop=4
+    set shiftwidth=4
     set smarttab
 
     " fold by indent and fold by default

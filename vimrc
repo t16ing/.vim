@@ -1,5 +1,5 @@
 " Modeline and Metadata
-" vim: set shiftwidth=4 tabstop=4 softtabstop=4 expandtab smarttab textwidth=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set shiftwidth=4 tabstop=4 softtabstop=4 expandtab smarttab textwidth=78 foldmarker={,} foldlevel=0 foldmethod=marker:
 " Maintainer:
 "           ____  __   _   ____  _  _  ___
 "          (_  _)/  ) / ) (_  _)( \( )/ __)
@@ -214,11 +214,20 @@
     set foldmethod=indent
     set foldlevel=10
 
-    " For all text files set 'textwidth' to 78 characters.
-    autocmd FileType text setlocal textwidth=78
+    " For all text files set 'textwidth' to 80
+    autocmd FileType text setlocal textwidth=80
+
+    " Useful to align text to 80 characters
+    set colorcolumn=80
+
+    " wrap but do not change the text
+    set wrap linebreak
 
     " When off lines will not wrap and only part of long lines will be displayed
     set nowrap
+
+    " Toggle word wrap on and off
+    map <leader><leader>w :setlocal nowrap!<cr>
 
     " modeline only take effect in first 2 lines or last 2 lines
     set modeline
@@ -252,7 +261,7 @@
     " copy/paste and undo {
 
         " Toggle paste mode on and off
-        map <leader>pp :setlocal paste!<cr>
+        map <leader><leader>p :setlocal paste!<cr>
 
         " Share clipboard with system
         set clipboard+=unnamed
@@ -278,8 +287,8 @@
         " Turn off spell checking
         set nospell
 
-        " Pressing <leader>ss will toggle and untoggle spell checking
-        noremap <leader>ss :setlocal spell!<cr>
+        " Pressing <leader><leader>s will toggle and untoggle spell checking
+        noremap <leader><leader>s :setlocal spell!<cr>
 
         " sn: next typo
         noremap <leader>sn ]s
@@ -420,7 +429,7 @@
           " <leader>gt Visible git sign ]c and [c for hunk navigation.
 
         Plug 'majutsushi/tagbar'
-          " tt to open tag bar; ctags required
+          " <leader>tt to open tag bar; ctags required
 
         Plug 'dense-analysis/ale'
           " Visible linter ERROR and warning, ]e and [e for error navigation.
@@ -709,7 +718,7 @@
 
     map <leader>tt <ESC>:TagbarToggle<CR>
 
-    VkhAdd 'tagbar: ,tt to open Tagbar window.'
+    VkhAdd 'tagbar: <leader>tt to open Tagbar window.'
     " }
 
     " plugin ale {
@@ -1062,11 +1071,9 @@
     nmap g9 <Plug>lightline#bufferline#go(9)
     " }
 
-    VkhAdd "plugin vim-airline: Lean & mean status/tabline for vim that's light as air."
-    VkhAdd '<c-o> jump backward. <c-i> jump forward.'
-    VkhAdd '<leader>- or <leader>| to splie window. Q to close window.'
-    VkhAdd ',bt to open buffer in tab; ,bc to close current tab; ,bd to close buffer'
+    VkhAdd "plugin vim-lightline: Lean & mean status/tabline for vim that's light as air."
     VkhAdd 'gn to next buffer, gp to previous buffer, g[1-9] to move to tab n'
+    VkhAdd '<leader>bd to close buffer'
     " }
 
     " plugin coc.nvim {

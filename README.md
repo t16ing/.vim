@@ -22,22 +22,18 @@
     * [Marks and Register (`mm`)](#marks-and-register-mm)
     * [Fuzzy Finder (`,ff`)](#fuzzy-finder-ff)
     * [Markdown (`,tm`)](#markdown-tm)
-    * [Spell Feature (`,ss`)](#spell-feature-ss)
-    * [Code Navigation (`gd` and moving forward/backward.)](#code-navigation-gd-and-moving-forwardbackward)
+    * [Spell Feature (`,,s`)](#spell-feature-s)
     * [Select then Search](#select-then-search)
     * [Surround Editing (`+` then `S`)](#surround-editing--then-s)
     * [Multiple Selection Editing (`<c-n>`)](#multiple-selection-editing-c-n)
 * [Integrated Development Environment](#integrated-development-environment)
-    * [Tagbar](#tagbar)
-    * [Auto Complete](#auto-complete)
+    * [How to Navigate Source Code](#how-to-navigate-source-code)
+    * [Auto Completion](#auto-completion)
     * [Documentation](#documentation)
-    * [Git Navigation](#git-navigation)
-    * [Warning/Error Navigation](#warningerror-navigation)
     * [Code Comment](#code-comment)
     * [Refactoring](#refactoring)
     * [Compile and Run](#compile-and-run)
     * [CoC List](#coc-list)
-* [Commands](#commands)
 * [Plugins](#plugins)
 * [Support Languages](#support-languages)
 * [Compatibility](#compatibility)
@@ -53,10 +49,10 @@ It is designed as a sensible and powerful editor environment.
 
 ## Sensible Configurations
 
-- Sensible motion, search, fold, and precede.
+- Sensible motion, search, fold, and precede each line with its line number.
 - More file format and encoding are supported.
-- Persistent edit position and undo history. Auto read file changes from outside.
-- Indent: 4 spaces, expand tabs. Highlight on tabs and unwanted spaces.
+- Persistent editing position and undo history. Auto read when a file is changed from the outside
+- Indent: 4 spaces, expand tabs. Highlight tabs and unwanted spaces.
 - Integrate with system clipboard.
 - colorscheme: PaperColor Dark.
 
@@ -105,14 +101,15 @@ Use ':' or ';' as command key.
 | **(VISUAL)`=`**          | Selected range indent.               |
 | `<leader>=`              | Format selected code.                |
 | `<leader><leader>t`      | Expand tabs for buffer or selection. |
+| `<leader><leader>w`      | Toggle word wrap on and off.         |
 
 ### Clipboard
 
-| Key          | Action                   |
-|--------------|--------------------------|
-| `<leader>u`  | Open undo tree.          |
-| `<leader>pp` | Toggle paste mode.       |
-| `<a-p>`      | Cycle back yank history. |
+| Key                 | Action                   |
+|---------------------|--------------------------|
+| `<leader>u`         | Open undo tree.          |
+| `<leader><leader>p` | Toggle paste mode.       |
+| `<a-p>`             | Cycle back yank history. |
 
 ### Misc
 
@@ -124,6 +121,10 @@ Use ':' or ';' as command key.
 | `<leader>rr`      | Reload vimrc.               |
 | `<leader><space>` | Edit next placeholder <++>. |
 | `tx`              | Place an AsciiArt.          |
+
+| Command    | Action                                                   |
+|------------|----------------------------------------------------------|
+| :SudoWrite | Write with sudo, requires ssh-askpass to input password. |
 
 ## Featuring
 
@@ -143,7 +144,7 @@ Marks:
 | **`mm`**         | Toggle marks.           |
 | **`mn` or `mp`** | Next or previous marks. |
 | **`m<Space>`**   | Clear marks.            |
-| **`ml`**         | Liast marks.            |
+| **`ml`**         | List marks.             |
 
 Register:
 
@@ -179,9 +180,9 @@ How to start `Fuzzy Finder` feature:
 
 How to enable `Markdown` feature:
 
-| Key                   | Action                      |
-|-----------------------|-----------------------------|
-| **`<leader>tm`**      | Toggle markdown table mode. |
+| Key              | Action                      |
+|------------------|-----------------------------|
+| **`<leader>tm`** | Toggle markdown table mode. |
 
 `Markdown` key mappings:
 
@@ -190,13 +191,19 @@ How to enable `Markdown` feature:
 | `<leader>tr`          | Format markdown table mode. |
 | `<code>&#124;</code>` | Cell text object.           |
 
-### Spell Feature (`,ss`)
+Generate Markdown TOC:
+
+| Command    | Action                                                   |
+|------------|----------------------------------------------------------|
+| :GenTocGFM | Generate markdown TOC for Github markdown.               |
+
+### Spell Feature (`,,s`)
 
 How to enable `Spell` feature:
 
-| Key              | Action             |
-|------------------|--------------------|
-| **`<leader>ss`** | Toggle spell mode. |
+| Key                     | Action             |
+|-------------------------|--------------------|
+| **`<leader><leader>s`** | Toggle spell mode. |
 
 `Spell` key mappings:
 
@@ -208,18 +215,6 @@ How to enable `Spell` feature:
 | `<leader>s?`    | Show all suggested correction. |
 | **`<leader>sc`* | Apply spell correction         |
 | **`<leader>cs`* | List suggested synonym.        |
-
-### Code Navigation (`gd` and moving forward/backward.)
-
-| Key                | Action                          |
-|--------------------|---------------------------------|
-| **`gd`**           | Go to definition.               |
-| **`gf`**           | Open file.                      |
-| `gy`               | Go to type definition.          |
-| `gi`               | Go to implementation.           |
-| `gr`               | Go to references.               |
-| **`<c-o>`**        | Jump back to previous location. |
-| **`<c-i>, <tab>`** | Jump forward to next location.  |
 
 ### Select then Search
 
@@ -249,13 +244,43 @@ How to enable `Spell` feature:
 
 ## Integrated Development Environment
 
-### Tagbar
+### How to Navigate Source Code
+
+Code Navigation (`gd` and moving forward/backward.):
+
+| Key                | Action                          |
+|--------------------|---------------------------------|
+| **`gd`**           | Go to definition.               |
+| **`gf`**           | Open file.                      |
+| `gy`               | Go to type definition.          |
+| `gi`               | Go to implementation.           |
+| `gr`               | Go to references.               |
+| **`<c-o>`**        | Jump back to previous location. |
+| **`<c-i>, <tab>`** | Jump forward to next location.  |
+
+Use Tagbar:
 
 | Key       | Action         |
 |-----------|----------------|
-| **`,tt`** | Toggle tagbar. |
+| **`<leader>tt`** | Toggle tagbar. |
 
-### Auto Complete
+Git Navigation:
+
+| Key              | Action              |
+|------------------|---------------------|
+| **`<leader>gb`** | Open git blame.     |
+| **`<leader>gl`** | Open git log.       |
+| `<leader>gt`     | Toggle git hunks.   |
+| `]c` or `[c`     | Navigate git hunks. |
+
+Warning/Error Navigation:
+
+| Key          | Action                |
+|--------------|-----------------------|
+| `]e` or `[e` | Navigate lint errors. |
+| `]g` or `[g` | Navigate diagnostics. |
+
+### Auto Completion
 
 | Key                 | Action                                                      |
 |---------------------|-------------------------------------------------------------|
@@ -267,22 +292,6 @@ How to enable `Spell` feature:
 | Key                 | Action                                                      |
 |---------------------|-------------------------------------------------------------|
 | **`K`**             | Open document.                                              |
-
-### Git Navigation
-
-| Key              | Action              |
-|------------------|---------------------|
-| **`<leader>gb`** | Open git blame.     |
-| **`<leader>gl`** | Open git log.       |
-| `<leader>gt`     | Toggle git hunks.   |
-| `]c` or `[c`     | Navigate git hunks. |
-
-### Warning/Error Navigation
-
-| Key          | Action                |
-|--------------|-----------------------|
-| `]e` or `[e` | Navigate lint errors. |
-| `]g` or `[g` | Navigate diagnostics. |
 
 ### Code Comment
 
@@ -318,13 +327,6 @@ How to enable `Spell` feature:
 | `<space>s`      | List CoC symbols.                       |
 | `<space>j or k` | Do default next or previous CoC action. |
 | `<space>p`      | Resume previous CoC list.               |
-
-## Commands
-
-| Command    | Action                                                   |
-|------------|----------------------------------------------------------|
-| :SudoWrite | Write with sudo, requires ssh-askpass to input password. |
-| :GenTocGFM | Generate markdown TOC for Github markdown.               |
 
 ## Plugins
 
@@ -362,7 +364,7 @@ Highlight:
 ## Support Languages
 
 - `Dockerfile`
-- `python` (by `jedi.vim`)
+- `python`
 - `c/c++`
 - `php`
 - `javascript`

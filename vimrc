@@ -624,8 +624,7 @@
     noremap <silent> <leader>fb :Buffers<CR>
     noremap <silent> <leader>fg :BCommits<CR>
     noremap <silent> <leader>f; :History:<CR>
-    noremap <silent> <leader>f/ :History/<CR>
-    noremap <leader>f: :Rg 
+    noremap <silent> <leader>f/ :Rg<CR>
 
     " [Buffers] Jump to the existing window if possible
     let g:fzf_buffers_jump = 1
@@ -712,7 +711,7 @@
     " plugin tagbar-javascript.vim: requires npm install -g esctags.
 
     let g:tagbar_autofocus   = 1
-    let g:tagbar_autoclose   = 0
+    let g:tagbar_autoclose   = 1
     let g:tagbar_autoshowtag = 1
     let g:tagbar_width = 32
 

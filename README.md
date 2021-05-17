@@ -161,15 +161,14 @@ How to start `Fuzzy Finder` feature:
 |------------------|--------------------------------------------|
 | **`<leader>fp`** | Fuzzy file finder.                         |
 | **`<leader>ff`** | Search for the selected or cursor keyword. |
-| **`<leader>f:`** | Input the keyword and search.              |
 | `<leader>f*`     | Search for current word.                   |
 
 `Fuzzy Finder` key mappings:
 
 | Key              | Action                              |
 |------------------|-------------------------------------|
+| **`<leader>f/`** | Open fzf window.                    |
 | **`<leader>f;`** | Quick mapping for command history.  |
-| **`<leader>f/`** | Search for searched patterns.       |
 | **`<leader>fg`** | Git commits for the current buffer. |
 | `<leader>fh`     | Search for the opened history.      |
 | `<leader>ft`     | Search for global tags.             |

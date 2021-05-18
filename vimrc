@@ -412,7 +412,7 @@
             set rtp+=~/.fzf
         endif " }
         Plug 'junegunn/fzf.vim'
-          " <c-p> open ctrlp window. <leader>ff for keyword search, and <leader>f? other fzf functions.
+          " <leader>fp to open ctrlp window. <leader>ff for cursor word search, and <leader>f/ to open fzf window.
 
         Plug 'airblade/vim-rooter'
           " changes the working directory to the project root when you open a file or directory
@@ -638,7 +638,7 @@
     " Default fzf layout { 'window': { 'width': 0.9, 'height': 0.6 } }
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
-    VkhAdd 'fzf.vim: <c-p> open ctrlp window. <leader>f for other fzf functions.'
+    VkhAdd 'fzf.vim: <leader>fp to open ctrlp window. <leader>ff for cursor word search, and <leader>f/ to open fzf window.'
     " }
 
     " plugin vim-rooter {
@@ -992,22 +992,15 @@
           \ 'tabnum': 'lightline#tab#tabnum' }
     " }
 
-    " statusline for |CtrlP|, |Tagbar| buffers. {
-    let g:ctrlp_status_func = {
-      \ 'main': 'CtrlPStatusFunc_1',
-      \ 'prog': 'CtrlPStatusFunc_2',
-      \ }
-    function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
-      return lightline#statusline(0)
-    endfunction
-    function! CtrlPStatusFunc_2(str)
-      return lightline#statusline(0)
-    endfunction
-
+    " statusline for |Tagbar| buffers. {
     let g:tagbar_status_func = 'TagbarStatusFunc'
     function! TagbarStatusFunc(current, sort, fname, ...) abort
       return lightline#statusline(0)
     endfunction
+    " }
+
+    " lightline-hunks: Symbol visible to the left of the branch. {
+    let g:lightline#hunks#branch_symbol = '(c) '
     " }
 
     " lightlien-ale indicators and configs {

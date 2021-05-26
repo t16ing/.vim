@@ -463,9 +463,9 @@
         " markdown {
         Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
           " instantly preview finicky markdown files
-        Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
+        Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['markdown'] }
           " <leader>tm to start automatic table creator & formatter
-        Plug 'mzlogin/vim-markdown-toc', { 'on': 'GenTocGFM', 'for': ['text', 'markdown', 'vim-plug'] }
+        Plug 'mzlogin/vim-markdown-toc', { 'on': 'GenTocGFM', 'for': ['markdown'] }
           " :GenTocGFM to generate markdown TOC for Github markdown
         " }
 
@@ -638,7 +638,9 @@
     " Default fzf layout { 'window': { 'width': 0.9, 'height': 0.6 } }
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
-    VkhAdd 'fzf.vim: <leader>fp to open ctrlp window. <leader>ff for cursor word search, and <leader>f/ to open fzf window.'
+    VkhAdd 'fzf.vim: <leader>fp to open ctrlp window.'
+    VkhAdd 'fzf.vim: <leader>ff for cursor word search'
+    VkhAdd 'fzf.vim: <leader>f/ to open fzf window.'
     " }
 
     " plugin vim-rooter {
@@ -789,6 +791,25 @@
 
     " plugin vim-table-mode {
     " ~/.vim/bundle/vim-table-mode/README.md
+
+    " You can use the following to quickly enable / disable table mode in insert mode by using `||` or `__`:
+    function! s:isAtStartOfLine(mapping)
+        let text_before_cursor = getline('.')[0 : col('.')-1]
+        let mapping_pattern = '\V' . escape(a:mapping, '\')
+        let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+        return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+    endfunction
+
+    inoreabbrev <expr> <bar><bar>
+                \ <SID>isAtStartOfLine('\|\|') ?
+                \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+    inoreabbrev <expr> __
+                \ <SID>isAtStartOfLine('__') ?
+                \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+
+    " conflict with tagbarlist key binding
+    let g:table_mode_tableize_map = '<Leader>tmt'
+
     VkhAdd 'vim-table-mode: <leader>tm to start automatic table creator & formatter'
     " }
 

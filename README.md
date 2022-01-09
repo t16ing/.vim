@@ -95,13 +95,14 @@ Use ':' or ';' as command key.
 
 ### Edit and Formatting
 
-| Key                      | Action                               |
-|--------------------------|--------------------------------------|
-| **`>` and `<` and `==`** | Quick indent.                        |
-| **(VISUAL)`=`**          | Selected range indent.               |
-| `<leader>=`              | Format selected code.                |
-| `<leader><leader>t`      | Expand tabs for buffer or selection. |
-| `<leader><leader>w`      | Toggle word wrap on and off.         |
+| Key                      | Action                                   |
+|--------------------------|------------------------------------------|
+| **`>` and `<` and `==`** | Quick indent.                            |
+| **(VISUAL)`=`**          | Selected range indent.                   |
+| **c-f**                  | Quick format html, js, json, css, etc... |
+| `<leader>=`              | Format selected code.                    |
+| `<leader><leader>t`      | Expand tabs for buffer or selection.     |
+| `<leader><leader>w`      | Toggle word wrap on and off.             |
 
 ### Clipboard
 

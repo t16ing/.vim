@@ -203,11 +203,11 @@
     set smartindent
     set wrap
 
-    " modern indent: 1 tab = 4 spaces, use space instead
+    " modern indent: 1 tab = 2 spaces, use space instead
     set expandtab
     set tabstop=8
-    set softtabstop=4
-    set shiftwidth=4
+    set softtabstop=2
+    set shiftwidth=2
     set smarttab
 
     " fold by indent and fold by default
@@ -587,8 +587,8 @@
     " Unicode box-drawing characters will be used instead.
     let g:startify_fortune_use_unicode = 1
 
-    " anytime <leader>S to launch Startify
-    map <leader>S :Startify<CR>
+    " anytime <leader>s to launch Startify
+    map <leader>s :Startify<CR>
 
     VkhAdd 'vim-startify: <leader>S open the fancy start screen. :SSave to save session.'
     " }
@@ -675,7 +675,7 @@
         \ }
 
     " highligh for markers
-    let g:SignatureMarkerLineHL = "QuickFixLine"
+    let g:SignatureMarkLineHL = "QuickFixLine"
 
     " When a line has both marks and markers, display the sign for markers
     let g:SignaturePrioritizeMarks = 0

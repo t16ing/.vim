@@ -11,29 +11,29 @@
 * [What is `.vim`](#what-is-vim)
 * [Sensible Configurations](#sensible-configurations)
 * [General Key Mappings](#general-key-mappings)
-    * [Buffer and Line](#buffer-and-line)
-    * [Window](#window)
-    * [Tab](#tab)
-    * [Edit and Formatting](#edit-and-formatting)
-    * [Clipboard](#clipboard)
-    * [Misc](#misc)
+  * [Buffer and Line](#buffer-and-line)
+  * [Window](#window)
+  * [Tab](#tab)
+  * [Edit and Formatting](#edit-and-formatting)
+  * [Clipboard](#clipboard)
+  * [Misc](#misc)
 * [Featuring](#featuring)
-    * [File Management (`,nn`)](#file-management-nn)
-    * [Marks and Register (`mm`)](#marks-and-register-mm)
-    * [Fuzzy Finder (`,ff`)](#fuzzy-finder-ff)
-    * [Markdown (`,tm`)](#markdown-tm)
-    * [Spell Feature (`,,s`)](#spell-feature-s)
-    * [Select then Search](#select-then-search)
-    * [Surround Editing (`+` then `S`)](#surround-editing--then-s)
-    * [Multiple Selection Editing (`<c-n>`)](#multiple-selection-editing-c-n)
+  * [File Management (`,nn`)](#file-management-nn)
+  * [Marks and Register (`mm`)](#marks-and-register-mm)
+  * [Fuzzy Finder (`,ff`)](#fuzzy-finder-ff)
+  * [Markdown (`,tm`)](#markdown-tm)
+  * [Spell Feature (`,,s`)](#spell-feature-s)
+  * [Select then Search](#select-then-search)
+  * [Surround Editing (`+` then `S`)](#surround-editing--then-s)
+  * [Multiple Selection Editing (`<c-n>`)](#multiple-selection-editing-c-n)
 * [Integrated Development Environment](#integrated-development-environment)
-    * [How to Navigate Source Code](#how-to-navigate-source-code)
-    * [Auto Completion](#auto-completion)
-    * [Documentation](#documentation)
-    * [Code Comment](#code-comment)
-    * [Refactoring](#refactoring)
-    * [Compile and Run](#compile-and-run)
-    * [CoC List](#coc-list)
+  * [How to Navigate Source Code](#how-to-navigate-source-code)
+  * [Auto Completion](#auto-completion)
+  * [Documentation](#documentation)
+  * [Code Comment](#code-comment)
+  * [Refactoring](#refactoring)
+  * [Compile and Run](#compile-and-run)
+  * [CoC List](#coc-list)
 * [Plugins](#plugins)
 * [Support Languages](#support-languages)
 * [Compatibility](#compatibility)
@@ -43,15 +43,13 @@
 
 ## What is `.vim`
 
-This is my personal vim/neovim configurations.
-
-It is designed as a sensible and powerful editor environment.
+My customized vim configurations, as a sensible and powerful editor environment.
 
 ## Sensible Configurations
 
-- Sensible motion, search, fold, and precede each line with its line number.
-- More file format and encoding are supported.
-- Persistent editing position and undo history. Auto read when a file is changed from the outside
+- Sensible motion, search, fold, and precede of line.
+- More file format and encoding supported.
+- Persistent editing position and undo history. Auto read when a file is changed from the outside.
 - Indent: 4 spaces, expand tabs. Highlight tabs and unwanted spaces.
 - Integrate with system clipboard.
 - colorscheme: PaperColor Dark.
@@ -61,6 +59,8 @@ It is designed as a sensible and powerful editor environment.
 Use ',' as leader key.
 
 Use ':' or ';' as command key.
+
+Use ',,' for mode changing.
 
 ### Buffer and Line
 
@@ -116,7 +116,7 @@ Use ':' or ';' as command key.
 | Key               | Action                      |
 |-------------------|-----------------------------|
 | `zz`              | Save the file.              |
-| `<leader>S`       | Open a fancy start screen.  |
+| `<leader>s`       | Open a fancy start screen.  |
 | `<leader>rc`      | Open vimrc.                 |
 | `<leader>rr`      | Reload vimrc.               |
 | `<leader><space>` | Edit next placeholder <++>. |
@@ -206,14 +206,14 @@ How to enable `Spell` feature:
 
 `Spell` key mappings:
 
-| Key             | Action                         |
-|-----------------|--------------------------------|
-| **`<leader>sn`* | Next typo.                     |
-| `<leader>sp`    | Previous typo.                 |
-| **`<leader>sa`* | Add word to dict.              |
-| `<leader>s?`    | Show all suggested correction. |
-| **`<leader>sc`* | Apply spell correction         |
-| **`<leader>cs`* | List suggested synonym.        |
+| Key              | Action                         |
+|------------------|--------------------------------|
+| **`<leader>sn`** | Next typo.                     |
+| `<leader>sp`     | Previous typo.                 |
+| **`<leader>sa`** | Add word to dict.              |
+| `<leader>s?`     | Show all suggested correction. |
+| **`<leader>sc`** | Apply spell correction         |
+| **`<leader>cs`** | List suggested synonym.        |
 
 ### Select then Search
 

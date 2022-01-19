@@ -1197,10 +1197,10 @@
         omap ac <Plug>(coc-classobj-a)
         " }
 
-        " Use CTRL-S for selections ranges. {
+        " Use `,as` for selections ranges. {
         " Requires 'textDocument/selectionRange' support of language server.
-        nmap <silent> <c-s> <Plug>(coc-range-select)
-        xmap <silent> <c-s> <Plug>(coc-range-select)
+        nmap <silent> <leader>as <Plug>(coc-range-select)
+        xmap <silent> <leader>as <Plug>(coc-range-select)
         " }
 
     " }
@@ -1230,7 +1230,7 @@
     VkhAdd 'Code actions: try <leader>ac <leader>aap <leader>= <leader>rn'
     VkhAdd ']g and [g for next diagnostic, and <leader>qf for quick fix'
     VkhAdd 'try cif in funcion, and cic in class.'
-    VkhAdd '<c-s> for CoC selection'
+    VkhAdd '<leader>as for CoC code selection'
     VkhAdd '<space>a,e,c,o,s,j,k,p for CoCList mappings'
     " }
 

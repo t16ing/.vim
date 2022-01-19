@@ -56,17 +56,21 @@ My customized vim configurations, as a sensible and powerful editor environment.
 
 ## General Key Mappings
 
-Use ',' as leader key.
-Use ':' or ';' as command key.
+Use `,` as leader key.
+Use `:` or `;` as command key.
 
-Use ',,' as mode changing leading key.
-Use ',f' as find leading key.
-Use ',n' as file management leading key.
-Use ',t' as IDE tablist leading key.
-Use ',m' as table mode leading key.
-Use '<c-w>' as window control leading key.
+Use `,,` as mode changing leading key.
+Use `,f` as find leading key.
+Use `,n` as file management leading key.
+Use `,t` as IDE tablist leading key.
+Use `,m` as table mode leading key.
+Use `<c-w>` as window control leading key.
 
-Use '=' as format related key.
+Use `=` as format related key.
+Use `][` to navigate diagnostics.
+Use `tab` as IDE coc auto completion.
+Use `,a` as IDE coc code actions leading key.
+Use `space` as IDE coc list leading key.
 
 ### Buffer and Line
 
@@ -400,12 +404,9 @@ Highlight:
 ## Support Languages
 
 - `Dockerfile`
-- `python`
-- `c/c++`
-- `php`
-- `javascript`
-- `typescript`
-- `markdown`
+- `python`, `go`, `c/c++`, `c#`, `php`, `javascript`, `typescript`
+- `json`, `markdown`
+- `html`, `css`
 
 ## Compatibility
 

@@ -251,8 +251,8 @@
     nnoremap > >>
 
     " Tab to Space
-    nnoremap <leader><leader>t :%s/\t/    /g
-    vnoremap <leader><leader>t :s/\t/    /g
+    nnoremap <leader>=t :%s/\t/    /g<cr>
+    vnoremap <leader>=t :s/\t/    /g<cr>
 
 " }
 
@@ -810,10 +810,10 @@
                 \ <SID>isAtStartOfLine('__') ?
                 \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
-    " conflict with tagbarlist key binding
-    let g:table_mode_tableize_map = '<Leader>tmt'
+    " Better general leading key for markdown table mode
+    let g:table_mode_map_prefix = '<leader>m'
 
-    VkhAdd 'vim-table-mode: <leader>tm to start automatic table creator & formatter'
+    VkhAdd 'vim-table-mode: <leader>mm to start automatic table creator & formatter'
     " }
 
     " plugin vim-markdown-toc {
@@ -1236,11 +1236,11 @@
 
     " plugin vim-jsbeautify {
     " ~/.vim/bundle/vim-jsbeautify/README.md
-    autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
-    autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
-    autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
-    autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-    autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+    autocmd FileType javascript noremap <buffer> <leader>= :call JsBeautify()<cr>
+    autocmd FileType json noremap <buffer> <leader>= :call JsonBeautify()<cr>
+    autocmd FileType jsx noremap <buffer> <leader>= :call JsxBeautify()<cr>
+    autocmd FileType html noremap <buffer> <leader>= :call HtmlBeautify()<cr>
+    autocmd FileType css noremap <buffer> <leader>= :call CSSBeautify()<cr>
     " }
 " }
 

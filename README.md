@@ -21,7 +21,7 @@
   * [File Management (`,nn`)](#file-management-nn)
   * [Marks and Register (`mm`)](#marks-and-register-mm)
   * [Fuzzy Finder (`,ff`)](#fuzzy-finder-ff)
-  * [Markdown (`,tm`)](#markdown-tm)
+  * [Markdown (`,mm`)](#markdown-mm)
   * [Spell Feature (`,,s`)](#spell-feature-s)
   * [Select then Search](#select-then-search)
   * [Surround Editing (`+` then `S`)](#surround-editing--then-s)
@@ -57,23 +57,45 @@ My customized vim configurations, as a sensible and powerful editor environment.
 ## General Key Mappings
 
 Use ',' as leader key.
-
 Use ':' or ';' as command key.
 
-Use ',,' for mode changing.
+Use ',,' as mode changing leading key.
+Use ',f' as find leading key.
+Use ',n' as file management leading key.
+Use ',t' as IDE tablist leading key.
+Use ',m' as table mode leading key.
+Use '<c-w>' as window control leading key.
+
+Use '=' as format related key.
 
 ### Buffer and Line
 
-| Key                    | Action                                  |
-|------------------------|-----------------------------------------|
-| **`gj` `gk` `g<tab>`** | Next or previous or last opened buffer. |
-| **`g<number>`**        | Goto buffer n.                          |
-| **`<leader>bd`**       | Close buffer.                           |
-| `W` `B`                | Faster word and back-word motion.       |
-| `z.`                   | Put current line to center of screen.   |
-| `z-`                   | Put current line to bottom of screen.   |
+`g` to move around opened buffers.
+
+| Key             | Action                  |
+|-----------------|-------------------------|
+| **`gj`**        | Next opened buffer.     |
+| **`gk`**        | Last opened buffer.     |
+| **`g<tab>`**    | Previous opened buffer. |
+| **`g<number>`** | Goto buffer n.          |
+
+`<leader>b` for quick buffer control.
+
+| Key              | Action        |
+|------------------|---------------|
+| **`<leader>bd`** | Close buffer. |
+
+Other quick cursor and screen control.
+
+| Key     | Action                                |
+|---------|---------------------------------------|
+| `W` `B` | Faster word and back-word motion.     |
+| `z.`    | Put current line to center of screen. |
+| `z-`    | Put current line to bottom of screen. |
 
 ### Window
+
+`<c-w>` to control window.
 
 | Key                                          | Action                                                        |
 |----------------------------------------------|---------------------------------------------------------------|
@@ -81,10 +103,17 @@ Use ',,' for mode changing.
 | **`<c-w>` then `j` or `k` or `h` or `l`**    | Move around in windows.                                       |
 | `<c-w>` then `J` or `K` or `H` or `L`        | Move current window to topmost/bottommost/leftmost/rightmost. |
 | `<c-w>_`                                     | Maximinze current window.                                     |
-| `Q`                                          | Close current window.                                         |
-| `q`                                          | Close a quick window.                                         |
+
+Other quick window control.
+
+| Key | Action                                     |
+|-----|--------------------------------------------|
+| `Q` | Quick close all (or close current window). |
+| `q` | Close a quick window.                      |
 
 ### Tab
+
+Commands to control tab.
 
 | Key        | Action                |
 |------------|-----------------------|
@@ -95,22 +124,29 @@ Use ',,' for mode changing.
 
 ### Edit and Formatting
 
+Key '=' for formatting.
+
 | Key                      | Action                                   |
 |--------------------------|------------------------------------------|
-| **`>` and `<` and `==`** | Quick indent.                            |
-| **(VISUAL)`=`**          | Selected range indent.                   |
-| **c-f**                  | Quick format html, js, json, css, etc... |
-| `<leader>=`              | Format selected code.                    |
-| `<leader><leader>t`      | Expand tabs for buffer or selection.     |
-| `<leader><leader>w`      | Toggle word wrap on and off.             |
+| **`<leader>=`**         | Quick format html, js, json, css, etc... |
+| (VISUAL)`<leader>=`      | Advanced coc code formating.             |
+| `>` and `<` and `==` | Single line indent.                    |
+| (VISUAL)`=`              | Multiple line indent.                   |
+| `<leader>=t`             | Expand tabs for buffer or selection.     |
+
+Different edit mode.
+
+| Key                 | Action                       |
+|---------------------|------------------------------|
+| `<leader><leader>w` | Toggle word wrap on and off. |
+| `<leader><leader>p` | Toggle paste mode.           |
 
 ### Clipboard
 
-| Key                 | Action                   |
-|---------------------|--------------------------|
-| `<leader>u`         | Open undo tree.          |
-| `<leader><leader>p` | Toggle paste mode.       |
-| `<a-p>`             | Cycle back yank history. |
+| Key         | Action                   |
+|-------------|--------------------------|
+| `<leader>u` | Open undo tree.          |
+| `<a-p>`     | Cycle back yank history. |
 
 ### Misc
 
@@ -120,7 +156,7 @@ Use ',,' for mode changing.
 | `<leader>s`       | Open a fancy start screen.  |
 | `<leader>rc`      | Open vimrc.                 |
 | `<leader>rr`      | Reload vimrc.               |
-| `<leader><space>` | Edit next placeholder <++>. |
+| `<leader><space>` | Edit next placeholder . |
 | `tx`              | Place an AsciiArt.          |
 
 | Command    | Action                                                   |
@@ -176,13 +212,13 @@ How to start `Fuzzy Finder` feature:
 | `<leader>fl`     | Search for the lines.               |
 | `<leader>fb`     | Search for opened buffer.           |
 
-### Markdown (`,tm`)
+### Markdown (`,mm`)
 
 How to enable `Markdown` feature:
 
 | Key              | Action                      |
 |------------------|-----------------------------|
-| **`<leader>tm`** | Toggle markdown table mode. |
+| **`<leader>mm`** | Toggle markdown table mode. |
 
 `Markdown` key mappings:
 

@@ -23,7 +23,7 @@
   * [Fuzzy Finder (`,ff`)](#fuzzy-finder-ff)
   * [Markdown (`,mm`)](#markdown-mm)
   * [Spell Feature (`,,s`)](#spell-feature-s)
-  * [Select then Search](#select-then-search)
+  * [Select then Search (`*`)](#select-then-search-)
   * [Surround Editing (`+` then `S`)](#surround-editing--then-s)
   * [Multiple Selection Editing (`<c-n>`)](#multiple-selection-editing-c-n)
 * [Integrated Development Environment](#integrated-development-environment)
@@ -65,6 +65,7 @@ Use `,n` as file management leading key.
 Use `,t` as IDE tablist leading key.
 Use `,m` as table mode leading key.
 Use `<c-w>` as window control leading key.
+Use `<c-n>` as multiple selection envoking key.
 
 Use `=` as format related key.
 Use `][` to navigate diagnostics.
@@ -256,7 +257,7 @@ How to enable `Spell` feature:
 | **`<leader>sc`** | Apply spell correction         |
 | **`<leader>cs`** | List suggested synonym.        |
 
-### Select then Search
+### Select then Search (`*`)
 
 | Key                          | Action                                        |
 |------------------------------|-----------------------------------------------|

@@ -56,22 +56,30 @@ My customized vim configurations, as a sensible and powerful editor environment.
 
 ## General Key Mappings
 
-Use `,` as leader key.
-Use `:` or `;` as command key.
+Common leading key:
 
-Use `,,` as mode changing leading key.
-Use `,f` as find leading key.
-Use `,n` as file management leading key.
-Use `,t` as IDE tablist leading key.
-Use `,m` as table mode leading key.
-Use `<c-w>` as window control leading key.
-Use `<c-n>` as multiple selection envoking key.
+- Use `,` as leader key.
+- Use `:` or `;` as command key.
 
-Use `=` as format related key.
-Use `][` to navigate diagnostics.
-Use `tab` as IDE coc auto completion.
-Use `,a` as IDE coc code actions leading key.
-Use `space` as IDE coc list leading key.
+Powerful editor key mapping principle:
+
+- Use `,,` as mode changing leading key.
+- Use `,f` as find leading key.
+- Use `,n` as file management leading key.
+- Use `,m` as table mode leading key.
+- Use `<c-w>` as window control leading key.
+- Use `<c-n>` as multiple selection envoking key.
+
+Powerful IDE key mapping principle:
+
+- Use `=` as auto indent related key.
+- Use `,t` as IDE tag list leading key.
+- Use `,g` as git leading key.
+- Use `][` as message navigation leading key.
+- Use `<tab>` as IDE coc auto completion.
+- Use `<c-o>` as IDE coc code snippets.
+- Use `,a` as IDE coc code actions leading key.
+- Use `<space>` as IDE coc list leading key.
 
 ### Buffer and Line
 
@@ -301,8 +309,8 @@ Code Navigation (`gd` and moving forward/backward.):
 
 Use Tagbar:
 
-| Key       | Action         |
-|-----------|----------------|
+| Key              | Action         |
+|------------------|----------------|
 | **`<leader>tt`** | Toggle tagbar. |
 
 Git Navigation:
